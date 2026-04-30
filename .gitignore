@@ -1,0 +1,58 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+
+# Build output (will be relevant once stack is chosen)
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.vercel/
+.netlify/
+.turbo/
+
+# Coverage & test
+coverage/
+.nyc_output/
+
+# Python (if any backend tooling)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Misc
+.cache/
+tmp/
+*.tmp
