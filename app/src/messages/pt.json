@@ -4,12 +4,12 @@
     "ctaTalkToBernie": "Falar com o Bernie",
     "ctaBookCallShort": "Agendar conversa",
     "ctaBack": "Voltar",
-    "ctaBackHome": " Voltar ao incio",
+    "ctaBackHome": " Voltar ao início",
     "ctaTryDemo": "Testar a demo ao vivo",
-    "skipToContent": "Pular para o contedo",
+    "skipToContent": "Pular para o conteúdo",
     "languageSelector": "Seletor de idioma",
     "comingSoon": "Em breve",
-    "translationDisclosure": "As tradues so assistidas por IA e esto em reviso por falantes nativos. /privacy e /terms permanecem em ingls at a finalizao da traduo legal."
+    "translationDisclosure": "As traduções são assistidas por IA e estão em revisão por falantes nativos. /privacy e /terms permanecem em inglês até a finalização da tradução legal."
   },
   "nav": {
     "lighthouse": "Lighthouse",
@@ -17,7 +17,7 @@
     "about": "Sobre",
     "methodology": "Metodologia",
     "primary": "Principal",
-    "footer": "Rodap"
+    "footer": "Rodapé"
   },
   "footer": {
     "links": {
@@ -25,7 +25,7 @@
       "engines": "Sistemas",
       "about": "Sobre",
       "methodology": "Metodologia",
-      "trust": "Confiana",
+      "trust": "Confiança",
       "privacy": "Privacidade",
       "terms": "Termos",
       "contact": "Contato"
@@ -35,53 +35,53 @@
   "home": {
     "metadata": {
       "title": "10XAI  Sistemas Operacionais de IA sob medida para PMEs",
-      "description": "Agentes de IA personalizados que rodam suas vendas, atendimento e operaes. Construdos em torno do seu negcio, no de um template genrico. Trilngue: Ingls, Portugus, Espanhol."
+      "description": "Agentes de IA personalizados que rodam suas vendas, atendimento e operações. Construídos em torno do seu negócio, não de um template genérico. Trilíngue: Inglês, Português, Espanhol."
     },
-    "eyebrow": "IA sob medida para o seu negcio  feita para rodar",
+    "eyebrow": "IA sob medida para o seu negócio  feita para rodar",
     "headline": {
       "line1": "Agentes de IA sob medida",
       "line2start": "que rodam",
-      "line2gold": "o seu negcio."
+      "line2gold": "o seu negócio."
     },
-    "subhead": "A gente senta com voc, entende o que est realmente travando o dia, e entrega o Sistema Operacional de IA que roda isso por voc  no mais uma ferramenta para aprender.",
+    "subhead": "A gente senta com você, entende o que está realmente travando o dia, e entrega o Sistema Operacional de IA que roda isso por você  não mais uma ferramenta para aprender.",
     "ctaPrimary": "Testar Lighthouse  Demo ao vivo",
     "credentialsLine": "Desenvolvido por veteranos do setor com",
     "credentialsLineYears": "20+ anos",
     "credentialsLineEnd": "em tecnologia de receita e especialistas de IA de fronteira.",
-    "fomoLine": "A maior parte das PMEs vai escolher seu parceiro de IA nos prximos 18 meses. Acerte da primeira vez.",
+    "fomoLine": "A maior parte das PMEs vai escolher seu parceiro de IA nos próximos 18 meses. Acerte da primeira vez.",
     "principles": {
       "eyebrow": "Como trabalhamos",
       "title": "Sentar. Aprender. Entregar.",
       "items": {
         "01": {
-          "title": "A gente senta com voc.",
-          "body": "Descoberta no  apresentao de slides. A gente senta com o operador, observa o fluxo de trabalho, e encontra o atrito que mais consome a sua semana."
+          "title": "A gente senta com você.",
+          "body": "Descoberta não é apresentação de slides. A gente senta com o operador, observa o fluxo de trabalho, e encontra o atrito que mais consome a sua semana."
         },
         "02": {
-          "title": "Construmos para voc.",
-          "body": "Desenhamos os agentes de IA em torno das suas operaes reais, no de um template genrico. Sua voz. Seu CRM. Sua stack."
+          "title": "Construímos para você.",
+          "body": "Desenhamos os agentes de IA em torno das suas operações reais, não de um template genérico. Sua voz. Seu CRM. Sua stack."
         },
         "03": {
           "title": "Entregamos rodando.",
-          "body": "A gente no entrega uma ferramenta para voc aprender. Entregamos o sistema j rodando  medido, monitorado, e seu para evoluir."
+          "body": "A gente não entrega uma ferramenta para você aprender. Entregamos o sistema já rodando  medido, monitorado, e seu para evoluir."
         }
       }
     },
     "stats": {
       "abandonRate": "das PMEs abandonam ferramentas de IA em 6 meses",
-      "businessesWithoutSites": "pequenos negcios sem site. O Lighthouse encontra eles.",
+      "businessesWithoutSites": "pequenos negócios sem site. O Lighthouse encontra eles.",
       "languages": "idiomas em que entregamos nativamente  EN, PT-BR, ES",
-      "experience": "anos de experincia em tecnologia de receita por trs de cada projeto"
+      "experience": "anos de experiência em tecnologia de receita por trás de cada projeto"
     },
     "enginesPreview": {
       "eyebrow": "A Stack 10XAI",
       "title1": "Seis sistemas.",
       "title2": "Um Sistema Operacional.",
-      "subhead": "Cada sistema entra em operao rodando, no como uma ferramenta para aprender. Escolha aquele em que seu negcio sente mais atrito. Combine quando estiver pronto. Passe o mouse para detalhes."
+      "subhead": "Cada sistema entra em operação rodando, não como uma ferramenta para aprender. Escolha aquele em que seu negócio sente mais atrito. Combine quando estiver pronto. Passe o mouse para detalhes."
     },
     "ctaBand": {
-      "title": "O purgatrio dos pilotos termina aqui.",
-      "subhead": "77% das PMEs que compram ferramentas de IA abandonam em seis meses. A gente no vende ferramenta. Entregamos sistemas operacionais rodando que sobrevivem ao segundo ano.",
+      "title": "O purgatório dos pilotos termina aqui.",
+      "subhead": "77% das PMEs que compram ferramentas de IA abandonam em seis meses. A gente não vende ferramenta. Entregamos sistemas operacionais rodando que sobrevivem ao segundo ano.",
       "ctaBook": "Agendar conversa ",
       "ctaTalk": "Falar com o Bernie"
     }
@@ -89,165 +89,165 @@
   "about": {
     "metadata": {
       "title": "Sobre  Bernardo Medrado, fundador da 10XAI",
-      "description": "20+ anos em tecnologia de receita. ATD Master Trainer, AA-ISP Accredited, FGV. Trilngue nativo (EN, PT-BR, ES). Por que a 10XAI existe, e quem est por trs."
+      "description": "20+ anos em tecnologia de receita. ATD Master Trainer, AA-ISP Accredited, FGV. Trilíngue nativo (EN, PT-BR, ES). Por que a 10XAI existe, e quem está por trás."
     },
     "eyebrow": "Sobre o fundador",
     "headlineLine1": "Passei 20 anos dentro de tecnologia de receita",
-    "headlineLine2": "para que meus clientes PME no precisem.",
-    "subhead": "Bernardo Medrado  fundador da 10XAI. Operador. Treinador. Trilngue nativo. Duas dcadas em B2B SaaS, sade e medtech, agora construindo Sistemas Operacionais de IA para negcios que no podem pagar uma equipe de 12 pessoas.",
+    "headlineLine2": "para que meus clientes PME não precisem.",
+    "subhead": "Bernardo Medrado  fundador da 10XAI. Operador. Treinador. Trilíngue nativo. Duas décadas em B2B SaaS, saúde e medtech, agora construindo Sistemas Operacionais de IA para negócios que não podem pagar uma equipe de 12 pessoas.",
     "story": {
-      "eyebrow": "Minha histria",
+      "eyebrow": "Minha história",
       "title": "Por que a 10XAI existe.",
-      "p1": "Passei duas dcadas construindo e escalando equipes de receita em sade, medtech e tecnologia B2B. Liderei organizaes de inside sales, desenhei programas de habilitao que chegaram a milhares de reps, e vi o que acontece quando uma boa estratgia encontra uma execuo operacional ruim.",
+      "p1": "Passei duas décadas construindo e escalando equipes de receita em saúde, medtech e tecnologia B2B. Liderei organizações de inside sales, desenhei programas de habilitação que chegaram a milhares de reps, e vi o que acontece quando uma boa estratégia encontra uma execução operacional ruim.",
       "p2start": "A IA chegou  e de repente toda PME do planeta estava sendo vendida um chatbot, um copilot, uma ferramenta de produtividade. A maioria comprou.",
       "p2bold": "77% abandonam ferramentas de IA em seis meses.",
-      "p2end": "No porque a IA  ruim. Porque as ferramentas nunca foram conectadas a como o negcio realmente roda.",
-      "p3": "A 10XAI existe para os operadores presos no purgatrio dos pilotos. A gente no vende ferramenta. A gente senta com voc, entende o que est realmente travando o seu dia, e entrega o Sistema Operacional de IA que roda isso por voc  em ingls, portugus ou espanhol, dependendo de quem estiver usando."
+      "p2end": "Não porque a IA é ruim. Porque as ferramentas nunca foram conectadas a como o negócio realmente roda.",
+      "p3": "A 10XAI existe para os operadores presos no purgatório dos pilotos. A gente não vende ferramenta. A gente senta com você, entende o que está realmente travando o seu dia, e entrega o Sistema Operacional de IA que roda isso por você  em inglês, português ou espanhol, dependendo de quem estiver usando."
     },
     "credentials": {
       "eyebrow": "Credenciais",
-      "title": "Sinais de confiana que no precisam do nome de um empregador.",
-      "subhead": "Cada credencial aqui  independente de qualquer empresa especfica  conquistada, certificada e verificvel. O padro de confiana de um engajamento 10XAI.",
+      "title": "Sinais de confiança que não precisam do nome de um empregador.",
+      "subhead": "Cada credencial aqui é independente de qualquer empresa específica  conquistada, certificada e verificável. O padrão de confiança de um engajamento 10XAI.",
       "items": {
         "atdMaster": {
           "title": "ATD Master Trainer",
-          "detail": "Association for Talent Development  o padro ouro em design instrucional e metodologia de treinamento.",
+          "detail": "Association for Talent Development  o padrão ouro em design instrucional e metodologia de treinamento.",
           "year": "2021"
         },
         "atdInstructional": {
           "title": "Certificado ATD em Design Instrucional",
-          "detail": "Certificao avanada em arquitetura de aprendizagem por papel e teoria de aprendizagem de adultos.",
+          "detail": "Certificação avançada em arquitetura de aprendizagem por papel e teoria de aprendizagem de adultos.",
           "year": "2021"
         },
         "aaIsp": {
           "title": "AA-ISP Accredited Inside Sales Management",
-          "detail": "American Association of Inside Sales Professionals  prticas modernas de operao de equipes de receita.",
+          "detail": "American Association of Inside Sales Professionals  práticas modernas de operação de equipes de receita.",
           "year": "2023"
         },
         "fgv": {
-          "title": "FGV  Fundao Getulio Vargas",
-          "detail": "A escola de negcios #1 do Brasil. Formao em gesto e operaes.",
-          "year": "20012002"
+          "title": "FGV  Fundação Getulio Vargas",
+          "detail": "A escola de negócios #1 do Brasil. Formação em gestão e operações.",
+          "year": "2001–2002"
         },
         "top100": {
-          "title": "Top 100 Mais Influentes da Sade",
-          "detail": "Reconhecimento pblico no setor de sade brasileiro  validao externa anterior  10XAI.",
+          "title": "Top 100 Mais Influentes da Saúde",
+          "detail": "Reconhecimento público no setor de saúde brasileiro  validação externa anterior à 10XAI.",
           "year": "2015"
         },
         "linkedin": {
-          "title": "Certificaes LinkedIn Sales Navigator",
-          "detail": "Credenciais modernas de social selling e prospeco.",
-          "year": "20232024"
+          "title": "Certificações LinkedIn Sales Navigator",
+          "detail": "Credenciais modernas de social selling e prospecção.",
+          "year": "2023–2024"
         }
       }
     },
     "languages": {
       "eyebrow": "Idiomas",
-      "title": "Trilngue nativo. No traduzido.",
-      "subhead": "Conversas de descoberta, entregveis, presena do fundador  tudo acontece no idioma em que o seu negcio realmente pensa.",
+      "title": "Trilíngue nativo. Não traduzido.",
+      "subhead": "Conversas de descoberta, entregáveis, presença do fundador  tudo acontece no idioma em que o seu negócio realmente pensa.",
       "items": {
-        "en": { "name": "Ingls", "level": "Nativo / bilngue" },
-        "pt": { "name": "Portugus (Brasil)", "level": "Nativo / bilngue" },
+        "en": { "name": "Inglês", "level": "Nativo / bilíngue" },
+        "pt": { "name": "Português (Brasil)", "level": "Nativo / bilíngue" },
         "es": { "name": "Espanhol", "level": "Profissional pleno" }
       }
     },
     "connect": {
       "eyebrow": "Conectar",
       "title": "Vamos pular o marketing.",
-      "subhead": "Agende uma conversa de 15 minutos. A gente conversa sobre o que est realmente travando seu dia, e se um dos sistemas faz sentido  ou no.",
+      "subhead": "Agende uma conversa de 15 minutos. A gente conversa sobre o que está realmente travando seu dia, e se um dos sistemas faz sentido  ou não.",
       "ctaBook": "Agendar conversa ",
       "ctaLinkedin": "LinkedIn",
       "ctaEmail": "E-mail",
-      "location": "Apex / Raleigh, Carolina do Norte  Atendendo EUA + Brasil + Amrica Latina"
+      "location": "Apex / Raleigh, Carolina do Norte  Atendendo EUA + Brasil + América Latina"
     }
   },
   "methodology": {
     "metadata": {
       "title": "Metodologia  Como a 10XAI entrega sistemas de IA rodando",
-      "description": "Do purgatrio dos pilotos para IA em produo. Liderado por descoberta, com entregveis semana a semana, medio desde o dia um. O protocolo de 4 semanas da 10XAI."
+      "description": "Do purgatório dos pilotos para IA em produção. Liderado por descoberta, com entregáveis semana a semana, medição desde o dia um. O protocolo de 4 semanas da 10XAI."
     },
     "eyebrow": "Metodologia",
-    "headlineLine1": "Do purgatrio dos pilotos",
-    "headlineLine2": "para IA em produo.",
-    "subhead": "O protocolo de 4 semanas que tira seus operadores das apresentaes de estratgia e os coloca em sistemas rodando. Medido no dia um. Ajustado no dia 28. Seu a partir do dia 29.",
+    "headlineLine1": "Do purgatório dos pilotos",
+    "headlineLine2": "para IA em produção.",
+    "subhead": "O protocolo de 4 semanas que tira seus operadores das apresentações de estratégia e os coloca em sistemas rodando. Medido no dia um. Ajustado no dia 28. Seu a partir do dia 29.",
     "protocol": {
       "eyebrow": "O protocolo",
-      "title1": "Quatro semanas. Quatro entregveis.",
+      "title1": "Quatro semanas. Quatro entregáveis.",
       "title2": "Sem surpresas.",
       "items": {
         "discover": {
           "week": "Semana 1",
           "title": "Descobrir",
-          "body": "A gente senta com o operador. Observa o fluxo de trabalho. Encontra o atrito. Captura as mtricas de baseline para que a semana 4 tenha algo para medir.",
+          "body": "A gente senta com o operador. Observa o fluxo de trabalho. Encontra o atrito. Captura as métricas de baseline para que a semana 4 tenha algo para medir.",
           "deliverables": [
             "Entrevistas com operadores e acompanhamento dos fluxos",
-            "Mtricas de baseline capturadas (tempo de resposta, converso, throughput  o que importa)",
-            "ICP, voz da marca e mapa de integraes confirmados",
+            "Métricas de baseline capturadas (tempo de resposta, conversão, throughput  o que importa)",
+            "ICP, voz da marca e mapa de integrações confirmados",
             "Escopo do engajamento fechado, marcos acordados"
           ]
         },
         "build": {
           "week": "Semana 2",
           "title": "Construir",
-          "body": "Construmos os agentes de IA em torno das suas operaes reais. Sua voz. Seu CRM. Sua stack. No um template genrico. Iterao rpida com voc no loop.",
+          "body": "Construímos os agentes de IA em torno das suas operações reais. Sua voz. Seu CRM. Sua stack. Não um template genérico. Iteração rápida com você no loop.",
           "deliverables": [
             "Agente(s) de IA treinados na sua base de conhecimento",
-            "Integraes conectadas (CRM, agenda, WhatsApp, e-mail)",
-            "Regras de compliance e escalonamento capturadas em cdigo",
-            "QA interno em todos os trs idiomas quando relevante"
+            "Integrações conectadas (CRM, agenda, WhatsApp, e-mail)",
+            "Regras de compliance e escalonamento capturadas em código",
+            "QA interno em todos os três idiomas quando relevante"
           ]
         },
         "ship": {
           "week": "Semana 3",
           "title": "Entregar",
-          "body": "Lanamos o sistema em produo com monitoramento desde o dia um. Dashboards do operador no ar. Conversas reais, agendamentos reais, sadas reais  no uma demo.",
+          "body": "Lançamos o sistema em produção com monitoramento desde o dia um. Dashboards do operador no ar. Conversas reais, agendamentos reais, saídas reais  não uma demo.",
           "deliverables": [
-            "Deploy de produo com monitoramento ativo",
+            "Deploy de produção com monitoramento ativo",
             "Treinamento do operador no sistema rodando (1:1, gravado)",
             "Alertas em tempo real de qualidade, drift, escalonamento",
-            "Reviso e ajustes de conversas da primeira semana"
+            "Revisão e ajustes de conversas da primeira semana"
           ]
         },
         "measure": {
           "week": "Semana 4",
           "title": "Medir e adotar",
-          "body": "Comparar o baseline da semana 1 com o lift da semana 4. Ajustar o que no encaixou. Entregar as chaves ao operador com documentao e janela de suporte de 30 dias.",
+          "body": "Comparar o baseline da semana 1 com o lift da semana 4. Ajustar o que não encaixou. Entregar as chaves ao operador com documentação e janela de suporte de 30 dias.",
           "deliverables": [
-            "Medio do lift vs. baseline da semana 1",
-            "Handoff de documentao + treino administrativo",
-            "Janela de ajustes de 30 dias ps-lanamento",
-            "Roadmap para o ms 23 caso expandindo para outros sistemas"
+            "Medição do lift vs. baseline da semana 1",
+            "Handoff de documentação + treino administrativo",
+            "Janela de ajustes de 30 dias pós-lançamento",
+            "Roadmap para o mês 2–3 caso expandindo para outros sistemas"
           ]
         }
       }
     },
     "qualityBar": {
-      "eyebrow": "Padro de qualidade",
-      "title": "O que entregamos. O que no entregamos.",
+      "eyebrow": "Padrão de qualidade",
+      "title": "O que entregamos. O que não entregamos.",
       "shipsLabel": "Sim",
       "shipsTitle": "Isto a gente entrega.",
       "ships": [
-        "Sistemas rodando  no apresentaes",
-        "Lift mensurvel em uma mtrica que voc definiu",
-        "Documentao que um operador pode passar ao sucessor",
-        "Consistncia de voz da marca em cada sada",
+        "Sistemas rodando  não apresentações",
+        "Lift mensurável em uma métrica que você definiu",
+        "Documentação que um operador pode passar ao sucessor",
+        "Consistência de voz da marca em cada saída",
         "Compliance integrado desde o dia um",
-        "Responsabilidade de fundador nico"
+        "Responsabilidade de fundador único"
       ],
-      "skipsLabel": "No",
+      "skipsLabel": "Não",
       "skipsTitle": "Isto a gente pula.",
       "skips": [
-        "Apresentaes genricas de estratgia de IA",
-        "PDFs de 30 pginas de boas prticas",
-        "Ferramentas que voc precisa aprender antes de usar",
-        "Preo por usurio em chatbot",
-        "Handoffs que somem no lanamento",
-        "Qualquer outra coisa que esteja desperdiando seu tempo"
+        "Apresentações genéricas de estratégia de IA",
+        "PDFs de 30 páginas de boas práticas",
+        "Ferramentas que você precisa aprender antes de usar",
+        "Preço por usuário em chatbot",
+        "Handoffs que somem no lançamento",
+        "Qualquer outra coisa que esteja desperdiçando seu tempo"
       ]
     },
     "cta": {
-      "title": "Pronto para comear a semana 1?",
-      "subhead": "15 minutos no telefone dizem se um dos sistemas se encaixa  ou no. Sem apresentao. Sem compromisso. Resposta honesta de qualquer jeito.",
+      "title": "Pronto para começar a semana 1?",
+      "subhead": "15 minutos no telefone dizem se um dos sistemas se encaixa  ou não. Sem apresentação. Sem compromisso. Resposta honesta de qualquer jeito.",
       "ctaBook": "Agendar 15 minutos ",
       "ctaTalk": "Falar com o Bernie primeiro"
     }
@@ -255,14 +255,14 @@
   "enginesIndex": {
     "metadata": {
       "title": "Sistemas  Seis Sistemas Operacionais de IA para PMEs",
-      "description": "Lighthouse, Sales, Care, Reach, Mind, Bid + Bernie  os sete sistemas que rodam operaes de IA para pequenas e mdias empresas."
+      "description": "Lighthouse, Sales, Care, Reach, Mind, Bid + Bernie  os sete sistemas que rodam operações de IA para pequenas e médias empresas."
     },
     "eyebrow": "A Stack 10XAI",
     "headlineLine1": "Seis sistemas.",
     "headlineLine2": "Um Sistema Operacional.",
-    "subhead": "Cada sistema entra em operao rodando, no como uma ferramenta para aprender. Escolha aquele em que seu negcio sente mais atrito. Combine quando estiver pronto. Passe o mouse em qualquer card para ver o que voc recebe e para quem .",
+    "subhead": "Cada sistema entra em operação rodando, não como uma ferramenta para aprender. Escolha aquele em que seu negócio sente mais atrito. Combine quando estiver pronto. Passe o mouse em qualquer card para ver o que você recebe e para quem .",
     "cta": {
-      "title": "No tem certeza qual encaixa?",
+      "title": "Não tem certeza qual encaixa?",
       "subhead": "Conta para o Bernie o que mais consome a sua semana  ele aponta o sistema certo e agenda 15 minutos para confirmar.",
       "ctaTalk": "Falar com o Bernie",
       "ctaMethodology": "Ver a metodologia"
@@ -271,16 +271,16 @@
   "engineDetail": {
     "backLink": " Todos os sistemas",
     "anchorLabel": "Ideal para: {bestFor}",
-    "longDescEyebrow": "O que ",
-    "longDescTitle": "A histria por trs do {name}.",
-    "whoForEyebrow": "Para quem ",
-    "whoForTitle": "Se isto  voc, continue lendo.",
+    "longDescEyebrow": "O que é",
+    "longDescTitle": "A história por trás do {name}.",
+    "whoForEyebrow": "Para quem é",
+    "whoForTitle": "Se isto é você, continue lendo.",
     "featuresEyebrow": "O que faz",
-    "featuresTitle": "Capacidades que entram em produo no primeiro ms.",
+    "featuresTitle": "Capacidades que entram em produção no primeiro mês.",
     "processEyebrow": "Como entregamos",
     "processTitle": "O formato semana a semana do engajamento.",
     "integrationsEyebrow": "Integra com",
-    "integrationsTitle": "Funciona bem com as ferramentas que voc j roda.",
+    "integrationsTitle": "Funciona bem com as ferramentas que você já roda.",
     "otherEnginesEyebrow": "Combinar com",
     "otherEnginesTitle": "Outros sistemas que combinam bem com este.",
     "otherEnginesLearnMore": "Saiba mais",
@@ -292,18 +292,18 @@
   "lighthouseDemo": {
     "metadata": {
       "title": "Lighthouse Demo ao Vivo  10XAI",
-      "description": "Cole qualquer URL de negcio local. Veja a gente construir um site para eles em 60 segundos."
+      "description": "Cole qualquer URL de negócio local. Veja a gente construir um site para eles em 60 segundos."
     },
-    "backHome": " Voltar ao incio",
+    "backHome": " Voltar ao início",
     "eyebrow": "Lighthouse  Demo ao vivo",
-    "headlineLine1": "Cole qualquer URL de negcio local.",
+    "headlineLine1": "Cole qualquer URL de negócio local.",
     "headlineLine2": "Veja a gente construir um site.",
-    "subhead": "Este  o mesmo pipeline que rodamos com prospects toda semana. Reviews entram. Site sai. Depois fazemos o outreach e fechamos.",
+    "subhead": "Este é o mesmo pipeline que rodamos com prospects toda semana. Reviews entram. Site sai. Depois fazemos o outreach e fechamos.",
     "input": {
       "label": "URL do Google Business ou site",
       "placeholder": "https://goo.gl/maps/...  ou  https://exemplo.com",
-      "cta": "Gerar prvia do site ",
-      "disclaimer": "Modo demo  gera uma prvia com template. O pipeline real do Lighthouse puxa dados do Google Business Profile, reviews e fotos via Claude vision."
+      "cta": "Gerar prévia do site ",
+      "disclaimer": "Modo demo  gera uma prévia com template. O pipeline real do Lighthouse puxa dados do Google Business Profile, reviews e fotos via Claude vision."
     },
     "analyzing": {
       "eyebrow": "Trabalhando...",
@@ -313,35 +313,35 @@
         "Extraindo pistas de marca das fotos...",
         "Redigindo a hero copy no Claude...",
         "Gerando layout...",
-        "Publicando a prvia..."
+        "Publicando a prévia..."
       ]
     },
     "preview": {
-      "eyebrow": "Prvia gerada",
-      "preamble": "Abaixo est o site que entregaramos para",
-      "preambleEnd": ". Em um engajamento real, ele fica no ar em uma URL de prvia em 60 segundos  e enviamos um loom personalizado dele para o dono na mesma hora.",
+      "eyebrow": "Prévia gerada",
+      "preamble": "Abaixo está o site que entregaríamos para",
+      "preambleEnd": ". Em um engajamento real, ele fica no ar em uma URL de prévia em 60 segundos  e enviamos um loom personalizado dele para o dono na mesma hora.",
       "mockHeroEyebrow": "{location}",
-      "mockHeroSubhead": "Confiana dos vizinhos. Top em {city} no Google com mdia de 4.9 estrelas em 47 reviews.",
+      "mockHeroSubhead": "Confiança dos vizinhos. Top em {city} no Google com média de 4.9 estrelas em 47 reviews.",
       "mockBookBtn": "Agendar atendimento",
-      "mockCallBtn": "Ligue para ns",
+      "mockCallBtn": "Ligue para nós",
       "mockReviewsTitle": "O que os clientes dizem",
-      "ctaTitle": "Esta  a demo. A real fica no ar em 60 segundos.",
-      "ctaSubhead": "Lighthouse puxa dados ao vivo, gera o site real a partir de reviews reais, e publica uma URL de prvia pronta para deploy no seu domnio. A partir de US$ 497 setup + US$ 49/ms.",
+      "ctaTitle": "Esta é a demo. A real fica no ar em 60 segundos.",
+      "ctaSubhead": "Lighthouse puxa dados ao vivo, gera o site real a partir de reviews reais, e publica uma URL de prévia pronta para deploy no seu domínio. A partir de US$ 497 setup + US$ 49/mês.",
       "ctaBook": "Agendar 15 minutos ",
       "ctaAnother": "Tentar outra URL"
     }
   },
   "logoStrip": {
     "title": "Operadores que servimos",
-    "captionExamples": "Exemplos pblicos do tipo de operador que a 10XAI atende. Primeiros clientes nomeados sero divulgados no Q2 de 2026."
+    "captionExamples": "Exemplos públicos do tipo de operador que a 10XAI atende. Primeiros clientes nomeados serão divulgados no Q2 de 2026."
   },
   "testimonials": {
     "eyebrow": "O que os operadores dizem",
     "title": "Vozes da linha de frente.",
-    "captionPlaceholder": "Formato de exemplo. Os primeiros depoimentos reais sero divulgados com os primeiros estudos de caso publicados (Q2 de 2026).",
+    "captionPlaceholder": "Formato de exemplo. Os primeiros depoimentos reais serão divulgados com os primeiros estudos de caso publicados (Q2 de 2026).",
     "controls": {
       "previous": "Depoimento anterior",
-      "next": "Prximo depoimento",
+      "next": "Próximo depoimento",
       "selector": "Seletor de depoimentos",
       "showSlide": "Mostrar depoimento {n}",
       "rating": "{rating} de 5 estrelas",
@@ -349,7 +349,7 @@
     }
   },
   "bernie": {
-    "greeting": "Oi, eu sou o Bernie  o concierge de atendimento e vendas da 10XAI. Estou aqui pra ajudar. Qual  o fluxo que mais est consumindo a sua semana?",
+    "greeting": "Oi, eu sou o Bernie  o concierge de atendimento e vendas da 10XAI. Estou aqui pra ajudar. Qual é o fluxo que mais está consumindo a sua semana?",
     "label": "Bernie",
     "subtitle": "Concierge da 10XAI",
     "openLabel": "Abrir o chat com o Bernie",
@@ -358,7 +358,7 @@
     "inputPlaceholder": "Pergunte qualquer coisa para o Bernie...",
     "inputPlaceholderLimit": "Limite do chat atingido  agende uma conversa com o Bernardo",
     "footerLine": "Powered by Anthropic Claude  Concierge da 10XAI  {remaining}/{max} turnos restantes",
-    "errorOffline": "Bernie est offline ({status})",
+    "errorOffline": "Bernie está offline ({status})",
     "errorGeneric": "Algo quebrou. Tente novamente."
   },
   "contact": {
