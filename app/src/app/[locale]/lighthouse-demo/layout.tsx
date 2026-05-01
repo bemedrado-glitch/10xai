@@ -16,7 +16,7 @@ export async function generateMetadata({
       description: t("description"),
       images: [
         {
-          url: "/images/og-lighthouse.png",
+          url: "/images/og-lighthouse.jpg",
           width: 1200,
           height: 630,
           alt: "10XAI Lighthouse – We find local businesses with great reviews. We ship them websites.",
@@ -27,7 +27,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/images/og-lighthouse.png"],
+      images: ["/images/og-lighthouse.jpg"],
     },
   };
 }

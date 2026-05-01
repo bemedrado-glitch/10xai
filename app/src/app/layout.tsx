@@ -92,7 +92,7 @@ export const metadata: Metadata = {
     alternateLocale: ["pt_BR", "es_MX"],
     images: [
       {
-        url: "/images/og-default.png",
+        url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
         alt: "10XAI – Custom AI agents that run your business.",
@@ -104,7 +104,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     creator: "@bernardomedrado",
-    images: ["/images/og-default.png"],
+    images: ["/images/og-default.jpg"],
   },
   robots: {
     index: true,

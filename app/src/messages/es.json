@@ -360,5 +360,28 @@
     "footerLine": "Powered by Anthropic Claude  Concierge de 10XAI  {remaining}/{max} turnos restantes",
     "errorOffline": "Bernie est offline ({status})",
     "errorGeneric": "Algo se rompi. Intenta de nuevo."
+  },
+  "contact": {
+    "metadata": {
+      "title": "Agendar llamada – 10XAI",
+      "description": "15 minutos con Bernardo Medrado. Hablamos de lo que te frena y si uno de los sistemas encaja."
+    },
+    "eyebrow": "Hablemos",
+    "headlineLine1": "15 minutos.",
+    "headlineLine2": "Respuesta honesta de cualquier forma.",
+    "subhead": "Sin presentación. Sin compromiso. Hablamos de lo que realmente está frenando tu negocio y si uno de los sistemas encaja — o no.",
+    "calLabel": "Agendar 15 minutos con Bernardo",
+    "orLabel": "O contáctanos directamente",
+    "emailLabel": "Correo",
+    "linkedinLabel": "LinkedIn",
+    "bernieLabel": "Hablar con Bernie primero",
+    "bernieSubhead": "¿No estás listo para una llamada? Bernie puede responder preguntas sobre los sistemas, precios y metodología ahora mismo."
+  },
+  "notFound": {
+    "eyebrow": "404",
+    "headline": "Página no encontrada.",
+    "subhead": "Esta página no existe — o fue movida. Empieza desde la página de inicio o habla con Bernie.",
+    "ctaHome": "Volver al inicio",
+    "ctaBernie": "Hablar con Bernie"
   }
 }

@@ -65,7 +65,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/5] w-full lg:aspect-auto">
               <Image
-                src="/images/founder-studio.png"
+                src="/images/founder-studio.jpg"
                 alt="Bernardo Medrado, founder of 10XAI"
                 fill
                 priority
@@ -88,7 +88,7 @@ export default function AboutPage() {
                 <div className="lg:sticky lg:top-32">
                   <div className="overflow-hidden rounded-2xl border border-[var(--color-ink-300)] shadow-sm">
                     <Image
-                      src="/images/founder-cafe.png"
+                      src="/images/founder-cafe.jpg"
                       alt="Bernardo Medrado at a café in Apex, North Carolina"
                       width={1024}
                       height={576}

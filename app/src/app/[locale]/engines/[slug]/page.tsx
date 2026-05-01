@@ -14,8 +14,8 @@ export async function generateStaticParams() {
 }
 
 const ENGINE_OG: Record<string, string> = {
-  lighthouse: "/images/og-lighthouse.png",
-  bernie: "/images/og-bernie.png",
+  lighthouse: "/images/og-lighthouse.jpg",
+  bernie: "/images/og-bernie.jpg",
 };
 
 export async function generateMetadata({

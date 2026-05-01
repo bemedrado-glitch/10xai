@@ -360,5 +360,28 @@
     "footerLine": "Powered by Anthropic Claude  10XAI Concierge  {remaining}/{max} turns left",
     "errorOffline": "Bernie is offline ({status})",
     "errorGeneric": "Something broke. Try again."
+  },
+  "contact": {
+    "metadata": {
+      "title": "Book a Call – 10XAI",
+      "description": "15 minutes with Bernardo Medrado. We'll talk about what's slowing you down and whether one of the engines fits."
+    },
+    "eyebrow": "Let's talk",
+    "headlineLine1": "15 minutes.",
+    "headlineLine2": "Honest answer either way.",
+    "subhead": "No deck. No commitment. We'll talk about what's actually slowing you down and whether one of the engines fits — or doesn't.",
+    "calLabel": "Book a 15-min call with Bernardo",
+    "orLabel": "Or reach out directly",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn",
+    "bernieLabel": "Talk to Bernie first",
+    "bernieSubhead": "Not ready for a call? Bernie can answer questions about the engines, pricing, and methodology right now."
+  },
+  "notFound": {
+    "eyebrow": "404",
+    "headline": "Page not found.",
+    "subhead": "This page doesn't exist — or it moved. Start from the home page or talk to Bernie.",
+    "ctaHome": "Back to home",
+    "ctaBernie": "Talk to Bernie"
   }
 }
