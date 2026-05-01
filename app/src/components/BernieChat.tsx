@@ -113,7 +113,7 @@ export function BernieChat() {
       {/* Chat panel */}
       {open && (
         <div
-          className="fixed bottom-6 right-6 z-40 flex h-[640px] max-h-[calc(100vh-3rem)] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-[var(--color-ink-300)] bg-[var(--color-cream-50)] shadow-xl"
+          className="fixed inset-x-2 bottom-2 z-40 flex h-[88vh] max-h-[calc(100vh-1rem)] flex-col overflow-hidden rounded-2xl border border-[var(--color-ink-300)] bg-[var(--color-cream-50)] shadow-2xl md:inset-x-auto md:bottom-6 md:right-6 md:h-[640px] md:max-h-[calc(100vh-3rem)] md:w-[380px] md:max-w-[calc(100vw-3rem)]"
           role="dialog"
           aria-label="Bernie  10XAI Concierge"
         >

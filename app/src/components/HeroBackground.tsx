@@ -13,9 +13,9 @@
 export function HeroBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden bg-[var(--color-ink)]">
-      {/* Brand logo animation */}
+      {/* Brand logo animation  hidden <md to save 1.6MB on slow LatAm 4G */}
       <video
-        className="absolute inset-0 h-full w-full object-cover opacity-90 motion-reduce:hidden"
+        className="absolute inset-0 hidden h-full w-full object-cover opacity-90 motion-reduce:hidden md:block"
         autoPlay
         muted
         loop
