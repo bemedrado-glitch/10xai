@@ -10,15 +10,35 @@ export async function generateStaticParams() {
   return getAllEngineSlugs().map((slug) => ({ slug }));
 }
 
+// Per-engine OG image overrides. Default falls back to /images/og-default.png from root layout.
+const ENGINE_OG: Record<string, string> = {
+  lighthouse: "/images/og-lighthouse.png",
+  bernie: "/images/og-bernie.png",
+};
+
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const { slug } = await params;
   const engine = getEngine(slug);
   if (!engine) return { title: "Engine not found" };
+  const ogImage = ENGINE_OG[slug];
   return {
     title: `${engine.name}  ${engine.tag}`,
     description: engine.valueProp,
+    ...(ogImage && {
+      openGraph: {
+        title: `${engine.name}  10XAI`,
+        description: engine.valueProp,
+        images: [{ url: ogImage, width: 1200, height: 630, alt: `${engine.name}  10XAI` }],
+      },
+      twitter: {
+        card: "summary_large_image" as const,
+        title: `${engine.name}  10XAI`,
+        description: engine.valueProp,
+        images: [ogImage],
+      },
+    }),
   };
 }
 

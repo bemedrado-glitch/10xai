@@ -91,12 +91,21 @@ export const metadata: Metadata = {
     url: SITE_URL,
     locale: "en_US",
     alternateLocale: ["pt_BR", "es_MX"],
+    images: [
+      {
+        url: "/images/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "10XAI  Custom AI agents that run your business.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     creator: "@bernardomedrado",
+    images: ["/images/og-default.png"],
   },
   robots: {
     index: true,

@@ -90,48 +90,89 @@ export default function AboutPage() {
       </header>
 
       <main id="main">
-        {/* Hero */}
-        <section className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-          <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-32 lg:px-8">
-            <Reveal>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">About the founder</p>
-              <h1 className="mt-4 font-display text-4xl font-black leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-                I spent 20 years inside revenue technology
-                <br className="hidden md:block" />
-                <span className="text-[var(--color-gold)]"> so my SMB clients don&rsquo;t have to.</span>
-              </h1>
-              <p className="mt-8 max-w-2xl text-lg text-[var(--color-ink-300)] md:text-xl">
-                Bernardo Medrado  founder of 10XAI. Operator. Trainer. Trilingual native. Two decades in B2B SaaS, healthcare, and medtech, now building AI Operating Systems for businesses that can&rsquo;t afford a 12-person team.
-              </p>
-            </Reveal>
+        {/* Hero  founder studio portrait + headline overlay */}
+        <section className="relative overflow-hidden bg-[var(--color-ink)] text-[var(--color-cream)]">
+          <div className="grid lg:grid-cols-2">
+            {/* Copy column */}
+            <div className="relative z-10 px-4 py-20 md:px-6 md:py-32 lg:px-8 lg:py-40">
+              <div className="mx-auto max-w-xl lg:ml-auto lg:mr-0">
+                <Reveal>
+                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">About the founder</p>
+                  <h1 className="mt-4 font-display text-4xl font-black leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+                    I spent 20 years inside revenue technology
+                    <span className="text-[var(--color-gold)]"> so my SMB clients don&rsquo;t have to.</span>
+                  </h1>
+                  <p className="mt-8 text-lg text-[var(--color-ink-300)] md:text-xl">
+                    Bernardo Medrado  founder of 10XAI. Operator. Trainer. Trilingual native. Two decades in B2B SaaS, healthcare, and medtech, now building AI Operating Systems for businesses that can&rsquo;t afford a 12-person team.
+                  </p>
+                </Reveal>
+              </div>
+            </div>
+            {/* Photo column */}
+            <div className="relative aspect-[4/5] w-full lg:aspect-auto">
+              <Image
+                src="/images/founder-studio.png"
+                alt="Bernardo Medrado, founder of 10XAI"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+              {/* Gradient blend into the dark column on lg+ */}
+              <div
+                className="absolute inset-0 lg:bg-gradient-to-r lg:from-[var(--color-ink)] lg:via-transparent lg:to-transparent"
+                aria-hidden="true"
+              />
+            </div>
           </div>
         </section>
 
-        {/* Story */}
+        {/* Story  with environmental founder photo */}
         <section className="border-y border-[var(--color-ink-300)]/60 bg-[var(--color-cream-50)]">
-          <div className="mx-auto max-w-3xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
-            <Reveal>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">My story</p>
-              <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-[var(--color-ink)] md:text-4xl">
-                Why 10XAI exists.
-              </h2>
-            </Reveal>
-            <div className="mt-10 space-y-6 text-lg leading-relaxed text-[var(--color-ink-700)]">
-              <Reveal delay={100}>
-                <p>
-                  I spent two decades building and scaling revenue teams across healthcare, medtech, and B2B technology. I led inside-sales orgs, designed enablement programs that shipped to thousands of reps, and watched what happens when great strategy meets bad operational follow-through.
-                </p>
+          <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
+            <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+              <Reveal>
+                <div className="lg:sticky lg:top-32">
+                  <div className="overflow-hidden rounded-2xl border border-[var(--color-ink-300)] shadow-sm">
+                    <Image
+                      src="/images/founder-cafe.png"
+                      alt="Bernardo Medrado at a caf in Apex, North Carolina"
+                      width={1024}
+                      height={576}
+                      className="h-auto w-full object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </div>
+                  <p className="mt-3 text-xs text-[var(--color-ink-500)]">
+                    Apex, NC  most discovery weeks start over coffee.
+                  </p>
+                </div>
               </Reveal>
-              <Reveal delay={200}>
-                <p>
-                  Then AI showed up  and suddenly every SMB on the planet was being sold a chatbot, a copilot, a productivity tool. Most of them bought one. <strong className="text-[var(--color-ink)]">77% abandon AI tools within six months.</strong> Not because the AI is bad. Because the tools were never wired into how the business actually runs.
-                </p>
-              </Reveal>
-              <Reveal delay={300}>
-                <p>
-                  10XAI exists for the operators stuck in pilot purgatory. We don&rsquo;t sell tools. We sit with you, learn what&rsquo;s actually slowing you down, and ship the AI Operating System that runs it for you  in English, Portuguese, or Spanish, depending on who&rsquo;s using it.
-                </p>
-              </Reveal>
+              <div>
+                <Reveal>
+                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">My story</p>
+                  <h2 className="mt-3 font-display text-3xl font-black tracking-tight text-[var(--color-ink)] md:text-4xl">
+                    Why 10XAI exists.
+                  </h2>
+                </Reveal>
+                <div className="mt-10 space-y-6 text-lg leading-relaxed text-[var(--color-ink-700)]">
+                  <Reveal delay={100}>
+                    <p>
+                      I spent two decades building and scaling revenue teams across healthcare, medtech, and B2B technology. I led inside-sales orgs, designed enablement programs that shipped to thousands of reps, and watched what happens when great strategy meets bad operational follow-through.
+                    </p>
+                  </Reveal>
+                  <Reveal delay={200}>
+                    <p>
+                      Then AI showed up  and suddenly every SMB on the planet was being sold a chatbot, a copilot, a productivity tool. Most of them bought one. <strong className="text-[var(--color-ink)]">77% abandon AI tools within six months.</strong> Not because the AI is bad. Because the tools were never wired into how the business actually runs.
+                    </p>
+                  </Reveal>
+                  <Reveal delay={300}>
+                    <p>
+                      10XAI exists for the operators stuck in pilot purgatory. We don&rsquo;t sell tools. We sit with you, learn what&rsquo;s actually slowing you down, and ship the AI Operating System that runs it for you  in English, Portuguese, or Spanish, depending on who&rsquo;s using it.
+                    </p>
+                  </Reveal>
+                </div>
+              </div>
             </div>
           </div>
         </section>

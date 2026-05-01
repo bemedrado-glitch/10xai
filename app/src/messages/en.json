@@ -1,0 +1,364 @@
+{
+  "common": {
+    "ctaBookCall": "Book a Call",
+    "ctaTalkToBernie": "Talk to Bernie",
+    "ctaBookCallShort": "Book a Call",
+    "ctaBack": "Back",
+    "ctaBackHome": " Back home",
+    "ctaTryDemo": "Try the live demo",
+    "skipToContent": "Skip to content",
+    "languageSelector": "Language selector",
+    "comingSoon": "Coming soon",
+    "translationDisclosure": "Translations are AI-assisted and under native-speaker review. /privacy and /terms remain in English until legal translation completes."
+  },
+  "nav": {
+    "lighthouse": "Lighthouse",
+    "engines": "Engines",
+    "about": "About",
+    "methodology": "Methodology",
+    "primary": "Primary",
+    "footer": "Footer"
+  },
+  "footer": {
+    "links": {
+      "lighthouse": "Lighthouse",
+      "engines": "Engines",
+      "about": "About",
+      "methodology": "Methodology",
+      "trust": "Trust",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact"
+    },
+    "address": " 2026 10XAI  Apex / Raleigh, NC  contato10xai@gmail.com"
+  },
+  "home": {
+    "metadata": {
+      "title": "10XAI  Custom AI Operating Systems for SMBs",
+      "description": "Custom AI agents that run your sales, support, and operations. Built around your business, not a generic template. Trilingual: English, Portugus, Espaol."
+    },
+    "eyebrow": "AI Tailored to Your Business  Built to Run",
+    "headline": {
+      "line1": "Custom AI agents",
+      "line2start": "that run",
+      "line2gold": "your business."
+    },
+    "subhead": "We sit with you, learn what's actually slowing you down, and ship the AI Operating System that runs it for you  not another tool you have to learn.",
+    "ctaPrimary": "Try Lighthouse  Live Demo",
+    "credentialsLine": "Developed by industry veterans with",
+    "credentialsLineYears": "20+ years",
+    "credentialsLineEnd": "in revenue technology and frontier AI experts.",
+    "fomoLine": "Most SMBs will choose their AI partner in the next 18 months. Choose right the first time.",
+    "principles": {
+      "eyebrow": "How we work",
+      "title": "Sit. Learn. Ship.",
+      "items": {
+        "01": {
+          "title": "Sit with you.",
+          "body": "Discovery isn't a slide deck. We sit with the operator, watch the workflow, and find the friction that's eating the most of your week."
+        },
+        "02": {
+          "title": "Build for you.",
+          "body": "We design the AI agents around your actual operations, not a generic template. Your tone of voice. Your CRM. Your stack."
+        },
+        "03": {
+          "title": "Ship it running.",
+          "body": "We don't hand you a tool you have to learn. We ship the system already running  measured, monitored, and yours to evolve."
+        }
+      }
+    },
+    "stats": {
+      "abandonRate": "of SMBs abandon AI tools within 6 months",
+      "businessesWithoutSites": "small businesses with no website. Lighthouse finds them.",
+      "languages": "languages we deliver in natively  EN, PT-BR, ES",
+      "experience": "years of revenue-technology experience behind every build"
+    },
+    "enginesPreview": {
+      "eyebrow": "The 10XAI Stack",
+      "title1": "Six engines.",
+      "title2": "One operating system.",
+      "subhead": "Each engine ships running, not as a tool you have to learn. Pick the one your business is feeling friction in. Stack them when you're ready. Hover for details."
+    },
+    "ctaBand": {
+      "title": "Pilot purgatory ends here.",
+      "subhead": "77% of SMBs that buy AI tools abandon them in six months. We don't sell tools. We deliver running operating systems that survive year two.",
+      "ctaBook": "Book a Call ",
+      "ctaTalk": "Talk to Bernie"
+    }
+  },
+  "about": {
+    "metadata": {
+      "title": "About  Bernardo Medrado, founder of 10XAI",
+      "description": "20+ years in revenue technology. ATD Master Trainer, AA-ISP Accredited, FGV. Trilingual native (EN, PT-BR, ES). Why 10XAI exists, and who's behind it."
+    },
+    "eyebrow": "About the founder",
+    "headlineLine1": "I spent 20 years inside revenue technology",
+    "headlineLine2": "so my SMB clients don't have to.",
+    "subhead": "Bernardo Medrado  founder of 10XAI. Operator. Trainer. Trilingual native. Two decades in B2B SaaS, healthcare, and medtech, now building AI Operating Systems for businesses that can't afford a 12-person team.",
+    "story": {
+      "eyebrow": "My story",
+      "title": "Why 10XAI exists.",
+      "p1": "I spent two decades building and scaling revenue teams across healthcare, medtech, and B2B technology. I led inside-sales orgs, designed enablement programs that shipped to thousands of reps, and watched what happens when great strategy meets bad operational follow-through.",
+      "p2start": "Then AI showed up  and suddenly every SMB on the planet was being sold a chatbot, a copilot, a productivity tool. Most of them bought one.",
+      "p2bold": "77% abandon AI tools within six months.",
+      "p2end": "Not because the AI is bad. Because the tools were never wired into how the business actually runs.",
+      "p3": "10XAI exists for the operators stuck in pilot purgatory. We don't sell tools. We sit with you, learn what's actually slowing you down, and ship the AI Operating System that runs it for you  in English, Portuguese, or Spanish, depending on who's using it."
+    },
+    "credentials": {
+      "eyebrow": "Credentials",
+      "title": "Trust signals that don't need an employer name.",
+      "subhead": "Every credential here is independent of any specific company  earned, accredited, and verifiable. The standard for trust in a 10XAI engagement.",
+      "items": {
+        "atdMaster": {
+          "title": "ATD Master Trainer",
+          "detail": "Association for Talent Development  the gold standard for instructional design and training methodology.",
+          "year": "2021"
+        },
+        "atdInstructional": {
+          "title": "ATD Instructional Design Certificate",
+          "detail": "Advanced certification in role-based learning architecture and adult-learning theory.",
+          "year": "2021"
+        },
+        "aaIsp": {
+          "title": "AA-ISP Accredited Inside Sales Management",
+          "detail": "American Association of Inside Sales Professionals  modern revenue-team operating practices.",
+          "year": "2023"
+        },
+        "fgv": {
+          "title": "FGV  Fundao Getulio Vargas",
+          "detail": "Brazil's #1 business school. Foundational training in management and operations.",
+          "year": "20012002"
+        },
+        "top100": {
+          "title": "Top 100 Most Influential in Healthcare",
+          "detail": "Public recognition in Brazilian healthcare sector  external validation that pre-dates 10XAI.",
+          "year": "2015"
+        },
+        "linkedin": {
+          "title": "LinkedIn Sales Navigator certifications",
+          "detail": "Modern social-selling and prospecting credentials.",
+          "year": "20232024"
+        }
+      }
+    },
+    "languages": {
+      "eyebrow": "Languages",
+      "title": "Trilingual native. Not translated.",
+      "subhead": "Discovery conversations, deliverables, founder presence  all happen in the language your business actually thinks in.",
+      "items": {
+        "en": { "name": "English", "level": "Native / bilingual" },
+        "pt": { "name": "Portugus (Brasil)", "level": "Native / bilingual" },
+        "es": { "name": "Espaol", "level": "Full professional" }
+      }
+    },
+    "connect": {
+      "eyebrow": "Connect",
+      "title": "Let's skip the marketing copy.",
+      "subhead": "Book a 15-minute call. We'll talk about what's actually slowing you down, and whether one of the engines fits  or doesn't.",
+      "ctaBook": "Book a Call ",
+      "ctaLinkedin": "LinkedIn",
+      "ctaEmail": "Email",
+      "location": "Apex / Raleigh, North Carolina  Serving US + Brasil + Latin America"
+    }
+  },
+  "methodology": {
+    "metadata": {
+      "title": "Methodology  How 10XAI delivers running AI systems",
+      "description": "From pilot purgatory to production AI. Discovery-led, week-by-week deliverables, measurement on day one. The 10XAI 4-week protocol."
+    },
+    "eyebrow": "Methodology",
+    "headlineLine1": "From pilot purgatory",
+    "headlineLine2": "to production AI.",
+    "subhead": "The 4-week protocol that gets your operators out of strategy decks and into running systems. Measured on day one. Tuned on day twenty-eight. Yours from day twenty-nine.",
+    "protocol": {
+      "eyebrow": "The protocol",
+      "title1": "Four weeks. Four deliverables.",
+      "title2": "No surprises.",
+      "items": {
+        "discover": {
+          "week": "Week 1",
+          "title": "Discover",
+          "body": "We sit with the operator. Watch the workflow. Find the friction. Capture the baseline metrics so week 4 has something to measure against.",
+          "deliverables": [
+            "Operator interviews and workflow shadowing",
+            "Baseline metrics captured (response time, conversion, throughput  whatever matters)",
+            "ICP, brand voice, and integration map confirmed",
+            "Engagement scope locked, milestones agreed"
+          ]
+        },
+        "build": {
+          "week": "Week 2",
+          "title": "Build",
+          "body": "We build the AI agents around your actual operations. Your tone of voice. Your CRM. Your stack. Not a generic template. Iterate fast with you in the loop.",
+          "deliverables": [
+            "AI agent(s) trained on your knowledge base",
+            "Integrations wired (CRM, calendar, WhatsApp, email)",
+            "Compliance + escalation rules captured in code",
+            "Internal QA across all three languages where relevant"
+          ]
+        },
+        "ship": {
+          "week": "Week 3",
+          "title": "Ship",
+          "body": "Launch the system into production with monitoring on day one. Operator dashboards live. Real conversations, real bookings, real outputs  not a demo.",
+          "deliverables": [
+            "Production deployment with monitoring in place",
+            "Operator training on the live system (1:1, recorded)",
+            "Real-time alerting on quality, drift, escalation",
+            "First-week conversation review and tuning"
+          ]
+        },
+        "measure": {
+          "week": "Week 4",
+          "title": "Measure & adopt",
+          "body": "Compare week 1 baseline to week 4 lift. Tune what's not landing. Hand the operator the keys with documentation and a 30-day support window.",
+          "deliverables": [
+            "Lift measurement vs. week-1 baseline",
+            "Documentation handoff + admin training",
+            "30-day post-launch tuning window",
+            "Roadmap for month 23 if expanding to other engines"
+          ]
+        }
+      }
+    },
+    "qualityBar": {
+      "eyebrow": "Quality bar",
+      "title": "What we ship. What we don't.",
+      "shipsLabel": "Yes",
+      "shipsTitle": "We ship this.",
+      "ships": [
+        "Running systems  not slide decks",
+        "Measurable lift on a metric you defined",
+        "Documentation an operator can hand to their successor",
+        "Brand-voice consistency across every output",
+        "Compliance baked in from day one",
+        "Single-founder accountability"
+      ],
+      "skipsLabel": "No",
+      "skipsTitle": "We skip this.",
+      "skips": [
+        "Generic AI strategy decks",
+        "30-page best-practices PDFs",
+        "Tools you have to learn before they help",
+        "Per-seat pricing on a chatbot",
+        "Hand-offs that vanish at launch",
+        "Whatever else is wasting your time"
+      ]
+    },
+    "cta": {
+      "title": "Ready to start week 1?",
+      "subhead": "15 minutes on the phone tells us whether one of the engines fits  or doesn't. No deck. No commitment. Honest answer either way.",
+      "ctaBook": "Book a 15-min call ",
+      "ctaTalk": "Talk to Bernie first"
+    }
+  },
+  "enginesIndex": {
+    "metadata": {
+      "title": "Engines  Six AI Operating Systems for SMBs",
+      "description": "Lighthouse, Sales, Care, Reach, Mind, Bid + Bernie  the seven engines that run AI operations for small and mid-sized businesses."
+    },
+    "eyebrow": "The 10XAI Stack",
+    "headlineLine1": "Six engines.",
+    "headlineLine2": "One operating system.",
+    "subhead": "Each engine ships running, not as a tool you have to learn. Pick the one your business is feeling friction in. Stack them when you're ready. Hover any card for what you get + who it's for.",
+    "cta": {
+      "title": "Not sure which one fits?",
+      "subhead": "Tell Bernie what's eating the most of your week  he'll point you at the right engine and book a 15-minute call to confirm.",
+      "ctaTalk": "Talk to Bernie",
+      "ctaMethodology": "See the methodology"
+    }
+  },
+  "engineDetail": {
+    "backLink": " All engines",
+    "anchorLabel": "Best for: {bestFor}",
+    "longDescEyebrow": "What it is",
+    "longDescTitle": "The story behind {name}.",
+    "whoForEyebrow": "Who this is for",
+    "whoForTitle": "If this is you, keep reading.",
+    "featuresEyebrow": "What it does",
+    "featuresTitle": "Capabilities that ship in the first month.",
+    "processEyebrow": "How we deploy it",
+    "processTitle": "The week-by-week shape of the engagement.",
+    "integrationsEyebrow": "Wires into",
+    "integrationsTitle": "Plays nicely with the tools you already run.",
+    "otherEnginesEyebrow": "Stack with",
+    "otherEnginesTitle": "Other engines you might pair this with.",
+    "otherEnginesLearnMore": "Learn more",
+    "ctaTitle": "Ready to ship {name}?",
+    "ctaSubhead": "15 minutes on the phone tells us whether it's the right fit  or whether another engine is. Honest answer either way.",
+    "ctaBook": "Book a Call ",
+    "ctaTalk": "Talk to Bernie"
+  },
+  "lighthouseDemo": {
+    "metadata": {
+      "title": "Lighthouse Live Demo  10XAI",
+      "description": "Paste any local business URL. Watch us build them a website in 60 seconds."
+    },
+    "backHome": " Back home",
+    "eyebrow": "Lighthouse  Live Demo",
+    "headlineLine1": "Paste any local business URL.",
+    "headlineLine2": "Watch us build them a website.",
+    "subhead": "This is the same pipeline we run on prospects every week. Reviews go in. A site goes out. Then we reach out and close it.",
+    "input": {
+      "label": "Google Business URL or website",
+      "placeholder": "https://goo.gl/maps/...  or  https://example.com",
+      "cta": "Generate site preview ",
+      "disclaimer": "Demo mode  generates a templated preview. The real Lighthouse pipeline pulls Google Business Profile data, customer reviews, and photos via Claude vision."
+    },
+    "analyzing": {
+      "eyebrow": "Working...",
+      "stages": [
+        "Pulling Google Business Profile...",
+        "Reading 47 customer reviews...",
+        "Extracting brand cues from photos...",
+        "Drafting hero copy in Claude...",
+        "Generating layout...",
+        "Deploying preview..."
+      ]
+    },
+    "preview": {
+      "eyebrow": "Preview generated",
+      "preamble": "Below is the site we'd ship to",
+      "preambleEnd": ". In a real engagement, it goes live on a preview URL within 60 seconds  and we send the owner a personalized loom of it the same hour.",
+      "mockHeroEyebrow": "{location}",
+      "mockHeroSubhead": "Trusted by neighbors. Ranked top in {city} on Google with a 4.9-star average across 47 reviews.",
+      "mockBookBtn": "Book an appointment",
+      "mockCallBtn": "Call us",
+      "mockReviewsTitle": "What customers say",
+      "ctaTitle": "This is the demo. The real one ships in 60 seconds.",
+      "ctaSubhead": "Lighthouse pulls live data, generates the actual site copy from real reviews, and stages a preview URL ready to deploy under your domain. From $497 setup + $49/mo.",
+      "ctaBook": "Book a 15-min call ",
+      "ctaAnother": "Try another URL"
+    }
+  },
+  "logoStrip": {
+    "title": "Operators we serve",
+    "captionExamples": "Public examples of the kind of operator 10XAI serves. First named clients launching Q2 2026."
+  },
+  "testimonials": {
+    "eyebrow": "What operators say",
+    "title": "Voices from the front office.",
+    "captionPlaceholder": "Sample format. First real client testimonials launch with the first published case studies (Q2 2026).",
+    "controls": {
+      "previous": "Previous testimonial",
+      "next": "Next testimonial",
+      "selector": "Testimonial selector",
+      "showSlide": "Show testimonial {n}",
+      "rating": "{rating} out of 5 stars",
+      "showing": "Showing testimonial {current} of {total}."
+    }
+  },
+  "bernie": {
+    "greeting": "Hi, I'm Bernie  10XAI's customer support and sales concierge. I'm here to help. What's the workflow that's eating the most of your week right now?",
+    "label": "Bernie",
+    "subtitle": "10XAI Concierge",
+    "openLabel": "Open Bernie chat",
+    "closeLabel": "Close chat",
+    "sendLabel": "Send message",
+    "inputPlaceholder": "Ask Bernie anything...",
+    "inputPlaceholderLimit": "Chat limit reached  book a call with Bernardo",
+    "footerLine": "Powered by Anthropic Claude  10XAI Concierge  {remaining}/{max} turns left",
+    "errorOffline": "Bernie is offline ({status})",
+    "errorGeneric": "Something broke. Try again."
+  }
+}
