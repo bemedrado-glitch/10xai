@@ -3,6 +3,8 @@ import Link from "next/link";
 import { HeroBackground } from "@/components/HeroBackground";
 import { Reveal } from "@/components/Reveal";
 import { EngineCard, type Engine } from "@/components/EngineCard";
+import { LogoStrip } from "@/components/LogoStrip";
+import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 
 const ENGINES: Engine[] = [
   {
@@ -247,6 +249,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Logo strip  trusted by / operators we serve */}
+        <LogoStrip />
+
         {/* Three principles */}
         <section className="border-y border-[var(--color-ink-300)]/60 bg-[var(--color-cream-50)]">
           <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
@@ -330,6 +335,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Testimonial carousel */}
+        <TestimonialCarousel />
 
         {/* CTA band */}
         <section className="relative overflow-hidden bg-[var(--color-ink)] text-[var(--color-cream)]">
