@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  10XAI wordmark — dark background variant
-  Use on ink (#0C0A09), ink-900, or any dark bg with ≥7:1 contrast against cream.
+  10XAI wordmark  dark background variant (3-color v2)
+  Colors: cream "10" + GOLD "X" + cream-300 "AI" + gold separator bar.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" width="360" height="100" role="img" aria-label="10XAI">
   <title>10XAI</title>
@@ -10,8 +10,9 @@
     font-family="'DM Sans','Inter','Satoshi','General Sans',system-ui,sans-serif"
     font-weight="900"
     font-size="96"
-    letter-spacing="-4"
-    fill="#FAFAF9">10X</text>
+    letter-spacing="-4">
+    <tspan fill="#FAFAF9">10</tspan><tspan fill="#CA8A04">X</tspan>
+  </text>
   <rect x="195" y="40" width="3" height="38" fill="#CA8A04"/>
   <text
     x="208" y="78"
@@ -19,5 +20,5 @@
     font-weight="700"
     font-size="60"
     letter-spacing="-1"
-    fill="#FAFAF9">AI</text>
+    fill="#D6D3D1">AI</text>
 </svg>

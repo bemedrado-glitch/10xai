@@ -1,0 +1,23 @@
+{
+  "name": "10XAI  AI Operating Systems for SMBs",
+  "short_name": "10XAI",
+  "description": "Custom AI agents that run your sales, support, and operations. Trilingual. Operator-led.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF9",
+  "theme_color": "#0C0A09",
+  "icons": [
+    {
+      "src": "/brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/logo-monogram.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
