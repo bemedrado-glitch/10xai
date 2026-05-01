@@ -81,7 +81,7 @@ Brand vibe: "Nike × Apple energy" — minimalist, anti-corporate, outcome-focus
 
 | # | Gap | Why it matters | Fix in v2 |
 |---|---|---|---|
-| 1 | **Zero founder visibility** | SMBs buying AI from a small agency need a real human. Salesforce + 20-yr healthcare/sales credibility is hidden. | Founder-front layout. Bernardo's face, story, certifications, LinkedIn. |
+| 1 | **Zero founder visibility** | SMBs buying AI from a small agency need a real human. Bernardo's 20-yr revenue/healthcare/sales-enablement credibility is hidden. | Founder-front layout. Bernardo's face, story, certifications, LinkedIn — without naming his current employer. |
 | 2 | **No verified case studies** | Site uses "aspirational" public examples with disclaimer. Trust killer. | At least 1–2 real case studies before launch (even pilot/free engagements). |
 | 3 | **Pricing opacity** | ROI calc but no packages. Buyers self-disqualify or stall. | At least one "Starter" public package + transparent ranges for the rest. |
 | 4 | **No real ES support** | Implied via LatAm framing only. | True trilingual (EN/PT-BR/ES) routing from day one. |

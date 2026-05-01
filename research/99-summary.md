@@ -122,7 +122,7 @@
 
 ## Top 3 risks to navigate
 
-1. **Bernardo's day-job at Salesforce.** Public 10XAI positioning must be unambiguously a separate venture. Avoid Salesforce-branded language. Phase 2 must include a "founder copy guidelines" doc.
+1. **Founder day-job conflict-of-interest.** Per Bernardo's direction (2026-04-30): 10XAI is positioned as a fully separate brand. **Do not name his current employer** in any public 10XAI copy. Phase 2 strategy must include a "founder copy guidelines" doc enforcing employer-name redaction across the site, social, content, and outbound.
 2. **Blip's WhatsApp BSP moat.** If 10XAI doesn't partner with Blip, building WhatsApp infra independently takes 6+ months. Decision needed early.
 3. **The category compresses fast.** "AI SDR" is becoming commodity. The 10XAI moat must be *outcome-as-deliverable + multilingual + founder-credibility* — none of which can be cloned by a venture-funded competitor in 12 months.
 

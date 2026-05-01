@@ -126,7 +126,7 @@ These sit 5–10x below enterprise vendors (Qualified, Tavus direct), 3x above c
 - **Cost runaway.** A single vexatious user could rack up $30+ in one session. Add per-session length caps and per-IP rate limiting.
 
 ### Strategic risks
-- **Salesforce conflict (Bernardo's day job).** Dez talking about CRM/sales-engagement could attract Salesforce attention if the demo is *too* good. Phase 2 founder-comms guidelines must address this.
+- **Day-job conflict-of-interest.** Bernardo's current FT employer is in adjacent revenue/CRM technology — and per his direction, 10XAI must be positioned as a fully separate brand with **no reference to that employer** in any public materials. Dez's positioning, voice, and demo should be unambiguously 10XAI-branded. Phase 2 founder-comms guidelines must enforce employer-name redaction site-wide.
 - **Avatar fatigue.** Some visitors will dislike a face. The "minimize avatar, keep voice/chat" path must always be one click away.
 - **Brand voice drift.** Three languages × six service systems × tone-of-voice consistency is hard. Build evals from day one.
 
@@ -134,7 +134,7 @@ These sit 5–10x below enterprise vendors (Qualified, Tavus direct), 3x above c
 1. **Final agent name?** (Dez / Mira / Iris / other)
 2. **Phase D — your face on the site?** (HeyGen digital twin in month 2–3?)
 3. **Voice gender per language?** (Dez sounds masculine in PT — do we want a female PT voice as a counterweight, or male across all three?)
-4. **CRM target?** HubSpot, Salesforce, or Cal.com + Notion to start lean?
+4. **CRM target?** HubSpot, Pipedrive, or Cal.com + Notion + Supabase to start lean? (Lean budget likely points to the latter.)
 5. **Pilot client list?** Who are 3 SMBs that would let us deploy a pilot in exchange for case study rights?
 6. **Sequence preference?** Phase A → B → C → D → E (recommended) or skip straight to C?
 
