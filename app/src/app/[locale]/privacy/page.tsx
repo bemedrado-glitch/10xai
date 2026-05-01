@@ -1,55 +1,54 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { SiteNav } from "@/components/SiteNav";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy  10XAI",
+  title: "Privacy Policy – 10XAI",
   description:
     "How 10XAI collects, uses, stores, and protects your data. GDPR, LGPD, and CCPA aligned.",
   robots: { index: true, follow: true },
 };
 
 export default function PrivacyPage() {
+  const tCommon = useTranslations("common");
+
   return (
     <div className="flex min-h-screen flex-col bg-[var(--color-cream)]">
-      <header className="sticky top-0 z-30 w-full border-b border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
-          <Link href="/" className="flex items-center" aria-label="10XAI home">
-            <Image src="/brand/logo-wordmark-light.svg" alt="10XAI" width={120} height={32} priority />
-          </Link>
-          <Link href="/" className="text-sm text-[var(--color-ink-700)] hover:text-[var(--color-ink)]">
-             Back home
-          </Link>
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 md:px-6 md:py-24 lg:px-8 prose-lg">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">Legal  Last updated 2026-04-30</p>
+      <SiteNav />
+
+      <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 md:px-6 md:py-24 lg:px-8 prose-lg">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">Legal – Last updated 2026-04-30</p>
         <h1 className="mt-3 font-display text-4xl font-black tracking-tight text-[var(--color-ink)] md:text-5xl">
           Privacy Policy
         </h1>
+        <p className="mt-4 text-sm italic text-[var(--color-ink-500)]">
+          {tCommon("translationDisclosure")}
+        </p>
         <div className="mt-8 space-y-6 text-[var(--color-ink-700)] [&_h2]:mt-10 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[var(--color-ink)] [&_h3]:mt-6 [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[var(--color-ink)] [&_a]:text-[var(--color-gold)] [&_a]:underline">
           <p>
             10XAI (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) is an AI agency operated by Bernardo Medrado, headquartered in Apex / Raleigh, North Carolina, United States. This Privacy Policy explains how we collect, use, store, share, and protect your personal data across <a href="https://10xai.us">10xai.us</a> and any related services.
           </p>
           <p>
-            We are committed to compliance with the EU General Data Protection Regulation (GDPR), the Brazilian Lei Geral de Proteo de Dados (LGPD), and the California Consumer Privacy Act (CCPA), in addition to applicable U.S. federal and state laws.
+            We are committed to compliance with the EU General Data Protection Regulation (GDPR), the Brazilian Lei Geral de Proteção de Dados (LGPD), and the California Consumer Privacy Act (CCPA), in addition to applicable U.S. federal and state laws.
           </p>
 
           <h2>1. Data we collect</h2>
           <p>We collect three categories of data:</p>
-          <h3>1.1  Information you provide</h3>
+          <h3>1.1 – Information you provide</h3>
           <ul className="ml-6 list-disc space-y-1">
             <li>Contact information you submit through forms (name, email, phone, company, role).</li>
             <li>Conversation content you send to Bernie, our AI concierge, including the messages you type and any business URLs you paste.</li>
             <li>Booking details when you schedule a call, including calendar availability via our booking provider.</li>
           </ul>
-          <h3>1.2  Information collected automatically</h3>
+          <h3>1.2 – Information collected automatically</h3>
           <ul className="ml-6 list-disc space-y-1">
             <li>Standard server logs (IP address, user agent, timestamps, referrer).</li>
             <li>Anonymized analytics events (page views, clicks, scroll depth) for product improvement.</li>
             <li>Cookies strictly necessary for the site to function, plus optional analytics cookies you can refuse.</li>
           </ul>
-          <h3>1.3  Information from third parties</h3>
+          <h3>1.3 – Information from third parties</h3>
           <ul className="ml-6 list-disc space-y-1">
             <li>If you book through our calendar provider, that provider shares your email and timezone with us.</li>
             <li>If you authorize us to enrich a Lighthouse lead, we may pull publicly-available business information from Google Business Profile, LinkedIn, and similar public sources.</li>
@@ -67,20 +66,20 @@ export default function PrivacyPage() {
           <h2>3. Legal basis (GDPR / LGPD)</h2>
           <p>We rely on the following legal bases:</p>
           <ul className="ml-6 list-disc space-y-1">
-            <li><strong>Consent</strong>  for optional analytics cookies, marketing communications, and AI training of bespoke client agents.</li>
-            <li><strong>Contract</strong>  to deliver services you have engaged us for.</li>
-            <li><strong>Legitimate interest</strong>  for security, anti-fraud, and B2B business-development outreach where allowed by law.</li>
-            <li><strong>Legal obligation</strong>  for record-keeping and regulatory requirements.</li>
+            <li><strong>Consent</strong> – for optional analytics cookies, marketing communications, and AI training of bespoke client agents.</li>
+            <li><strong>Contract</strong> – to deliver services you have engaged us for.</li>
+            <li><strong>Legitimate interest</strong> – for security, anti-fraud, and B2B business-development outreach where allowed by law.</li>
+            <li><strong>Legal obligation</strong> – for record-keeping and regulatory requirements.</li>
           </ul>
 
           <h2>4. Sub-processors and AI providers</h2>
           <p>We use carefully selected sub-processors to deliver the service. The principal ones include:</p>
           <ul className="ml-6 list-disc space-y-1">
-            <li><strong>Anthropic</strong>  large-language-model provider powering Bernie. Conversations are processed in accordance with Anthropic's privacy policy. Anthropic does not train on API data by default.</li>
-            <li><strong>Vercel</strong>  hosting and edge delivery.</li>
-            <li><strong>Supabase</strong>  database and authentication (planned).</li>
-            <li><strong>Cal.com</strong>  call booking.</li>
-            <li><strong>Resend</strong>  transactional email.</li>
+            <li><strong>Anthropic</strong> – large-language-model provider powering Bernie. Conversations are processed in accordance with Anthropic&apos;s privacy policy. Anthropic does not train on API data by default.</li>
+            <li><strong>Vercel</strong> – hosting and edge delivery.</li>
+            <li><strong>Supabase</strong> – database and authentication (planned).</li>
+            <li><strong>Cal.com</strong> – call booking.</li>
+            <li><strong>Resend</strong> – transactional email.</li>
           </ul>
           <p>We do not sell your personal data. We do not share it for advertising purposes.</p>
 
@@ -126,7 +125,7 @@ export default function PrivacyPage() {
 
           <h2>11. Contact</h2>
           <p>
-            10XAI  Apex / Raleigh, NC, United States.
+            10XAI – Apex / Raleigh, NC, United States.
             <br />
             Email: <a href="mailto:contato10xai@gmail.com">contato10xai@gmail.com</a>
             <br />
@@ -134,11 +133,8 @@ export default function PrivacyPage() {
           </p>
         </div>
       </main>
-      <footer className="border-t border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]">
-        <div className="mx-auto max-w-6xl px-4 py-8 md:px-6 lg:px-8">
-          <p className="text-xs text-[var(--color-ink-500)]">&copy; 2026 10XAI  contato10xai@gmail.com</p>
-        </div>
-      </footer>
+
+      <SiteFooter />
     </div>
   );
 }

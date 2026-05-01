@@ -1,23 +1,38 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { HeroBackground } from "@/components/HeroBackground";
 import { Reveal } from "@/components/Reveal";
 import { EngineCard, type Engine } from "@/components/EngineCard";
 import { LogoStrip } from "@/components/LogoStrip";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
+import { SiteNav } from "@/components/SiteNav";
+import { SiteFooter } from "@/components/SiteFooter";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "home.metadata" });
+  return { title: t("title"), description: t("description") };
+}
 
 const ENGINES: Engine[] = [
   {
     iconKey: "lighthouse",
     name: "Lighthouse",
     tag: "Lead engine",
-    desc: "Find local businesses with proven demand. Ship them a website. Reach out  and close.",
+    desc: "Find local businesses with proven demand. Ship them a website. Reach out – and close.",
     details: [
       "Find local SMBs with great Google reviews and no website",
       "Generate a tailored 5-section site from their data in 60 seconds",
       "Personalized outreach across email, WhatsApp, Instagram",
     ],
-    bestFor: "Local service businesses  dental, home services, beauty, food",
+    bestFor: "Local service businesses – dental, home services, beauty, food",
     anchor: "From $497 + $49/mo",
     href: "/lighthouse-demo",
   },
@@ -51,7 +66,7 @@ const ENGINES: Engine[] = [
     iconKey: "reach",
     name: "Reach Engine",
     tag: "Marketing",
-    desc: "Content, social, and ads on one autonomous track  in your brand voice.",
+    desc: "Content, social, and ads on one autonomous track – in your brand voice.",
     details: [
       "Content generation in your brand voice, multilingual",
       "Social orchestration across LinkedIn, Instagram, Facebook",
@@ -102,83 +117,29 @@ const ENGINES: Engine[] = [
   },
 ];
 
-export default function Home() {
+export default function HomePage() {
+  const t = useTranslations("home");
+  const tCommon = useTranslations("common");
+
+  const stats = [
+    { stat: "77%", label: t("stats.abandonRate") },
+    { stat: "3M+", label: t("stats.businessesWithoutSites") },
+    { stat: "3", label: t("stats.languages") },
+    { stat: "20+", label: t("stats.experience") },
+  ];
+
+  const principles = [
+    { num: "01", title: t("principles.items.01.title"), body: t("principles.items.01.body") },
+    { num: "02", title: t("principles.items.02.title"), body: t("principles.items.02.body") },
+    { num: "03", title: t("principles.items.03.title"), body: t("principles.items.03.body") },
+  ];
+
   return (
     <div className="flex flex-1 flex-col bg-[var(--color-cream)]">
-      {/* Skip to content (a11y) */}
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-[var(--color-ink)] focus:px-4 focus:py-2 focus:text-[var(--color-cream)]"
-      >
-        Skip to content
-      </a>
-
-      {/* Top nav */}
-      <header className="sticky top-0 z-30 w-full border-b border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
-          <Link href="/" className="flex items-center" aria-label="10XAI home">
-            <Image
-              src="/brand/logo-wordmark-light.svg"
-              alt="10XAI"
-              width={150}
-              height={42}
-              priority
-            />
-          </Link>
-          <nav className="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Primary">
-            <Link href="/lighthouse-demo" className="text-[var(--color-ink-700)] transition-colors hover:text-[var(--color-ink)]">
-              Lighthouse
-            </Link>
-            <Link href="/engines" className="text-[var(--color-ink-700)] transition-colors hover:text-[var(--color-ink)]">
-              Engines
-            </Link>
-            <Link href="/about" className="text-[var(--color-ink-700)] transition-colors hover:text-[var(--color-ink)]">
-              About
-            </Link>
-            <Link href="/methodology" className="text-[var(--color-ink-700)] transition-colors hover:text-[var(--color-ink)]">
-              Methodology
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 rounded-lg border border-[var(--color-ink-300)] bg-[var(--color-cream-50)] p-1 text-xs font-bold" role="group" aria-label="Language selector">
-              <button
-                type="button"
-                aria-current="true"
-                className="rounded px-2.5 py-1 bg-[var(--color-ink)] text-[var(--color-cream)]"
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                disabled
-                className="rounded px-2.5 py-1 text-[var(--color-ink-500)] cursor-not-allowed"
-                title="Coming soon"
-                aria-label="Portuguese  coming soon"
-              >
-                PT
-              </button>
-              <button
-                type="button"
-                disabled
-                className="rounded px-2.5 py-1 text-[var(--color-ink-500)] cursor-not-allowed"
-                title="Coming soon"
-                aria-label="Spanish  coming soon"
-              >
-                ES
-              </button>
-            </div>
-            <Link
-              href="/contact"
-              className="hidden rounded-lg bg-[var(--color-gold)] px-5 py-2.5 text-sm font-bold text-[var(--color-cream)] transition-colors hover:bg-[var(--color-gold-600)] sm:inline-flex"
-            >
-              Book a Call
-            </Link>
-          </div>
-        </div>
-      </header>
+      <SiteNav />
 
       <main id="main">
-        {/* Hero (dark, video-backed) */}
+        {/* Hero */}
         <section className="relative overflow-hidden text-[var(--color-cream)]">
           <HeroBackground />
           <div className="relative z-10 mx-auto max-w-6xl px-4 py-32 md:px-6 md:py-40 lg:px-8 lg:py-52">
@@ -189,20 +150,20 @@ export default function Home() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-gold)] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-gold)]" />
                   </span>
-                  AI Tailored to Your Business  Built to Run
+                  {t("eyebrow")}
                 </p>
               </Reveal>
               <Reveal delay={120}>
                 <h1 className="font-display font-black leading-[0.95] tracking-tight text-[2.75rem] md:text-7xl lg:text-[6.25rem]">
-                  Custom AI agents
+                  {t("headline.line1")}
                   <br />
-                  that run{" "}
-                  <span className="text-[var(--color-gold)]">your business.</span>
+                  {t("headline.line2start")}{" "}
+                  <span className="text-[var(--color-gold)]">{t("headline.line2gold")}</span>
                 </h1>
               </Reveal>
               <Reveal delay={260}>
                 <p className="mt-10 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-300)] md:text-xl">
-                  We sit with you, learn what's actually slowing you down, and ship the AI Operating System that runs it for you  not another tool you have to learn.
+                  {t("subhead")}
                 </p>
               </Reveal>
               <Reveal delay={400}>
@@ -211,7 +172,7 @@ export default function Home() {
                     href="/lighthouse-demo"
                     className="group inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[var(--color-gold)] px-8 text-base font-bold text-[var(--color-cream)] shadow-lg shadow-[var(--color-gold)]/30 transition-all hover:bg-[var(--color-gold-600)] hover:shadow-[var(--color-gold)]/50"
                   >
-                    Try Lighthouse  Live Demo
+                    {t("ctaPrimary")}
                     <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
                   </Link>
                   <button
@@ -219,25 +180,24 @@ export default function Home() {
                     data-talk-to-bernie
                     className="inline-flex h-14 items-center justify-center rounded-lg border border-[var(--color-cream)]/30 bg-[var(--color-cream)]/5 px-8 text-base font-bold text-[var(--color-cream)] backdrop-blur transition-colors hover:border-[var(--color-cream)] hover:bg-[var(--color-cream)]/10"
                   >
-                    Talk to Bernie
+                    {tCommon("ctaTalkToBernie")}
                   </button>
                 </div>
               </Reveal>
               <Reveal delay={540}>
                 <div className="mt-14 max-w-3xl border-l-2 border-[var(--color-gold)]/40 pl-5">
                   <p className="text-sm font-medium leading-relaxed text-[var(--color-cream)]/90 md:text-base">
-                    Developed by industry veterans with{" "}
-                    <span className="font-bold text-[var(--color-gold)]">20+ years</span>{" "}
-                    in revenue technology and frontier AI experts.
+                    {t("credentialsLine")}{" "}
+                    <span className="font-bold text-[var(--color-gold)]">{t("credentialsLineYears")}</span>{" "}
+                    {t("credentialsLineEnd")}
                   </p>
                   <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--color-ink-300)]">
-                    Most SMBs will choose their AI partner in the next 18 months. Choose right the first time.
+                    {t("fomoLine")}
                   </p>
                 </div>
               </Reveal>
             </div>
           </div>
-          {/* Subtle scroll indicator */}
           <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[var(--color-cream)]/40" aria-hidden="true">
             <svg width="20" height="32" viewBox="0 0 20 32" fill="none">
               <rect x="1" y="1" width="18" height="30" rx="9" stroke="currentColor" strokeWidth="1.5" />
@@ -249,36 +209,21 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Logo strip  trusted by / operators we serve */}
         <LogoStrip />
 
         {/* Three principles */}
         <section className="border-y border-[var(--color-ink-300)]/60 bg-[var(--color-cream-50)]">
           <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
             <Reveal>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">How we work</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">
+                {t("principles.eyebrow")}
+              </p>
               <h2 className="mt-3 max-w-3xl font-display text-3xl font-black tracking-tight text-[var(--color-ink)] md:text-4xl">
-                Sit. Learn. Ship.
+                {t("principles.title")}
               </h2>
             </Reveal>
             <div className="mt-12 grid gap-12 md:grid-cols-3">
-              {[
-                {
-                  num: "01",
-                  title: "Sit with you.",
-                  body: "Discovery isn't a slide deck. We sit with the operator, watch the workflow, and find the friction that's eating the most of your week.",
-                },
-                {
-                  num: "02",
-                  title: "Build for you.",
-                  body: "We design the AI agents around your actual operations, not a generic template. Your tone of voice. Your CRM. Your stack.",
-                },
-                {
-                  num: "03",
-                  title: "Ship it running.",
-                  body: "We don't hand you a tool you have to learn. We ship the system already running  measured, monitored, and yours to evolve.",
-                },
-              ].map((p, i) => (
+              {principles.map((p, i) => (
                 <Reveal key={p.num} delay={i * 120}>
                   <div>
                     <p className="font-display text-6xl font-black text-[var(--color-gold)]">{p.num}</p>
@@ -291,16 +236,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Stats / proof band */}
+        {/* Stats */}
         <section className="bg-[var(--color-ink)] text-[var(--color-cream)]">
           <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20 lg:px-8">
             <div className="grid gap-10 md:grid-cols-4">
-              {[
-                { stat: "77%", label: "of SMBs abandon AI tools within 6 months" },
-                { stat: "3M+", label: "small businesses with no website. Lighthouse finds them." },
-                { stat: "3", label: "languages we deliver in natively  EN, PT-BR, ES" },
-                { stat: "20+", label: "years of revenue-technology experience behind every build" },
-              ].map((item, i) => (
+              {stats.map((item, i) => (
                 <Reveal key={i} delay={i * 100}>
                   <div className="border-l-2 border-[var(--color-gold)] pl-5">
                     <p className="font-display text-5xl font-black text-[var(--color-gold)] md:text-6xl">{item.stat}</p>
@@ -316,14 +256,16 @@ export default function Home() {
         <section className="bg-[var(--color-cream)]">
           <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
             <Reveal>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">The 10XAI Stack</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">
+                {t("enginesPreview.eyebrow")}
+              </p>
               <h2 className="mt-3 max-w-3xl font-display text-4xl font-black tracking-tight text-[var(--color-ink)] md:text-5xl lg:text-6xl">
-                Six engines.
+                {t("enginesPreview.title1")}
                 <br />
-                <span className="text-[var(--color-gold)]">One operating system.</span>
+                <span className="text-[var(--color-gold)]">{t("enginesPreview.title2")}</span>
               </h2>
               <p className="mt-6 max-w-3xl text-lg text-[var(--color-ink-700)]">
-                Each engine ships running, not as a tool you have to learn. Pick the one your business is feeling friction in. Stack them when you&rsquo;re ready. Hover for details.
+                {t("enginesPreview.subhead")}
               </p>
             </Reveal>
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -336,41 +278,37 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonial carousel */}
         <TestimonialCarousel />
 
         {/* CTA band */}
         <section className="relative overflow-hidden bg-[var(--color-ink)] text-[var(--color-cream)]">
           <div
             className="absolute inset-0 opacity-30"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 60% at 80% 50%, rgba(202, 138, 4, 0.4) 0%, transparent 60%)",
-            }}
+            style={{ background: "radial-gradient(ellipse 60% 60% at 80% 50%, rgba(202, 138, 4, 0.4) 0%, transparent 60%)" }}
             aria-hidden="true"
           />
           <div className="relative mx-auto max-w-6xl px-4 py-24 md:px-6 md:py-32 lg:px-8">
             <Reveal>
               <div className="max-w-3xl">
                 <h2 className="font-display text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
-                  Pilot purgatory ends here.
+                  {t("ctaBand.title")}
                 </h2>
                 <p className="mt-6 text-lg text-[var(--color-ink-300)] md:text-xl">
-                  77% of SMBs that buy AI tools abandon them in six months. We don&rsquo;t sell tools. We deliver running operating systems that survive year two.
+                  {t("ctaBand.subhead")}
                 </p>
                 <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                   <Link
                     href="/contact"
                     className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[var(--color-gold)] px-8 text-base font-bold text-[var(--color-cream)] shadow-lg shadow-[var(--color-gold)]/30 transition-all hover:bg-[var(--color-gold-600)]"
                   >
-                    Book a Call &rarr;
+                    {t("ctaBand.ctaBook")}
                   </Link>
                   <button
                     type="button"
                     data-talk-to-bernie
                     className="inline-flex h-14 items-center justify-center rounded-lg border border-[var(--color-ink-700)] px-8 text-base font-bold text-[var(--color-cream)] transition-colors hover:border-[var(--color-ink-300)] hover:bg-[var(--color-ink-900)]"
                   >
-                    Talk to Bernie
+                    {t("ctaBand.ctaTalk")}
                   </button>
                 </div>
               </div>
@@ -379,39 +317,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]">
-        <div className="mx-auto max-w-6xl px-4 py-12 md:px-6 lg:px-8">
-          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <Image
-              src="/brand/logo-wordmark-light.svg"
-              alt="10XAI"
-              width={120}
-              height={32}
-            />
-            <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-[var(--color-ink-700)]" aria-label="Footer">
-              <Link href="/lighthouse-demo" className="hover:text-[var(--color-ink)]">Lighthouse</Link>
-              <Link href="/engines" className="hover:text-[var(--color-ink)]">Engines</Link>
-              <Link href="/about" className="hover:text-[var(--color-ink)]">About</Link>
-              <Link href="/methodology" className="hover:text-[var(--color-ink)]">Methodology</Link>
-              <Link href="/trust" className="hover:text-[var(--color-ink)]">Trust</Link>
-              <Link href="/privacy" className="hover:text-[var(--color-ink)]">Privacy</Link>
-              <Link href="/terms" className="hover:text-[var(--color-ink)]">Terms</Link>
-              <Link href="/contact" className="hover:text-[var(--color-ink)]">Contact</Link>
-            </nav>
-          </div>
-          <p className="mt-8 text-xs text-[var(--color-ink-500)]">
-            &copy; 2026 10XAI  Apex / Raleigh, NC  contato10xai@gmail.com
-          </p>
-        </div>
-      </footer>
-
-      {/* Wire data-talk-to-bernie buttons to the BernieChat global event */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `document.addEventListener('click',function(e){var b=e.target.closest('[data-talk-to-bernie]');if(b){e.preventDefault();window.dispatchEvent(new Event('talk-to-bernie'));}});`,
-        }}
-      />
+      <SiteFooter />
     </div>
   );
 }

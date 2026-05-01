@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Inter, JetBrains_Mono } from "next/font/google";
-import { BernieChat } from "@/components/BernieChat";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -26,9 +26,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 const SITE_URL = "https://10xai.us";
 const SITE_NAME = "10XAI";
-const SITE_TITLE = "10XAI  Custom AI Operating Systems for SMBs";
+const SITE_TITLE = "10XAI – Custom AI Operating Systems for SMBs";
 const SITE_DESCRIPTION =
-  "Custom AI agents that run your sales, support, and operations. Built around your business, not a generic template. Trilingual: English, Portugus, Espaol.";
+  "Custom AI agents that run your sales, support, and operations. Built around your business, not a generic template. Trilingual: English, Português, Español.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
-    template: "%s  10XAI",
+    template: "%s – 10XAI",
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -69,9 +69,7 @@ export const metadata: Metadata = {
   publisher: "10XAI",
   formatDetection: { telephone: false, email: false, address: false },
   icons: {
-    icon: [
-      { url: "/brand/favicon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/brand/favicon.svg", type: "image/svg+xml" }],
     apple: "/brand/logo-monogram.svg",
   },
   manifest: "/manifest.webmanifest",
@@ -79,7 +77,8 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
     languages: {
       "en-US": SITE_URL,
-      // PT/ES paths reserved for when i18n routes ship
+      "pt-BR": `${SITE_URL}/pt`,
+      "es-MX": `${SITE_URL}/es`,
       "x-default": SITE_URL,
     },
   },
@@ -96,7 +95,7 @@ export const metadata: Metadata = {
         url: "/images/og-default.png",
         width: 1200,
         height: 630,
-        alt: "10XAI  Custom AI agents that run your business.",
+        alt: "10XAI – Custom AI agents that run your business.",
       },
     ],
   },
@@ -149,9 +148,7 @@ const ORG_JSON_LD = {
         addressCountry: "US",
       },
       email: "contato10xai@gmail.com",
-      sameAs: [
-        "https://www.linkedin.com/company/10xaiconsultoria/",
-      ],
+      sameAs: ["https://www.linkedin.com/company/10xaiconsultoria/"],
       areaServed: [
         { "@type": "Country", name: "United States" },
         { "@type": "Country", name: "Brazil" },
@@ -173,7 +170,7 @@ const ORG_JSON_LD = {
     {
       "@type": "ProfessionalService",
       "@id": `${SITE_URL}/#service`,
-      name: "10XAI  Custom AI Operating Systems",
+      name: "10XAI – Custom AI Operating Systems",
       provider: { "@id": `${SITE_URL}/#organization` },
       areaServed: ["United States", "Brazil", "Mexico", "Latin America"],
       serviceType: [
@@ -192,19 +189,18 @@ const ORG_JSON_LD = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <BernieChat />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }}

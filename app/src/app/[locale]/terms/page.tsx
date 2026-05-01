@@ -1,32 +1,31 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { SiteNav } from "@/components/SiteNav";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Terms of Service  10XAI",
+  title: "Terms of Service – 10XAI",
   description:
     "The terms governing your use of the 10XAI website, the Bernie concierge, and our AI Operating Systems services.",
   robots: { index: true, follow: true },
 };
 
 export default function TermsPage() {
+  const tCommon = useTranslations("common");
+
   return (
     <div className="flex min-h-screen flex-col bg-[var(--color-cream)]">
-      <header className="sticky top-0 z-30 w-full border-b border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
-          <Link href="/" className="flex items-center" aria-label="10XAI home">
-            <Image src="/brand/logo-wordmark-light.svg" alt="10XAI" width={120} height={32} priority />
-          </Link>
-          <Link href="/" className="text-sm text-[var(--color-ink-700)] hover:text-[var(--color-ink)]">
-             Back home
-          </Link>
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 md:px-6 md:py-24 lg:px-8">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">Legal  Last updated 2026-04-30</p>
+      <SiteNav />
+
+      <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 md:px-6 md:py-24 lg:px-8">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">Legal – Last updated 2026-04-30</p>
         <h1 className="mt-3 font-display text-4xl font-black tracking-tight text-[var(--color-ink)] md:text-5xl">
           Terms of Service
         </h1>
+        <p className="mt-4 text-sm italic text-[var(--color-ink-500)]">
+          {tCommon("translationDisclosure")}
+        </p>
         <div className="mt-8 space-y-6 text-[var(--color-ink-700)] [&_h2]:mt-10 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[var(--color-ink)] [&_a]:text-[var(--color-gold)] [&_a]:underline">
           <p>
             These Terms of Service (&quot;Terms&quot;) govern your access to and use of the website at <a href="https://10xai.us">10xai.us</a>, the Bernie AI concierge, the Lighthouse demo, and any related services provided by 10XAI (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;). By using the site you agree to these Terms.
@@ -39,7 +38,7 @@ export default function TermsPage() {
 
           <h2>2. The Bernie concierge</h2>
           <p>
-            Bernie is an AI agent powered by a large-language-model provider. Bernie is intended to provide general information about 10XAI's services and to help schedule a discovery call. Bernie is not authorized to make commitments on our behalf and does not provide legal, tax, medical, or financial advice. Conversations may be retained for quality and abuse review per our <Link href="/privacy">Privacy Policy</Link>.
+            Bernie is an AI agent powered by a large-language-model provider. Bernie is intended to provide general information about 10XAI&apos;s services and to help schedule a discovery call. Bernie is not authorized to make commitments on our behalf and does not provide legal, tax, medical, or financial advice. Conversations may be retained for quality and abuse review per our <Link href="/privacy">Privacy Policy</Link>.
           </p>
 
           <h2>3. The Lighthouse demo</h2>
@@ -104,11 +103,8 @@ export default function TermsPage() {
           </p>
         </div>
       </main>
-      <footer className="border-t border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]">
-        <div className="mx-auto max-w-6xl px-4 py-8 md:px-6 lg:px-8">
-          <p className="text-xs text-[var(--color-ink-500)]">&copy; 2026 10XAI  contato10xai@gmail.com</p>
-        </div>
-      </footer>
+
+      <SiteFooter />
     </div>
   );
 }

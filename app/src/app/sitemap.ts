@@ -1,27 +1,47 @@
 import type { MetadataRoute } from "next";
 import { getAllEngineSlugs } from "@/data/engines";
 
-const BASE = "https://10xai.us";
+const SITE_URL = "https://10xai.us";
+const LOCALES = ["en", "pt", "es"] as const;
+
+function localeUrl(path: string, locale: string) {
+  if (locale === "en") return `${SITE_URL}${path || "/"}`;
+  return `${SITE_URL}/${locale}${path || ""}`;
+}
+
+function multiLocaleEntries(
+  path: string,
+  priority: number,
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]
+): MetadataRoute.Sitemap {
+  return LOCALES.map((locale) => ({
+    url: localeUrl(path, locale),
+    lastModified: new Date(),
+    changeFrequency,
+    priority,
+    alternates: {
+      languages: {
+        "en-US": localeUrl(path, "en"),
+        "pt-BR": localeUrl(path, "pt"),
+        "es-MX": localeUrl(path, "es"),
+      },
+    },
+  }));
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
-  const enginePages = getAllEngineSlugs().map((slug) => ({
-    url: `${BASE}/engines/${slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const engineEntries = getAllEngineSlugs().flatMap((slug) =>
+    multiLocaleEntries(`/engines/${slug}`, 0.7, "monthly")
+  );
 
   return [
-    { url: `${BASE}/`, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
-    { url: `${BASE}/lighthouse-demo`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/engines`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/methodology`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    ...enginePages,
-    { url: `${BASE}/contact`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
-    { url: `${BASE}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+    ...multiLocaleEntries("", 1.0, "weekly"),
+    ...multiLocaleEntries("/lighthouse-demo", 0.9, "monthly"),
+    ...multiLocaleEntries("/engines", 0.8, "monthly"),
+    ...multiLocaleEntries("/about", 0.8, "monthly"),
+    ...multiLocaleEntries("/methodology", 0.8, "monthly"),
+    ...engineEntries,
+    ...multiLocaleEntries("/privacy", 0.3, "yearly"),
+    ...multiLocaleEntries("/terms", 0.3, "yearly"),
   ];
 }
