@@ -291,44 +291,48 @@
   },
   "lighthouseDemo": {
     "metadata": {
-      "title": "Lighthouse Demo ao Vivo  10XAI",
-      "description": "Cole qualquer URL de negócio local. Veja a gente construir um site para eles em 60 segundos."
+      "title": "Demo ao Vivo do Lighthouse — 10XAI",
+      "description": "Veja como o Lighthouse Sales Engine encontra, enriquece e inscreve automaticamente seus contatos ideais em cadências de outreach personalizadas."
     },
-    "backHome": " Voltar ao início",
-    "eyebrow": "Lighthouse  Demo ao vivo",
-    "headlineLine1": "Cole qualquer URL de negócio local.",
-    "headlineLine2": "Veja a gente construir um site.",
-    "subhead": "Este é o mesmo pipeline que rodamos com prospects toda semana. Reviews entram. Site sai. Depois fazemos o outreach e fechamos.",
-    "input": {
-      "label": "URL do Google Business ou site",
-      "placeholder": "https://goo.gl/maps/...  ou  https://exemplo.com",
-      "cta": "Gerar prévia do site ",
-      "disclaimer": "Modo demo  gera uma prévia com template. O pipeline real do Lighthouse puxa dados do Google Business Profile, reviews e fotos via Claude vision."
+    "backHome": "← Voltar ao início",
+    "eyebrow": "Lighthouse — Demo ao Vivo",
+    "headlineLine1": "Encontre seus contatos ideais.",
+    "headlineLine2": "Inscreva-os automaticamente.",
+    "subhead": "Diga quem você quer alcançar. Nós os encontramos, enriquecemos os dados e iniciamos uma cadência personalizada — tudo em um clique.",
+    "icp": {
+      "eyebrow": "Passo 1 — Defina Seu ICP",
+      "title": "Para quem você está vendendo?",
+      "industryLabel": "Setor",
+      "titleLabel": "Cargo",
+      "locationLabel": "Localização",
+      "cta": "Encontrar contatos →",
+      "disclaimer": "Esta é uma demo com dados de exemplo. O pipeline real do Lighthouse acessa mais de 50M de contatos verificados com enriquecimento de LinkedIn, entregabilidade de e-mail e sinais de intenção."
     },
-    "analyzing": {
-      "eyebrow": "Trabalhando...",
-      "stages": [
-        "Puxando o Google Business Profile...",
-        "Lendo 47 reviews de clientes...",
-        "Extraindo pistas de marca das fotos...",
-        "Redigindo a hero copy no Claude...",
-        "Gerando layout...",
-        "Publicando a prévia..."
-      ]
+    "scanning": {
+      "eyebrow": "Escaneando contatos..."
     },
-    "preview": {
-      "eyebrow": "Prévia gerada",
-      "preamble": "Abaixo está o site que entregaríamos para",
-      "preambleEnd": ". Em um engajamento real, ele fica no ar em uma URL de prévia em 60 segundos  e enviamos um loom personalizado dele para o dono na mesma hora.",
-      "mockHeroEyebrow": "{location}",
-      "mockHeroSubhead": "Confiança dos vizinhos. Top em {city} no Google com média de 4.9 estrelas em 47 reviews.",
-      "mockBookBtn": "Agendar atendimento",
-      "mockCallBtn": "Ligue para nós",
-      "mockReviewsTitle": "O que os clientes dizem",
-      "ctaTitle": "Esta é a demo. A real fica no ar em 60 segundos.",
-      "ctaSubhead": "Lighthouse puxa dados ao vivo, gera o site real a partir de reviews reais, e publica uma URL de prévia pronta para deploy no seu domínio. A partir de US$ 497 setup + US$ 49/mês.",
-      "ctaBook": "Agendar 15 minutos ",
-      "ctaAnother": "Tentar outra URL"
+    "leads": {
+      "eyebrow": "Passo 2 — Seus Leads",
+      "title": "5 contatos encontrados e enriquecidos.",
+      "enrollCta": "Inscrever {count} contatos em uma cadência →"
+    },
+    "cadence": {
+      "eyebrow": "Passo 3 — Escolha uma Cadência",
+      "title": "Escolha a sequência certa.",
+      "previewLabel": "Pré-visualização da sequência",
+      "launchCta": "Iniciar cadência →"
+    },
+    "launching": {
+      "eyebrow": "Iniciando cadência..."
+    },
+    "reply": {
+      "eyebrow": "Passo 4 — Está funcionando.",
+      "title": "Você recebeu uma resposta.",
+      "waiting": "Cadência ativa. Aguardando respostas...",
+      "badge": "Interessado",
+      "ctaBook": "Agendar call com o Bernardo →",
+      "ctaRestart": "Fazer outra busca",
+      "disclaimer": "Resposta simulada. Os resultados reais variam — mas é isso que o Lighthouse foi criado para gerar."
     }
   },
   "logoStrip": {

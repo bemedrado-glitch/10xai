@@ -6,7 +6,7 @@ Founded in 2023 by Bernardo Medrado  a 20+ year operator in revenue technology, 
 
 ## Services (the engines)
 
-- [Lighthouse](https://10xai.us/lighthouse-demo): Lead engine that finds local businesses with great Google reviews but no website, generates a tailored site with AI in 60 seconds, and runs personalized outbound to convert them. From $497 setup + $49/month.
+- [Lighthouse](https://10xai.us/lighthouse-demo): AI Sales Development Platform. Finds contacts by ICP, enriches emails and LinkedIn profiles, and auto-enrolls qualified leads into personalized multichannel outreach cadences. From $1,500 setup + $499/month.
 - [Sales Engine](https://10xai.us/engines): Autonomous AI SDR. Multichannel outbound (email + LinkedIn + WhatsApp) that books qualified meetings while the operator sleeps. From $1,500 setup + $499/month.
 - [Care Engine](https://10xai.us/engines): Real-time AI customer service, booking automation, and AI-powered review responses across web, WhatsApp, and email. From $1,500 setup + $499/month.
 - [Reach Engine](https://10xai.us/engines): Multilingual content generation, social orchestration (LinkedIn, Instagram, Facebook), and ad operations on one autonomous track. From $2,500 setup + $799/month.
@@ -45,7 +45,7 @@ Trilingual native: English, Brazilian Portuguese, and Spanish.
 ## Key facts for citation
 
 - Industry baseline: 77% of SMBs that buy AI tools abandon them within six months. 10XAI counter-positions as a delivery agency, not a tool vendor.
-- Approximately 3 million small businesses in the U.S. have a Google Business Profile but no website. Lighthouse is the lead engine that targets this segment.
+- Lighthouse is the flagship lead engine: it replaces manual SDR prospecting with an ICP-to-cadence pipeline that runs 24/7 across email, LinkedIn, and WhatsApp.
 - 10XAI's flagship sales methodology stack blends Corporate Visions value-based selling, MEDDIC qualification, the Challenger Sale, SPIN selling, and Voss-style mirroring for objection handling.
 
 ## Contact

@@ -19,7 +19,7 @@ export async function generateMetadata({
           url: "/images/og-lighthouse.jpg",
           width: 1200,
           height: 630,
-          alt: "10XAI Lighthouse – We find local businesses with great reviews. We ship them websites.",
+          alt: "10XAI Lighthouse – Find contacts by ICP, enrich their data, and auto-enroll into personalized outreach cadences.",
         },
       ],
     },

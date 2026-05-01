@@ -291,44 +291,48 @@
   },
   "lighthouseDemo": {
     "metadata": {
-      "title": "Lighthouse Demo en Vivo  10XAI",
-      "description": "Pega cualquier URL de negocio local. Mira cómo construimos un sitio para ellos en 60 segundos."
+      "title": "Demo en Vivo de Lighthouse — 10XAI",
+      "description": "Descubre cómo el Lighthouse Sales Engine encuentra, enriquece e inscribe automáticamente tus contactos ideales en cadencias de outreach personalizadas."
     },
-    "backHome": " Volver al inicio",
-    "eyebrow": "Lighthouse  Demo en vivo",
-    "headlineLine1": "Pega cualquier URL de negocio local.",
-    "headlineLine2": "Míranos construirles un sitio.",
-    "subhead": "Este es el mismo pipeline que corremos con prospectos cada semana. Entran reseñas. Sale un sitio. Después contactamos y cerramos.",
-    "input": {
-      "label": "URL de Google Business o sitio",
-      "placeholder": "https://goo.gl/maps/...  o  https://ejemplo.com",
-      "cta": "Generar vista previa del sitio ",
-      "disclaimer": "Modo demo  genera una vista previa con plantilla. El pipeline real de Lighthouse jala datos del Google Business Profile, reseñas y fotos via Claude vision."
+    "backHome": "← Volver al inicio",
+    "eyebrow": "Lighthouse — Demo en Vivo",
+    "headlineLine1": "Encuentra tus contactos ideales.",
+    "headlineLine2": "Inscríbelos automáticamente.",
+    "subhead": "Dinos a quién le estás vendiendo. Los encontramos, enriquecemos sus datos y lanzamos una cadencia personalizada — todo en un clic.",
+    "icp": {
+      "eyebrow": "Paso 1 — Define Tu ICP",
+      "title": "¿A quién le estás vendiendo?",
+      "industryLabel": "Industria",
+      "titleLabel": "Cargo",
+      "locationLabel": "Ubicación",
+      "cta": "Encontrar contactos →",
+      "disclaimer": "Esta es una demo con datos de muestra. El pipeline real de Lighthouse accede a más de 50M de contactos verificados con enriquecimiento de LinkedIn, entregabilidad de email y señales de intención."
     },
-    "analyzing": {
-      "eyebrow": "Trabajando...",
-      "stages": [
-        "Jalando el Google Business Profile...",
-        "Leyendo 47 reseñas de clientes...",
-        "Extrayendo pistas de marca de las fotos...",
-        "Redactando el hero copy en Claude...",
-        "Generando layout...",
-        "Publicando la vista previa..."
-      ]
+    "scanning": {
+      "eyebrow": "Escaneando contactos..."
     },
-    "preview": {
-      "eyebrow": "Vista previa generada",
-      "preamble": "Abajo está el sitio que entregaríamos a",
-      "preambleEnd": ". En un proyecto real, queda en vivo en una URL de vista previa en 60 segundos  y le mandamos al dueño un loom personalizado en la misma hora.",
-      "mockHeroEyebrow": "{location}",
-      "mockHeroSubhead": "Confianza de los vecinos. Top en {city} en Google con un promedio de 4.9 estrellas en 47 reseñas.",
-      "mockBookBtn": "Agendar cita",
-      "mockCallBtn": "Llámanos",
-      "mockReviewsTitle": "Lo que dicen los clientes",
-      "ctaTitle": "Esta es la demo. La real queda en vivo en 60 segundos.",
-      "ctaSubhead": "Lighthouse jala datos en vivo, genera el copy real del sitio desde reseñas reales, y publica una URL de vista previa lista para deploy en tu dominio. Desde US$ 497 setup + US$ 49/mes.",
-      "ctaBook": "Agendar 15 minutos ",
-      "ctaAnother": "Probar otra URL"
+    "leads": {
+      "eyebrow": "Paso 2 — Tus Leads",
+      "title": "5 contactos encontrados y enriquecidos.",
+      "enrollCta": "Inscribir {count} contactos en una cadencia →"
+    },
+    "cadence": {
+      "eyebrow": "Paso 3 — Elige una Cadencia",
+      "title": "Elige la secuencia correcta.",
+      "previewLabel": "Vista previa de la secuencia",
+      "launchCta": "Lanzar cadencia →"
+    },
+    "launching": {
+      "eyebrow": "Lanzando cadencia..."
+    },
+    "reply": {
+      "eyebrow": "Paso 4 — Está funcionando.",
+      "title": "Tienes una respuesta.",
+      "waiting": "Cadencia activa. Esperando respuestas...",
+      "badge": "Interesado",
+      "ctaBook": "Reservar llamada con Bernardo →",
+      "ctaRestart": "Hacer otra búsqueda",
+      "disclaimer": "Respuesta simulada. Los resultados reales varían — pero esto es lo que Lighthouse está diseñado para generar."
     }
   },
   "logoStrip": {

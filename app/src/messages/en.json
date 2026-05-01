@@ -291,44 +291,48 @@
   },
   "lighthouseDemo": {
     "metadata": {
-      "title": "Lighthouse Live Demo  10XAI",
-      "description": "Paste any local business URL. Watch us build them a website in 60 seconds."
+      "title": "Lighthouse Live Demo — 10XAI",
+      "description": "See how the Lighthouse Sales Engine finds, enriches, and auto-enrolls your ideal contacts into personalized outreach cadences."
     },
-    "backHome": " Back home",
-    "eyebrow": "Lighthouse  Live Demo",
-    "headlineLine1": "Paste any local business URL.",
-    "headlineLine2": "Watch us build them a website.",
-    "subhead": "This is the same pipeline we run on prospects every week. Reviews go in. A site goes out. Then we reach out and close it.",
-    "input": {
-      "label": "Google Business URL or website",
-      "placeholder": "https://goo.gl/maps/...  or  https://example.com",
-      "cta": "Generate site preview ",
-      "disclaimer": "Demo mode  generates a templated preview. The real Lighthouse pipeline pulls Google Business Profile data, customer reviews, and photos via Claude vision."
+    "backHome": "← Back home",
+    "eyebrow": "Lighthouse — Live Demo",
+    "headlineLine1": "Find your ideal contacts.",
+    "headlineLine2": "Enroll them automatically.",
+    "subhead": "Tell us who you're targeting. We find them, enrich their data, and launch a personalized cadence — all in one click.",
+    "icp": {
+      "eyebrow": "Step 1 — Define Your ICP",
+      "title": "Who are you selling to?",
+      "industryLabel": "Industry",
+      "titleLabel": "Job Title",
+      "locationLabel": "Location",
+      "cta": "Find contacts →",
+      "disclaimer": "This is a live demo with curated sample data. The real Lighthouse pipeline pulls from 50M+ verified contacts and enriches with LinkedIn, email deliverability, and intent signals."
     },
-    "analyzing": {
-      "eyebrow": "Working...",
-      "stages": [
-        "Pulling Google Business Profile...",
-        "Reading 47 customer reviews...",
-        "Extracting brand cues from photos...",
-        "Drafting hero copy in Claude...",
-        "Generating layout...",
-        "Deploying preview..."
-      ]
+    "scanning": {
+      "eyebrow": "Scanning contacts..."
     },
-    "preview": {
-      "eyebrow": "Preview generated",
-      "preamble": "Below is the site we'd ship to",
-      "preambleEnd": ". In a real engagement, it goes live on a preview URL within 60 seconds  and we send the owner a personalized loom of it the same hour.",
-      "mockHeroEyebrow": "{location}",
-      "mockHeroSubhead": "Trusted by neighbors. Ranked top in {city} on Google with a 4.9-star average across 47 reviews.",
-      "mockBookBtn": "Book an appointment",
-      "mockCallBtn": "Call us",
-      "mockReviewsTitle": "What customers say",
-      "ctaTitle": "This is the demo. The real one ships in 60 seconds.",
-      "ctaSubhead": "Lighthouse pulls live data, generates the actual site copy from real reviews, and stages a preview URL ready to deploy under your domain. From $497 setup + $49/mo.",
-      "ctaBook": "Book a 15-min call ",
-      "ctaAnother": "Try another URL"
+    "leads": {
+      "eyebrow": "Step 2 — Your Leads",
+      "title": "5 contacts found & enriched.",
+      "enrollCta": "Enroll {count} contacts into a cadence →"
+    },
+    "cadence": {
+      "eyebrow": "Step 3 — Choose a Cadence",
+      "title": "Pick the right sequence.",
+      "previewLabel": "Sequence preview",
+      "launchCta": "Launch cadence →"
+    },
+    "launching": {
+      "eyebrow": "Launching cadence..."
+    },
+    "reply": {
+      "eyebrow": "Step 4 — It's working.",
+      "title": "You've got a reply.",
+      "waiting": "Cadence live. Watching for replies...",
+      "badge": "Interested",
+      "ctaBook": "Book the call with Bernardo →",
+      "ctaRestart": "Run another search",
+      "disclaimer": "Simulated reply. Real results vary — but this is the outcome Lighthouse is built to drive."
     }
   },
   "logoStrip": {
