@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  10XAI wordmark — light background variant
+  Use on cream (#FAFAF9), white, or any bg with ≥7:1 contrast against ink.
+  Font: DM Sans 900 (Google Fonts) with system-ui fallback.
+  For production, convert text to paths to remove font dependency.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" width="360" height="100" role="img" aria-label="10XAI">
+  <title>10XAI</title>
+  <text
+    x="0" y="78"
+    font-family="'DM Sans','Inter','Satoshi','General Sans',system-ui,sans-serif"
+    font-weight="900"
+    font-size="96"
+    letter-spacing="-4"
+    fill="#0C0A09">10X</text>
+  <rect x="195" y="40" width="3" height="38" fill="#CA8A04"/>
+  <text
+    x="208" y="78"
+    font-family="'DM Sans','Inter','Satoshi','General Sans',system-ui,sans-serif"
+    font-weight="700"
+    font-size="60"
+    letter-spacing="-1"
+    fill="#0C0A09">AI</text>
+</svg>
