@@ -5,7 +5,8 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { HeroBackground } from "@/components/HeroBackground";
 import { Reveal } from "@/components/Reveal";
-import { EngineCard, type Engine } from "@/components/EngineCard";
+import { EngineCard } from "@/components/EngineCard";
+import { getHomeEngines } from "@/data/engines";
 import { LogoStrip } from "@/components/LogoStrip";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { SiteNav } from "@/components/SiteNav";
@@ -21,101 +22,7 @@ export async function generateMetadata({
   return { title: t("title"), description: t("description") };
 }
 
-const ENGINES: Engine[] = [
-  {
-    iconKey: "lighthouse",
-    name: "Lighthouse",
-    tag: "Lead engine",
-    desc: "Find local businesses with proven demand. Ship them a website. Reach out – and close.",
-    details: [
-      "Find local SMBs with great Google reviews and no website",
-      "Generate a tailored 5-section site from their data in 60 seconds",
-      "Personalized outreach across email, WhatsApp, Instagram",
-    ],
-    bestFor: "Local service businesses – dental, home services, beauty, food",
-    anchor: "From $497 + $49/mo",
-    href: "/lighthouse-demo",
-  },
-  {
-    iconKey: "sales",
-    name: "Sales Engine",
-    tag: "AI SDR",
-    desc: "Autonomous outbound that books meetings while you sleep.",
-    details: [
-      "Multichannel cadences across email, LinkedIn, and WhatsApp",
-      "Daily-fresh prospect lists from real-time intent signals",
-      "Books qualified meetings directly into your calendar",
-    ],
-    bestFor: "B2B SaaS, agencies, consulting firms with sales gaps",
-    anchor: "From $1,500 + $499/mo",
-  },
-  {
-    iconKey: "care",
-    name: "Care Engine",
-    tag: "Customer Success",
-    desc: "Real-time AI customer service, booking, and AI-powered review responses.",
-    details: [
-      "24/7 AI agent handles tier-1 support across web + WhatsApp + email",
-      "Booking automation tied to your calendar and team availability",
-      "AI review responses that protect and grow your reputation",
-    ],
-    bestFor: "Service businesses with customer-volume pressure",
-    anchor: "From $1,500 + $499/mo",
-  },
-  {
-    iconKey: "reach",
-    name: "Reach Engine",
-    tag: "Marketing",
-    desc: "Content, social, and ads on one autonomous track – in your brand voice.",
-    details: [
-      "Content generation in your brand voice, multilingual",
-      "Social orchestration across LinkedIn, Instagram, Facebook",
-      "Ad operations with performance feedback loops",
-    ],
-    bestFor: "Brands needing constant content with lean teams",
-    anchor: "From $2,500 + $799/mo",
-  },
-  {
-    iconKey: "mind",
-    name: "Mind Engine",
-    tag: "LMS / Onboarding",
-    desc: "Knowledge consolidation and role-based training, deployed as an AI tutor.",
-    details: [
-      "Pulls knowledge from your existing docs, SOPs, and Slack",
-      "Role-based onboarding paths that ramp new hires faster",
-      "Continuous training on policy + product changes",
-    ],
-    bestFor: "Teams growing fast or with high turnover",
-    anchor: "From $3,500",
-  },
-  {
-    iconKey: "bid",
-    name: "Bid Engine",
-    tag: "RFP intelligence",
-    desc: "AI agents that interpret RFPs, qualify the opportunity, and draft the response.",
-    details: [
-      "Reads RFPs and surfaces fit, risk, and competition in minutes",
-      "Drafts tailored responses anchored on your past wins",
-      "Tracks every bid against win-loss patterns",
-    ],
-    bestFor: "Service firms responding to RFPs/RFQs regularly",
-    anchor: "From $5,000",
-  },
-  {
-    iconKey: "bernie",
-    name: "Bernie",
-    tag: "Concierge",
-    desc: "Real-time AI sales agent on your site. Trilingual. Trained on your voice.",
-    details: [
-      "24/7 chat agent on your site, in EN/PT-BR/ES",
-      "Trained on your services, FAQs, and tone of voice",
-      "Books meetings, captures leads, escalates to human",
-    ],
-    bestFor: "Any business with web traffic and a sales motion",
-    anchor: "From $99/mo",
-    variant: "concierge",
-  },
-];
+const ENGINES = getHomeEngines();
 
 export default function HomePage() {
   const t = useTranslations("home");

@@ -4,22 +4,47 @@ import type { Engine } from "@/components/EngineCard";
  * Extended engine record with everything the detail page needs.
  * Home page only uses the core Engine fields; detail page uses the rest.
  */
+export type RoiInput = {
+  key: string;
+  label: string;
+  unit: "hours" | "usd" | "percent" | "count";
+  min: number;
+  max: number;
+  step: number;
+  default: number;
+};
+
+export type RoiOutput = {
+  key: string;
+  label: string;
+  format: "hours" | "usd" | "months" | "count";
+};
+
 export type EngineDetail = Engine & {
   slug: string;
-  /** One-line value prop  shown under the H1 on the detail page. */
   valueProp: string;
-  /** 24 sentence narrative for the detail-page intro. */
   longDesc: string;
-  /** Bullets for "Who this is for". */
   whoFor: string[];
-  /** Capabilities  shown as a feature grid. */
   features: Array<{ title: string; desc: string }>;
-  /** 4-step deployment timeline. */
   process: Array<{ week: string; deliverable: string }>;
-  /** Tooling we wire into. Optional. */
   integrations?: string[];
-  /** Page-level CTA  defaults to "Book a Call" for non-Lighthouse engines. */
   primaryCta?: { label: string; href: string };
+  /** Corporate Visions-style sales narrative for the detail page. */
+  narrative: {
+    problem: string;
+    challenge: string;
+    consequence: string;
+    whyChange: string;
+    whyNow: string;
+    why10xai: string;
+  };
+  /** Industry use-case cards. */
+  industries: Array<{ name: string; useCase: string; impact: string }>;
+  /** ROI calculator config (formula lives in roi-formulas.ts). */
+  roi: {
+    inputs: RoiInput[];
+    outputs: RoiOutput[];
+  };
 };
 
 export const ENGINES: EngineDetail[] = [
@@ -73,6 +98,32 @@ export const ENGINES: EngineDetail[] = [
     ],
     integrations: ["LinkedIn Sales Navigator", "Apollo.io", "Resend", "Cal.com", "WhatsApp Business", "Claude (Anthropic)"],
     primaryCta: { label: "Try the live demo", href: "/lighthouse-demo" },
+    narrative: {
+      problem: "Finding the right contacts is the most expensive problem in B2B sales. The average SDR spends 40–60% of their time prospecting instead of selling — and most of that time produces nothing billable.",
+      challenge: "Manual prospecting tools require constant configuration, data goes stale in weeks, and none of them connect discovery to outreach without a human doing every step in between.",
+      consequence: "Your pipeline depends on people showing up every morning and grinding through spreadsheets. When they leave — or get distracted — pipeline dries up. When pipeline dries, everything downstream suffers: hiring freezes, burn climbs, and deals get discounted.",
+      whyChange: "AI can do the full prospecting cycle continuously, at scale, without burnout. Every hour your team spends on ICP research is an hour not spent on closing. The math only gets worse as you scale.",
+      whyNow: "Contact databases now cover 50M+ verified records. AI enrichment can verify emails and pull LinkedIn context in milliseconds. The cost to build this full stack dropped 90% in 18 months — what required a 3-person team in 2022 runs on one agent today.",
+      why10xai: "We build the system once and it runs while you close. You define the ICP, we wire the discovery, enrichment, and cadence, and you wake up to a pipeline that didn't exist the day before — without adding a single headcount.",
+    },
+    industries: [
+      { name: "Restaurants & Hospitality", useCase: "Target GMs and owners of independent restaurants expanding to second locations or catering operations.", impact: "First reply in 3–5 days on average for hospitality ICPs" },
+      { name: "Healthcare & Medtech", useCase: "Reach practice administrators and procurement leads at clinics adopting new technology or changing EHR systems.", impact: "High-intent signals from hiring + tech-stack data" },
+      { name: "Professional Services", useCase: "Find decision-makers at law firms, accounting practices, and consulting shops with no CRM or outdated outreach.", impact: "Email + LinkedIn enrichment reduces bounce rate below 5%" },
+      { name: "Retail & E-commerce", useCase: "Target buyers and operations leads at growing regional retail chains with no centralized vendor outreach process.", impact: "Social signals (hiring, funding) surface warm leads daily" },
+    ],
+    roi: {
+      inputs: [
+        { key: "hoursPerWeek", label: "Hours/week spent on manual prospecting", unit: "hours", min: 2, max: 40, step: 1, default: 10 },
+        { key: "reps", label: "Number of people prospecting", unit: "count", min: 1, max: 10, step: 1, default: 1 },
+        { key: "dealValue", label: "Average deal value", unit: "usd", min: 500, max: 100000, step: 500, default: 5000 },
+      ],
+      outputs: [
+        { key: "hoursSaved", label: "Hours saved per month", format: "hours" },
+        { key: "pipelineAdded", label: "Estimated new pipeline / month", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
   {
     slug: "sales",
@@ -122,6 +173,32 @@ export const ENGINES: EngineDetail[] = [
       { week: "Week 4", deliverable: "First-meeting baseline measured. Tuning. Scale-up plan for month 2." },
     ],
     integrations: ["HubSpot", "Pipedrive", "Salesforce", "LinkedIn Sales Navigator", "Cal.com", "WhatsApp Business", "Apollo", "Clay"],
+    narrative: {
+      problem: "Most SMBs can't close pipeline they don't have. But building and running a real SDR function costs $60–80k/year per rep — plus ramp time, management overhead, and the near-certain turnover within 18 months.",
+      challenge: "Hiring one SDR is expensive. Keeping them motivated is harder. Training them to your ICP and tone takes months. And when they leave, you start from zero — again.",
+      consequence: "Without a reliable pipeline engine, growth becomes lumpy and referral-dependent. Founders end up doing SDR work themselves at CEO hourly rates, which means they're not closing, not building, and not sleeping.",
+      whyChange: "AI SDRs don't call in sick, don't lose motivation, and don't need 90-day ramp time. They run the same cadence quality on Tuesday morning as Friday afternoon — and they get better as you tune them.",
+      whyNow: "Multichannel outreach tooling (email + LinkedIn + WhatsApp) is now commoditized. LLMs can personalize at scale with genuine quality. The cost of running an autonomous AI SDR at competitive quality has dropped to a fraction of one human hire.",
+      why10xai: "We don't hand you a tool — we run the ICP workshop, train the voice, wire the CRM, and manage the cadences. The first qualified meeting typically lands in week 3. We measure pipeline created, not software licenses deployed.",
+    },
+    industries: [
+      { name: "B2B SaaS", useCase: "Target VP Sales, RevOps, and CTO personas at companies in a defined tech stack or funding stage.", impact: "Intent signal-based targeting cuts noise by 60%+" },
+      { name: "Professional Services", useCase: "Agencies and consultancies building outbound into new verticals where referrals aren't enough.", impact: "Multichannel cadences generate 2–4× more replies than email alone" },
+      { name: "Healthcare Technology", useCase: "Reach clinical administrators and procurement leads with warm, HIPAA-aware outreach sequences.", impact: "Compliance-ready templates built into every cadence" },
+      { name: "Financial Services", useCase: "Connect wealth managers, fintech founders, and CFOs with context-rich, regulation-aware messaging.", impact: "Industry-specific personalization drives higher open rates" },
+    ],
+    roi: {
+      inputs: [
+        { key: "meetingsPerMonth", label: "Qualified meetings / month today", unit: "count", min: 0, max: 30, step: 1, default: 5 },
+        { key: "dealValue", label: "Average deal value", unit: "usd", min: 1000, max: 250000, step: 1000, default: 10000 },
+        { key: "closeRate", label: "Current close rate", unit: "percent", min: 5, max: 60, step: 1, default: 20 },
+      ],
+      outputs: [
+        { key: "additionalMeetings", label: "Additional meetings / month", format: "count" },
+        { key: "revenueImpact", label: "Estimated revenue impact / month", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
   {
     slug: "care",
@@ -171,6 +248,32 @@ export const ENGINES: EngineDetail[] = [
       { week: "Week 4", deliverable: "First-month metrics: response time, resolution rate, booked appointments. Tuning." },
     ],
     integrations: ["WhatsApp Business", "Cal.com", "Acuity", "Google Business Profile", "Stripe (deposits)", "Twilio", "Resend"],
+    narrative: {
+      problem: "Customer service is the last thing a founder wants to spend evenings on — but the first thing that kills a reputation when it fails. Slow replies mean bad reviews. Bad reviews mean lost customers. Lost customers are permanent.",
+      challenge: "Hiring a support team scales cost linearly with volume. Free-tier chatbots can't handle anything beyond a static FAQ. And WhatsApp — the primary customer channel for most SMBs in Latin America and a growing share in the US — is drowning teams who try to manage it manually.",
+      consequence: "Every slow response compounds. Customers who wait more than 10 minutes are 40% less likely to buy. Unresponded reviews signal neglect to every future prospect. This gap doesn't close by itself — it grows as volume grows.",
+      whyChange: "AI customer service has crossed the quality threshold where most customers can't distinguish it from a human for tier-1 inquiries. The question is no longer whether AI can do this — it's whether you can afford not to have it.",
+      whyNow: "WhatsApp Business API, Claude's context window, and real-time booking integrations now combine to make a genuine 24/7 service agent feasible without enterprise infrastructure or enterprise budget.",
+      why10xai: "We build the escalation rules, train the agent on your actual service catalog and tone, and wire the human handoff from day one. You don't get a generic chatbot — you get an agent that sounds like your best team member.",
+    },
+    industries: [
+      { name: "Health & Wellness Clinics", useCase: "Handle appointment booking, rescheduling, pre-visit instructions, and review responses — across WhatsApp and web.", impact: "No-show rate reduced by automated 24h reminders" },
+      { name: "Beauty & Personal Care", useCase: "Book appointments, answer service questions, and recover abandoned bookings — in any language the customer messages in.", impact: "Response time from hours to seconds on WhatsApp" },
+      { name: "E-commerce & Retail", useCase: "Triage order status, returns, and product questions automatically — escalate only billing disputes and exceptions.", impact: "70%+ of tier-1 tickets resolved without human touch" },
+      { name: "Home Services", useCase: "Route service requests, confirm appointments, and collect pre-job information — before your crew shows up.", impact: "Same-day booking confirmation via WhatsApp automation" },
+    ],
+    roi: {
+      inputs: [
+        { key: "ticketsPerMonth", label: "Customer messages / month", unit: "count", min: 50, max: 5000, step: 50, default: 300 },
+        { key: "avgHandleMinutes", label: "Avg. handle time per message (min)", unit: "count", min: 3, max: 30, step: 1, default: 10 },
+        { key: "staffCostHour", label: "Staff cost / hour", unit: "usd", min: 12, max: 80, step: 1, default: 20 },
+      ],
+      outputs: [
+        { key: "hoursSaved", label: "Staff hours saved / month", format: "hours" },
+        { key: "costSaved", label: "Estimated savings / month", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
   {
     slug: "reach",
@@ -220,6 +323,32 @@ export const ENGINES: EngineDetail[] = [
       { week: "Week 4", deliverable: "Voice tuning, performance review, scale-up plan for month 2." },
     ],
     integrations: ["LinkedIn", "Instagram Graph API", "Facebook Pages", "X (Twitter)", "Beehiiv", "Resend", "Google Ads", "Meta Ads"],
+    narrative: {
+      problem: "Marketing requires consistent, high-quality output across multiple channels every single week. But most SMBs have one person (or zero) dedicated to marketing — and that person is already stretched across six other jobs.",
+      challenge: "Inconsistent posting loses algorithmic momentum overnight. Generic AI content doesn't just underperform — it actively damages brand trust. And most small teams post in bursts when they have time, go dark for weeks, then wonder why growth stalled.",
+      consequence: "Brands that go silent lose search ranking, social followers, and the compound interest of content marketing. Every week without content is a week competitors gain ground. The longer you wait, the more expensive recovery becomes.",
+      whyChange: "AI-generated content has crossed brand-quality thresholds when properly trained on voice samples and editorial guidelines. Reach Engine doesn't replace human creativity — it eliminates the 80% of content work that is production, not thinking.",
+      whyNow: "LLMs trained on brand voice can now produce on-brand content at near-human quality in seconds. Native social publishing APIs, ad platform integrations, and automated approval flows make a real autonomous content pipeline possible today.",
+      why10xai: "We do the voice training, the channel setup, the content calendar, and the human approval workflow. You review one queue per week and publish. We produce the rest — in three languages if your audience spans markets.",
+    },
+    industries: [
+      { name: "B2B Professional Services", useCase: "LinkedIn thought-leadership content, case study posts, and ad creative — consistently, in the founder's voice.", impact: "3× posting frequency with same team headcount" },
+      { name: "Healthcare & Wellness", useCase: "Patient education content, provider spotlights, and community-building posts — in multiple languages for diverse markets.", impact: "Compliant, brand-safe content without legal review bottlenecks" },
+      { name: "E-commerce & CPG", useCase: "Product launch content, UGC-style creative, and ad variant factories for Meta and Google — refreshed weekly.", impact: "30+ ad variants per campaign at a fraction of agency cost" },
+      { name: "Restaurants & Hospitality", useCase: "Menu features, event promotions, and review amplification — across Instagram, Facebook, and Google Business.", impact: "Consistent local brand presence without a marketing hire" },
+    ],
+    roi: {
+      inputs: [
+        { key: "contentPiecesPerMonth", label: "Content pieces published / month today", unit: "count", min: 0, max: 60, step: 2, default: 8 },
+        { key: "hoursPerPiece", label: "Hours per piece (writing + design + posting)", unit: "hours", min: 1, max: 8, step: 0.5, default: 3 },
+        { key: "staffCostHour", label: "Staff cost / hour", unit: "usd", min: 20, max: 200, step: 5, default: 60 },
+      ],
+      outputs: [
+        { key: "hoursSaved", label: "Hours saved / month", format: "hours" },
+        { key: "costSaved", label: "Estimated savings / month", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
   {
     slug: "mind",
@@ -269,6 +398,32 @@ export const ENGINES: EngineDetail[] = [
       { week: "Week 78", deliverable: "Tune, expand to remaining roles, set continuous-update cadence." },
     ],
     integrations: ["Notion", "Google Docs", "Slack", "Confluence", "Loom", "Claude (Anthropic)"],
+    narrative: {
+      problem: "Onboarding is broken at most SMBs. The 'training material' is three Slack messages, two outdated Google Docs, and shadowing someone who is about to quit. New hires learn by making mistakes — on your customers.",
+      challenge: "Building proper training content takes weeks of subject-matter expert time that nobody has. And even when it's built, it goes stale the moment you change a product, a policy, or a process — which is constantly.",
+      consequence: "New hires take 2–3× longer to ramp than they should. They make avoidable mistakes. They quit. And the cycle repeats — except now you've lost both the training investment and the institutional knowledge they accumulated.",
+      whyChange: "AI tutors can deliver personalized, role-specific training at scale without creating a content bottleneck. The answer is no longer in another onboarding document nobody reads — it's in an agent that responds in real time to the actual question the new hire has.",
+      whyNow: "LLM context windows now support full SOPs and knowledge bases as live training material. The cost to build a custom AI tutor that knows your entire business dropped 95% in 24 months. The infrastructure is ready. The bottleneck is will.",
+      why10xai: "Our founder is an ATD Master Trainer with a formal instructional design credential. Every Mind Engine is built with real pedagogy — not just a chatbot wrapper around your Notion. We measure ramp time reduction, not documents uploaded.",
+    },
+    industries: [
+      { name: "Healthcare & Clinical", useCase: "Role-specific training for nurses, front desk, and billing staff — with HIPAA-aware content controls baked in.", impact: "Ramp time reduced 40–60% in pilot deployments" },
+      { name: "Hospitality & Food Service", useCase: "Brand standards, service protocols, and POS training for high-turnover front-line staff — available 24/7 in any language.", impact: "Consistent quality across locations without a training manager" },
+      { name: "Professional Services Firms", useCase: "Client onboarding playbooks, methodology training, and compliance updates delivered as interactive AI sessions — not PDFs.", impact: "Senior consultants spend 3h less per new hire on shadowing" },
+      { name: "Technology Companies", useCase: "Product training, sales playbooks, and support runbooks that update automatically when the product changes.", impact: "Zero lag between product release and team readiness" },
+    ],
+    roi: {
+      inputs: [
+        { key: "hiresPerQuarter", label: "New hires per quarter", unit: "count", min: 1, max: 30, step: 1, default: 4 },
+        { key: "rampWeeks", label: "Current ramp time (weeks)", unit: "count", min: 2, max: 20, step: 1, default: 6 },
+        { key: "weeklyCost", label: "Cost per employee per week (salary + overhead)", unit: "usd", min: 500, max: 6000, step: 100, default: 1500 },
+      ],
+      outputs: [
+        { key: "weeksSaved", label: "Ramp weeks saved / quarter", format: "count" },
+        { key: "costSaved", label: "Estimated savings / quarter", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
   {
     slug: "bid",
@@ -318,23 +473,49 @@ export const ENGINES: EngineDetail[] = [
       { week: "Week 78", deliverable: "Win-rate baseline measured, risk-flag accuracy reviewed, scale plan for month 3." },
     ],
     integrations: ["Notion", "SharePoint", "Salesforce", "HubSpot", "DocuSign", "Adobe Sign"],
+    narrative: {
+      problem: "RFPs eat senior time. Most are unwinnable before you read page two. But you can't know which ones are worth pursuing until someone has read all of them — which means your best people spend weeks on bids that lose.",
+      challenge: "No-bid decisions require reading the full document. Proposal quality requires your most experienced writers. Both are expensive resources being pulled away from active clients and real revenue — every bid season.",
+      consequence: "Companies respond to everything because they can't afford to miss a winner, and exhaust their best people doing it. Win rates stay low because the effort is spread thin. The team burns out. The next bid season is even harder.",
+      whyChange: "AI can read and qualify an RFP in minutes and draft a tailored response anchored on your past wins in hours — freeing your senior people to focus only on deals that actually deserve their time.",
+      whyNow: "LLMs can now handle multi-hundred-page RFPs with structured extraction, compliance-flag detection, and competitive analysis. Past-win pattern matching at scale is feasible today in a way it wasn't 18 months ago.",
+      why10xai: "We index your past winning proposals, build the scoring model against your actual criteria, and run the first five RFPs end-to-end with your team watching. You see the quality — and the time savings — before you commit.",
+    },
+    industries: [
+      { name: "IT & Technology Services", useCase: "Qualify government and enterprise IT RFPs, surface compliance requirements, and draft responses from your technical wins.", impact: "Proposal drafting time reduced from days to hours" },
+      { name: "Engineering & Construction", useCase: "Score RFQs for fit against your capacity, license requirements, and past-project profile — before committing to respond.", impact: "Bid/no-bid decision in under 30 minutes per opportunity" },
+      { name: "Healthcare Services", useCase: "Navigate complex healthcare procurement requirements, HIPAA clauses, and insurance contracting language — automatically flagged.", impact: "Zero compliance gaps missed in review" },
+      { name: "Marketing & Creative Agencies", useCase: "Draft RFP responses that lead with creative case studies and ROI data matched to the prospect's vertical and stated criteria.", impact: "Win rate improvement through tailored, evidence-based responses" },
+    ],
+    roi: {
+      inputs: [
+        { key: "rfpsPerMonth", label: "RFPs received per month", unit: "count", min: 2, max: 50, step: 1, default: 8 },
+        { key: "hoursPerRfp", label: "Hours spent per RFP (eval + write)", unit: "hours", min: 5, max: 80, step: 5, default: 20 },
+        { key: "staffCostHour", label: "Senior staff cost / hour", unit: "usd", min: 50, max: 400, step: 10, default: 150 },
+      ],
+      outputs: [
+        { key: "hoursSaved", label: "Hours saved / month", format: "hours" },
+        { key: "costSaved", label: "Estimated savings / month", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
   {
     slug: "bernie",
     iconKey: "bernie",
     name: "Bernie",
-    tag: "Concierge",
-    desc: "Real-time AI sales agent on your site. Trilingual. Trained on your voice.",
+    tag: "AI SDR Agent",
+    desc: "An AI sales development rep embedded on your site — qualifies visitors, handles objections, and books calls. Trilingual. Never sleeps.",
     valueProp:
       "A real-time AI sales concierge on your website. Trilingual. Trained on your services, FAQs, and tone. Books meetings while you sleep.",
     longDesc:
       "Bernie is the agent on this very site  the same one we deploy for clients. He answers questions about your services, qualifies the visitor, and books a call without anyone refreshing their inbox. Trained on your tone of voice, capped at 10 turns per chat, and hardened against prompt-injection from day one.",
     details: [
-      "24/7 chat agent on your site, in EN/PT-BR/ES",
-      "Trained on your services, FAQs, and tone of voice",
-      "Books meetings, captures leads, escalates to human",
+      "Qualifies visitors using MEDDIC + Challenger methodology",
+      "Handles objections, books meetings, escalates hot leads to human",
+      "Trilingual (EN/PT-BR/ES) — auto-detects visitor language",
     ],
-    bestFor: "Any business with web traffic and a sales motion",
+    bestFor: "Any B2B or service business with web traffic and a sales motion",
     anchor: "From $99/mo",
     variant: "concierge",
     whoFor: [
@@ -369,6 +550,32 @@ export const ENGINES: EngineDetail[] = [
     ],
     integrations: ["Anthropic Claude", "HubSpot", "Cal.com", "Resend", "Vercel"],
     primaryCta: { label: "Talk to Bernie now", href: "#" },
+    narrative: {
+      problem: "Your website has traffic but most visitors leave without converting. A contact form converts under 1%. No human can staff the chat window 24/7 — and even if they could, they'd be answering the same five questions on repeat.",
+      challenge: "Generic chatbots feel generic. They damage trust more than they build it. Truly good sales conversations require knowing your services, your pricing logic, your competitive positioning, and your voice — none of which comes out of the box.",
+      consequence: "Every visitor who doesn't convert is pipeline you paid to acquire but never captured. At scale — 1,000 visitors per month, 1% conversion rate — you're losing 990 warm opportunities every single month. The cost compounds silently.",
+      whyChange: "AI agents trained on your specific business can now have real qualification conversations, not keyword matching. The quality bar for AI-assisted sales chat has crossed the human threshold for most tier-1 conversations — in any language.",
+      whyNow: "LLMs with system-prompt training can hold brand-consistent, multi-turn sales conversations with sub-second response time and genuine sales methodology built in. The infrastructure to deploy this is a week of work, not a quarter.",
+      why10xai: "Bernie is the same agent we run on 10xai.us right now. You see it working before you buy it. We train it on your business, test it in staging across all three languages, and go live in week 2. From $99/mo.",
+    },
+    industries: [
+      { name: "B2B Services & Agencies", useCase: "Qualify inbound leads, explain service tiers, handle pricing objections, and book discovery calls — without a sales rep on standby.", impact: "Chat-to-booking rate 3–5× higher than contact form alone" },
+      { name: "Healthcare & Wellness", useCase: "Answer patient questions, explain service offerings, and route to booking — in English, Portuguese, or Spanish.", impact: "Immediate response regardless of office hours or timezone" },
+      { name: "Real Estate & Finance", useCase: "Pre-qualify prospects, explain product options, and book appointments with advisors — with full compliance guardrails built in.", impact: "No-show rate reduced by pre-qualification step" },
+      { name: "E-commerce & Retail", useCase: "Handle product questions, shipping inquiries, and return policies — escalating only complex cases to a human agent.", impact: "70%+ of pre-sale questions resolved instantly" },
+    ],
+    roi: {
+      inputs: [
+        { key: "visitorsPerMonth", label: "Monthly website visitors", unit: "count", min: 100, max: 50000, step: 100, default: 1000 },
+        { key: "currentConversion", label: "Current conversion rate (%)", unit: "percent", min: 0.1, max: 5, step: 0.1, default: 0.5 },
+        { key: "dealValue", label: "Average deal value", unit: "usd", min: 500, max: 50000, step: 500, default: 2500 },
+      ],
+      outputs: [
+        { key: "additionalLeads", label: "Additional leads / month", format: "count" },
+        { key: "revenueImpact", label: "Estimated revenue impact / month", format: "usd" },
+        { key: "payback", label: "Estimated payback period", format: "months" },
+      ],
+    },
   },
 ];
 
@@ -387,9 +594,7 @@ export function getHomeEngines(): Engine[] {
     return {
       ...rest,
       // Lighthouse and Bernie keep their special hrefs; others link to /engines/[slug]
-      href: rest.name === "Bernie"
-        ? undefined
-        : rest.name === "Lighthouse"
+      href: rest.name === "Lighthouse"
         ? "/lighthouse-demo"
         : `/engines/${ENGINES.find((e) => e.name === rest.name)!.slug}`,
     };

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { ENGINES, getAllEngineSlugs, getEngine } from "@/data/engines";
 import { Reveal } from "@/components/Reveal";
+import { RoiCalculator } from "@/components/RoiCalculator";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Check, ArrowRight } from "lucide-react";
@@ -180,6 +181,97 @@ export default async function EngineDetailPage({
                     <h3 className="font-display text-xl font-bold text-[var(--color-ink)]">{f.title}</h3>
                     <p className="mt-3 text-[var(--color-ink-700)]">{f.desc}</p>
                   </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Narrative — Why Change */}
+        <section className="border-y border-[var(--color-ink-300)]/60 bg-[var(--color-ink)] text-[var(--color-cream)]">
+          <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
+            <Reveal>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">
+                The case for change
+              </p>
+              <h2 className="mt-3 max-w-3xl font-display text-3xl font-black tracking-tight md:text-4xl">
+                Why change? Why now? Why 10XAI?
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { label: "The problem", body: engine.narrative.problem },
+                { label: "The challenge", body: engine.narrative.challenge },
+                { label: "The long-term consequence", body: engine.narrative.consequence },
+                { label: "Why change", body: engine.narrative.whyChange },
+                { label: "Why now", body: engine.narrative.whyNow },
+                { label: "Why 10XAI", body: engine.narrative.why10xai },
+              ].map((item, i) => (
+                <Reveal key={item.label} delay={i * 60}>
+                  <div className="flex h-full flex-col rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]/60 p-6">
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-gold)]">
+                      {item.label}
+                    </p>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-ink-300)]">
+                      {item.body}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ROI Calculator */}
+        <section className="bg-[var(--color-cream-50)]">
+          <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
+            <Reveal>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">
+                Return on investment
+              </p>
+              <h2 className="mt-3 max-w-3xl font-display text-3xl font-black tracking-tight text-[var(--color-ink)] md:text-4xl">
+                What could this be worth to you?
+              </h2>
+              <p className="mt-4 max-w-2xl text-[var(--color-ink-700)]">
+                Adjust the inputs below to your current situation and see a rough estimate of the impact.
+              </p>
+            </Reveal>
+            <div className="mt-10">
+              <RoiCalculator
+                slug={engine.slug}
+                inputs={engine.roi.inputs}
+                outputs={engine.roi.outputs}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Industries */}
+        <section className="border-t border-[var(--color-ink-300)]/60 bg-[var(--color-cream)]">
+          <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28 lg:px-8">
+            <Reveal>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--color-gold)]">
+                Use cases by industry
+              </p>
+              <h2 className="mt-3 max-w-3xl font-display text-3xl font-black tracking-tight text-[var(--color-ink)] md:text-4xl">
+                Built to work across verticals.
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {engine.industries.map((ind, i) => (
+                <Reveal key={ind.name} delay={i * 70}>
+                  <div className="flex h-full flex-col rounded-xl border border-[var(--color-ink-200)] bg-[var(--color-cream-50)] p-6 md:p-8">
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-gold)]">
+                      {ind.name}
+                    </p>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-ink-700)]">
+                      {ind.useCase}
+                    </p>
+                    <div className="mt-4 flex items-center gap-2 rounded-lg bg-[var(--color-gold)]/8 px-3 py-2">
+                      <Check size={14} className="shrink-0 text-[var(--color-gold)]" />
+                      <p className="text-xs font-medium text-[var(--color-ink-700)]">{ind.impact}</p>
+                    </div>
+                  </div>
                 </Reveal>
               ))}
             </div>
