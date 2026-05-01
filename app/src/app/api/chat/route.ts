@@ -2,6 +2,22 @@ import Anthropic from "@anthropic-ai/sdk";
 
 export const runtime = "nodejs";
 
+// Per-IP rate limit: 30 requests per 60-second window (in-memory, per instance)
+const RATE_LIMIT_MAX = 30;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const ipHits = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = ipHits.get(ip);
+  if (!entry || now > entry.resetAt) {
+    ipHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
 const BERNIE_SYSTEM_PROMPT = `You are **Bernie** — the customer support and sales concierge for **10XAI**, an AI agency founded by Bernardo Medrado that builds AI Operating Systems for SMBs in the United States, Brazil, and Latin America.
 
 ## Your role (state this clearly when asked)
@@ -107,6 +123,18 @@ function detectLanguage(text: string): "pt" | "es" | "en" {
 }
 
 export async function POST(request: Request) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown";
+
+  if (isRateLimited(ip)) {
+    return new Response("Too many requests. Please wait a minute.", {
+      status: 429,
+      headers: { "Retry-After": "60" },
+    });
+  }
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return new Response(
       "Server is missing ANTHROPIC_API_KEY — set it in .env.local or via the host shell.",
