@@ -196,7 +196,7 @@ Logo  |  Lighthouse  |  Engines  |  About  |  Methodology  |  Resources ▾  |  
 
 Lighthouse · Engines · About · Methodology · Trust · Privacy · Terms · Contact
 
-contato@10xai.us · WhatsApp +1 ... · Apex / Raleigh, NC · São Paulo · CDMX
+contato10xai@gmail.com · WhatsApp +1 ... · Apex / Raleigh, NC · São Paulo · CDMX
 
 © 2026 10XAI. All rights reserved.
                                               [EN  PT  ES]

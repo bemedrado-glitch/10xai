@@ -51,7 +51,7 @@ Industries shown: dental practices, marketing agencies, accounting firms, logist
 
 - "Schedule a Call" (primary)
 - "Choose your first system"
-- Email: `contato@10xai.us`
+- Email: `contato10xai@gmail.com`
 - WhatsApp
 - "Send qualified brief" form
 
