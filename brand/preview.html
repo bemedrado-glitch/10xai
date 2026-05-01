@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10XAI — Brand Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Inter:wght@400;500;700&display=swap">
+  <style>
+    :root {
+      --ink: #0C0A09;
+      --ink-700: #44403C;
+      --ink-300: #D6D3D1;
+      --gold: #CA8A04;
+      --gold-100: #FEF9C3;
+      --cream: #FAFAF9;
+      --cream-50: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      padding: 48px 24px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 900;
+      font-size: 48px;
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+    .subtitle { color: var(--ink-700); font-size: 18px; margin-bottom: 48px; }
+    h2 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -0.5px;
+      margin: 64px 0 24px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink-300);
+    }
+    h2:first-of-type { margin-top: 0; }
+    .panel {
+      background: var(--cream-50);
+      border: 1px solid var(--ink-300);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .panel.dark {
+      background: var(--ink);
+      border-color: var(--ink-700);
+    }
+    .panel.dark .label { color: rgba(250, 250, 249, 0.7); }
+    .panel-row { display: flex; align-items: center; justify-content: center; min-height: 200px; flex-wrap: wrap; gap: 32px; }
+    .label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-700);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .size-test {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      background: var(--cream-50);
+      border: 1px solid var(--ink-300);
+      border-radius: 12px;
+    }
+    .size-test img { display: block; margin-bottom: 12px; }
+    .size-test .caption {
+      font-size: 12px;
+      color: var(--ink-700);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .palette { display: flex; gap: 16px; flex-wrap: wrap; }
+    .swatch {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      border: 1px solid var(--ink-300);
+    }
+    .swatch.ink { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .swatch.ink-700 { background: var(--ink-700); color: var(--cream); border-color: var(--ink-700); }
+    .swatch.ink-300 { background: var(--ink-300); color: var(--ink); }
+    .swatch.gold { background: var(--gold); color: var(--cream); border-color: var(--gold); }
+    .swatch.gold-100 { background: var(--gold-100); color: var(--ink); }
+    .swatch.cream { background: var(--cream); color: var(--ink); }
+    .swatch.cream-50 { background: var(--cream-50); color: var(--ink); }
+    .type-sample {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--ink-300);
+    }
+    .type-sample:last-child { border-bottom: none; }
+    .type-sample .role {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--ink-700);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .button-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 200ms ease-out;
+    }
+    .btn-primary { background: var(--gold); color: var(--cream-50); }
+    .btn-primary:hover { background: #A16207; }
+    .btn-secondary { background: var(--ink); color: var(--cream-50); }
+    .btn-secondary:hover { background: var(--ink-700); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink-300); }
+    .btn-ghost:hover { background: var(--cream-50); border-color: var(--ink-700); }
+    .focus-test:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--ink-300);
+      color: var(--ink-700);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>10XAI Brand Preview</h1>
+    <p class="subtitle">All assets in one place. Open this file directly in your browser (no server needed).</p>
+
+    <h2>Wordmark — Light surface</h2>
+    <div class="panel">
+      <div class="label">logo-wordmark-light.svg</div>
+      <div class="panel-row">
+        <img src="logo-wordmark-light.svg" alt="10XAI wordmark light" width="360" height="100">
+      </div>
+    </div>
+
+    <h2>Wordmark — Dark surface</h2>
+    <div class="panel dark">
+      <div class="label">logo-wordmark-dark.svg</div>
+      <div class="panel-row">
+        <img src="logo-wordmark-dark.svg" alt="10XAI wordmark dark" width="360" height="100">
+      </div>
+    </div>
+
+    <h2>Monogram — Multiple sizes</h2>
+    <div class="panel">
+      <div class="label">logo-monogram.svg — scales from app icon to favicon</div>
+      <div class="panel-row">
+        <div class="size-test">
+          <img src="logo-monogram.svg" alt="Monogram large" width="128" height="128">
+          <div class="caption">128 × 128 — App icon</div>
+        </div>
+        <div class="size-test">
+          <img src="logo-monogram.svg" alt="Monogram medium" width="64" height="64">
+          <div class="caption">64 × 64 — Avatar</div>
+        </div>
+        <div class="size-test">
+          <img src="logo-monogram.svg" alt="Monogram small" width="32" height="32">
+          <div class="caption">32 × 32 — Inline</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Favicon</h2>
+    <div class="panel">
+      <div class="label">favicon.svg — simplified for tiny scale</div>
+      <div class="panel-row">
+        <div class="size-test">
+          <img src="favicon.svg" alt="Favicon 64" width="64" height="64">
+          <div class="caption">64 × 64 (preview)</div>
+        </div>
+        <div class="size-test">
+          <img src="favicon.svg" alt="Favicon 32" width="32" height="32">
+          <div class="caption">32 × 32 (real)</div>
+        </div>
+        <div class="size-test">
+          <img src="favicon.svg" alt="Favicon 16" width="16" height="16">
+          <div class="caption">16 × 16 (browser tab)</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Horizontal lockup</h2>
+    <div class="panel">
+      <div class="label">logo-lockup-horizontal.svg — for site header navigation</div>
+      <div class="panel-row">
+        <img src="logo-lockup-horizontal.svg" alt="10XAI lockup horizontal" width="520" height="100">
+      </div>
+    </div>
+
+    <h2>Color palette</h2>
+    <div class="panel">
+      <div class="palette">
+        <div class="swatch ink">ink<br>#0C0A09</div>
+        <div class="swatch ink-700">ink-700<br>#44403C</div>
+        <div class="swatch ink-300">ink-300<br>#D6D3D1</div>
+        <div class="swatch gold">gold<br>#CA8A04</div>
+        <div class="swatch gold-100">gold-100<br>#FEF9C3</div>
+        <div class="swatch cream">cream<br>#FAFAF9</div>
+        <div class="swatch cream-50">cream-50<br>#FFFFFF</div>
+      </div>
+    </div>
+
+    <h2>Typography</h2>
+    <div class="panel">
+      <div class="type-sample">
+        <div class="role">text-display-xl — 72 / 1.0 — DM Sans 900</div>
+        <div style="font-family: 'DM Sans'; font-weight: 900; font-size: 72px; letter-spacing: -3px; line-height: 1.0;">From pilot purgatory to production AI.</div>
+      </div>
+      <div class="type-sample">
+        <div class="role">text-h1 — 40 / 1.15 — DM Sans 900</div>
+        <div style="font-family: 'DM Sans'; font-weight: 900; font-size: 40px; letter-spacing: -1.5px; line-height: 1.15;">AI Operating Systems for SMBs</div>
+      </div>
+      <div class="type-sample">
+        <div class="role">text-h2 — 32 / 1.2 — DM Sans 700</div>
+        <div style="font-family: 'DM Sans'; font-weight: 700; font-size: 32px; letter-spacing: -0.8px; line-height: 1.2;">We find your demand. We build the systems that turn it into bookings.</div>
+      </div>
+      <div class="type-sample">
+        <div class="role">text-body-lg — 20 / 1.6 — Inter 500</div>
+        <div style="font-family: 'Inter'; font-weight: 500; font-size: 20px; line-height: 1.6;">Bernardo Medrado spent 20 years inside revenue technology so his SMB clients don't have to. Trilingual operator. Trainer-certified. Built for operators, not theorists.</div>
+      </div>
+      <div class="type-sample">
+        <div class="role">text-body — 16 / 1.6 — Inter 400</div>
+        <div style="font-family: 'Inter'; font-weight: 400; font-size: 16px; line-height: 1.6; max-width: 65ch;">Lighthouse finds local businesses with great Google reviews and no website. We build them one with AI, then reach out — turning silent demand into our pipeline (and theirs). The motion runs in English, Portuguese, and Spanish from day one.</div>
+      </div>
+      <div class="type-sample">
+        <div class="role">text-caption — 14 / 1.4 — Inter 500</div>
+        <div style="font-family: 'Inter'; font-weight: 500; font-size: 14px; line-height: 1.4; letter-spacing: 0.5px;">ATD Master Trainer · AA-ISP Accredited · FGV · Top 100 Healthcare BR</div>
+      </div>
+    </div>
+
+    <h2>CTAs (with hover + focus states)</h2>
+    <div class="panel">
+      <div class="button-row">
+        <button class="btn btn-primary focus-test">Book a Call →</button>
+        <button class="btn btn-secondary focus-test">Talk to Dez</button>
+        <button class="btn btn-ghost focus-test">Try Lighthouse</button>
+      </div>
+      <div class="label" style="margin-top:24px">Tab into a button to see the focus ring; hover to see the color transition.</div>
+    </div>
+
+    <div class="footer">
+      <p>10XAI · Brand v1 · 2026-04-30</p>
+      <p>Edit any SVG file in this folder and refresh to see updates.</p>
+    </div>
+  </div>
+</body>
+</html>

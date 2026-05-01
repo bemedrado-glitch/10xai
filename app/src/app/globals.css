@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* 10XAI design tokens — locked per /brand/brand-guidelines.md */
+@theme {
+  /* Color tokens */
+  --color-ink: #0C0A09;
+  --color-ink-900: #1C1917;
+  --color-ink-700: #44403C;
+  --color-ink-500: #78716C;
+  --color-ink-300: #D6D3D1;
+
+  --color-gold: #CA8A04;
+  --color-gold-600: #A16207;
+  --color-gold-100: #FEF9C3;
+
+  --color-cream: #FAFAF9;
+  --color-cream-50: #FFFFFF;
+  --color-cream-100: #F5F5F4;
+
+  --color-success: #15803D;
+  --color-danger: #B91C1C;
+  --color-info: #0369A1;
+
+  /* Fonts (loaded via next/font/google in layout.tsx) */
+  --font-display: var(--font-dm-sans);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* Base reset + typographic defaults */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "ss03", "cv11";
+  line-height: 1.6;
+}
+
+/* Display + headings use DM Sans 900 */
+h1, h2, h3, h4, h5, h6,
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Selection highlight  gold */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-cream);
+}
+
+/* Focus ring  gold (WCAG AAA) */
+*:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

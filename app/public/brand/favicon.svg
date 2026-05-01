@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  10XAI favicon — 32x32, optimized for browser tabs
+  Same DNA as monogram, simplified for tiny scale.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="10XAI">
+  <title>10XAI</title>
+  <rect width="32" height="32" rx="6" fill="#0C0A09"/>
+  <text
+    x="16" y="22"
+    font-family="'DM Sans','Inter',system-ui,sans-serif"
+    font-weight="900"
+    font-size="16"
+    letter-spacing="-1"
+    text-anchor="middle"
+    fill="#CA8A04">10X</text>
+</svg>
