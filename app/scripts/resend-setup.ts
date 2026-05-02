@@ -234,36 +234,34 @@ async function main() {
       personaToAudience.set(p.id, id);
     }
   } else {
-    let sharedId = audienceByName.get(SHARED_AUDIENCE_NAME);
-    let sharedName = SHARED_AUDIENCE_NAME;
-    if (!sharedId) {
-      try {
-        const created = await createAudience(SHARED_AUDIENCE_NAME);
-        sharedId = created.id;
-        console.log(`  Created audience: ${SHARED_AUDIENCE_NAME}`);
-      } catch (err) {
-        const msg = String(err);
-        if (msg.includes("400") && msg.includes("segments")) {
-          // Free tier exhausted — reuse the first existing audience as the bucket
-          const fallback = existingAudiences.data[0];
-          if (!fallback) throw err;
-          sharedId = fallback.id;
-          sharedName = fallback.name;
-          console.log(
-            `  Resend free-tier limit hit — reusing existing audience as the bucket: "${fallback.name}"`
-          );
-          console.log(
-            `  (To use a clean "${SHARED_AUDIENCE_NAME}" audience instead, delete unused audiences in Resend → Audiences and re-run.)`
-          );
-        } else {
-          throw err;
-        }
-      }
+    // Free tier strategy: always reuse an existing audience when possible.
+    // Resend free plan caps segments and can refuse new ones even when
+    // listAudiences shows few. Avoid the issue entirely by reusing.
+    let sharedId: string | undefined;
+    let sharedName: string;
+
+    const namedMatch = audienceByName.get(SHARED_AUDIENCE_NAME);
+    if (namedMatch) {
+      sharedId = namedMatch;
+      sharedName = SHARED_AUDIENCE_NAME;
+      console.log(`  Audience exists: ${sharedName} (reusing)`);
+    } else if (existingAudiences.data.length > 0) {
+      const first = existingAudiences.data[0];
+      sharedId = first.id;
+      sharedName = first.name;
+      console.log(`  Reusing existing audience as shared bucket: "${sharedName}"`);
+      console.log(
+        `  Tip: rename it to "${SHARED_AUDIENCE_NAME}" in Resend → Audiences if you'd like cleaner naming.`
+      );
     } else {
-      console.log(`  Audience exists: ${SHARED_AUDIENCE_NAME}`);
+      const created = await createAudience(SHARED_AUDIENCE_NAME);
+      sharedId = created.id;
+      sharedName = SHARED_AUDIENCE_NAME;
+      console.log(`  Created audience: ${sharedName}`);
     }
+
     for (const p of personas) {
-      personaToAudience.set(p.id, sharedId!);
+      personaToAudience.set(p.id, sharedId);
     }
     console.log(`  All ${personas.length} personas map to "${sharedName}".`);
   }
