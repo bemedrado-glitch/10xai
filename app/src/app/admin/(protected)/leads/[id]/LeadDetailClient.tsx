@@ -15,6 +15,9 @@ import {
   PauseCircle,
   PlayCircle,
   XCircle,
+  Sparkles,
+  Loader2,
+  Plus,
 } from "lucide-react";
 import type { Lead, Persona, Cadence } from "@/lib/database.types";
 import { categoryLabel } from "@/lib/business-categories";
@@ -61,6 +64,41 @@ export default function LeadDetailClient({
   const [enrollments, setEnrollments] = useState(initialEnrollments);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  // Enrichment state
+  const [enriching, setEnriching] = useState(false);
+  const [enrichError, setEnrichError] = useState<string | null>(null);
+  const [enrichResult, setEnrichResult] = useState<{
+    domain: string;
+    emails: string[];
+    phones: string[];
+    people: { name: string; email: string; position: string; confidence: number }[];
+    sources: { hunter: boolean; scrape: boolean };
+  } | null>(null);
+
+  async function enrich() {
+    if (!lead.website) {
+      setEnrichError("This lead has no website on file. Add one first.");
+      return;
+    }
+    setEnriching(true);
+    setEnrichError(null);
+    setEnrichResult(null);
+    try {
+      const res = await fetch("/api/admin/enrich", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: lead.website }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Enrichment failed");
+      setEnrichResult(data);
+    } catch (err) {
+      setEnrichError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setEnriching(false);
+    }
+  }
 
   async function save() {
     setSaving(true);
@@ -150,7 +188,133 @@ export default function LeadDetailClient({
 
       {/* Contact enrichment */}
       <div className="mb-6 rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)] p-5">
-        <h2 className="mb-4 text-sm font-bold text-[var(--color-cream)]">Contact</h2>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-[var(--color-cream)]">Contact</h2>
+          <button
+            onClick={enrich}
+            disabled={enriching || !lead.website}
+            title={!lead.website ? "Add a website first" : "Find emails + phones from the website"}
+            className="flex items-center gap-2 rounded-lg border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-gold)] transition-colors hover:bg-[var(--color-gold)]/20 disabled:opacity-40"
+          >
+            {enriching ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
+            {enriching ? "Enriching…" : "Enrich"}
+          </button>
+        </div>
+
+        {enrichError && (
+          <div className="mb-3 rounded-lg bg-red-900/30 px-3 py-2 text-xs text-red-400">
+            {enrichError}
+          </div>
+        )}
+
+        {enrichResult && (
+          <div className="mb-4 rounded-lg border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/5 p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-gold)]">
+                Suggestions for {enrichResult.domain}
+              </p>
+              <p className="text-[10px] text-[var(--color-ink-500)]">
+                {enrichResult.sources.hunter ? "Hunter + scrape" : "Scrape only"}
+              </p>
+            </div>
+
+            {enrichResult.people.length > 0 && (
+              <div className="mb-3">
+                <p className="mb-1.5 text-[10px] uppercase tracking-wider text-[var(--color-ink-500)]">
+                  People found
+                </p>
+                <div className="space-y-1.5">
+                  {enrichResult.people.slice(0, 5).map((p) => (
+                    <div
+                      key={p.email}
+                      className="flex items-center justify-between gap-3 rounded-md border border-[var(--color-ink-800)] bg-[var(--color-ink-900)] px-2.5 py-1.5"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-xs text-[var(--color-cream)]">
+                          {p.name}{" "}
+                          {p.position && (
+                            <span className="text-[var(--color-ink-500)]">· {p.position}</span>
+                          )}
+                        </p>
+                        <p className="text-[11px] text-[var(--color-ink-400)]">{p.email}</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setEmail(p.email);
+                          if (p.name && !contactName) setContactName(p.name);
+                          if (p.position && !contactTitle) setContactTitle(p.position);
+                        }}
+                        className="flex shrink-0 items-center gap-1 rounded-md border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-2 py-1 text-[10px] font-bold text-[var(--color-gold)] hover:bg-[var(--color-gold)]/20"
+                      >
+                        <Plus size={10} />
+                        Use
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {enrichResult.emails.length > 0 && (
+              <div className="mb-3">
+                <p className="mb-1.5 text-[10px] uppercase tracking-wider text-[var(--color-ink-500)]">
+                  Emails
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {enrichResult.emails.slice(0, 12).map((e) => (
+                    <button
+                      key={e}
+                      onClick={() => setEmail(e)}
+                      className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                        email === e
+                          ? "border-[var(--color-gold)] bg-[var(--color-gold)]/15 text-[var(--color-gold)]"
+                          : "border-[var(--color-ink-700)] bg-[var(--color-ink-900)] text-[var(--color-cream)] hover:border-[var(--color-gold)]/40"
+                      }`}
+                    >
+                      {e}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {enrichResult.phones.length > 0 && (
+              <div>
+                <p className="mb-1.5 text-[10px] uppercase tracking-wider text-[var(--color-ink-500)]">
+                  Phones
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {enrichResult.phones.map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => setPhone(p)}
+                      className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                        phone === p
+                          ? "border-[var(--color-gold)] bg-[var(--color-gold)]/15 text-[var(--color-gold)]"
+                          : "border-[var(--color-ink-700)] bg-[var(--color-ink-900)] text-[var(--color-cream)] hover:border-[var(--color-gold)]/40"
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {enrichResult.emails.length === 0 &&
+              enrichResult.phones.length === 0 &&
+              enrichResult.people.length === 0 && (
+                <p className="text-xs text-[var(--color-ink-500)]">
+                  Nothing found on the website. Try Hunter.io setup, or add a different URL.
+                </p>
+              )}
+
+            <p className="mt-3 text-[10px] text-[var(--color-ink-600)]">
+              Click any suggestion to fill the field above. Don&apos;t forget to <strong>Save</strong>.
+            </p>
+          </div>
+        )}
+
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
             <label className="mb-1 block text-[11px] font-medium text-[var(--color-ink-500)]">
