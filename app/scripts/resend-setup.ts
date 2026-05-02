@@ -34,6 +34,33 @@
  */
 
 import { createClient } from "@supabase/supabase-js";
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
+
+// Auto-load .env.local from cwd if present (saves the user from setting all
+// vars manually — they only need RESEND_ADMIN_KEY).
+function loadEnvLocal() {
+  const p = join(process.cwd(), ".env.local");
+  if (!existsSync(p)) return;
+  const text = readFileSync(p, "utf8");
+  for (const raw of text.split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+    const eq = line.indexOf("=");
+    if (eq === -1) continue;
+    const key = line.slice(0, eq).trim();
+    let value = line.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = value;
+  }
+  console.log("→ Loaded .env.local");
+}
+loadEnvLocal();
 
 const RESEND = "https://api.resend.com";
 const KEY = process.env.RESEND_ADMIN_KEY;
