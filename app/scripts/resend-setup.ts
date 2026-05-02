@@ -205,21 +205,49 @@ async function main() {
   const leads = leadsRes.data ?? [];
   console.log(`  ${leads.length} qualified leads (have email or phone)`);
 
-  console.log("→ Provisioning audiences (one per persona)...");
+  // Resend free tier caps audiences at 3. Use a single shared audience by
+  // default — persona segmentation is already in Supabase and broadcast names
+  // tell you which persona/cadence. To split per-persona, upgrade Resend Pro
+  // and set RESEND_PER_PERSONA_AUDIENCES=1.
+  const SHARED_AUDIENCE_NAME = "10XAI Leads";
+  const perPersona = process.env.RESEND_PER_PERSONA_AUDIENCES === "1";
+  console.log(
+    perPersona
+      ? "→ Provisioning audiences (one per persona — Pro plan)..."
+      : "→ Provisioning audience (single shared — free tier)..."
+  );
   const existingAudiences = await listAudiences();
   const audienceByName = new Map(existingAudiences.data.map((a) => [a.name, a.id]));
 
   const personaToAudience = new Map<string, string>();
-  for (const p of personas ?? []) {
-    let id = audienceByName.get(p.name);
-    if (!id) {
-      const created = await createAudience(p.name);
-      id = created.id;
-      console.log(`  Created audience: ${p.name}`);
-    } else {
-      console.log(`  Audience exists: ${p.name}`);
+
+  if (perPersona) {
+    for (const p of personas) {
+      let id = audienceByName.get(p.name);
+      if (!id) {
+        const created = await createAudience(p.name);
+        id = created.id;
+        console.log(`  Created audience: ${p.name}`);
+      } else {
+        console.log(`  Audience exists: ${p.name}`);
+      }
+      personaToAudience.set(p.id, id);
     }
-    personaToAudience.set(p.id, id);
+  } else {
+    let sharedId = audienceByName.get(SHARED_AUDIENCE_NAME);
+    if (!sharedId) {
+      const created = await createAudience(SHARED_AUDIENCE_NAME);
+      sharedId = created.id;
+      console.log(`  Created audience: ${SHARED_AUDIENCE_NAME}`);
+    } else {
+      console.log(`  Audience exists: ${SHARED_AUDIENCE_NAME}`);
+    }
+    for (const p of personas) {
+      personaToAudience.set(p.id, sharedId);
+    }
+    console.log(
+      `  All ${personas.length} personas map to "${SHARED_AUDIENCE_NAME}". Leftover per-persona audiences from earlier runs can be deleted manually in the Resend dashboard.`
+    );
   }
 
   console.log("→ Adding enrolled leads as contacts...");
