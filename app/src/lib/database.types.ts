@@ -264,6 +264,45 @@ export type Database = {
         };
         Relationships: [];
       };
+      tasks: {
+        Row: {
+          id: string;
+          lead_id: string | null;
+          title: string;
+          description: string | null;
+          type: string;
+          status: string;
+          due_at: string | null;
+          created_at: string;
+          updated_at: string;
+          completed_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          lead_id?: string | null;
+          title: string;
+          description?: string | null;
+          type?: string;
+          status?: string;
+          due_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          completed_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          lead_id?: string | null;
+          title?: string;
+          description?: string | null;
+          type?: string;
+          status?: string;
+          due_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          completed_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: { [_ in never]: never };
     Functions: { [_ in never]: never };
@@ -278,3 +317,4 @@ export type Cadence = Database["public"]["Tables"]["cadences"]["Row"];
 export type CadenceStep = Database["public"]["Tables"]["cadence_steps"]["Row"];
 export type Enrollment = Database["public"]["Tables"]["enrollments"]["Row"];
 export type EmailSend = Database["public"]["Tables"]["email_sends"]["Row"];
+export type Task = Database["public"]["Tables"]["tasks"]["Row"];

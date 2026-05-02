@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -18,9 +18,13 @@ import {
   Sparkles,
   Loader2,
   Plus,
+  Calendar,
+  CheckCircle2,
+  Trash2,
 } from "lucide-react";
 import type { Lead, Persona, Cadence } from "@/lib/database.types";
 import { categoryLabel } from "@/lib/business-categories";
+import { buildCalUrl, bookMeetingNotes } from "@/lib/cal";
 
 type Enrollment = {
   id: string;
@@ -75,6 +79,82 @@ export default function LeadDetailClient({
     people: { name: string; email: string; position: string; confidence: number }[];
     sources: { hunter: boolean; scrape: boolean };
   } | null>(null);
+
+  // Tasks state
+  type TaskRow = {
+    id: string;
+    title: string;
+    description: string | null;
+    type: string;
+    status: string;
+    due_at: string | null;
+    completed_at: string | null;
+    created_at: string;
+  };
+  const [tasks, setTasks] = useState<TaskRow[]>([]);
+  const [tasksLoading, setTasksLoading] = useState(true);
+  const [callOutcomeMsg, setCallOutcomeMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/admin/tasks?lead_id=${lead.id}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (!cancelled) {
+          setTasks(d.tasks ?? []);
+          setTasksLoading(false);
+        }
+      })
+      .catch(() => setTasksLoading(false));
+    return () => {
+      cancelled = true;
+    };
+  }, [lead.id]);
+
+  async function createFollowUpTask(daysFromNow: 30 | 60) {
+    const res = await fetch("/api/admin/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: `Follow up with ${lead.business_name}`,
+        description: `Post-${daysFromNow} follow-up after negative call response.`,
+        type: daysFromNow === 30 ? "follow_up_30" : "follow_up_60",
+        days_from_now: daysFromNow,
+        lead_id: lead.id,
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setTasks((prev) => [data.task, ...prev]);
+      setCallOutcomeMsg(`Follow-up scheduled in ${daysFromNow} days.`);
+      setTimeout(() => setCallOutcomeMsg(null), 3000);
+    }
+  }
+
+  async function toggleTask(t: TaskRow) {
+    const newStatus = t.status === "done" ? "open" : "done";
+    const res = await fetch(`/api/admin/tasks/${t.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: newStatus }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setTasks((prev) => prev.map((x) => (x.id === t.id ? data.task : x)));
+    }
+  }
+
+  async function deleteTask(t: TaskRow) {
+    if (!confirm(`Delete task: "${t.title}"?`)) return;
+    const res = await fetch(`/api/admin/tasks/${t.id}`, { method: "DELETE" });
+    if (res.ok) setTasks((prev) => prev.filter((x) => x.id !== t.id));
+  }
+
+  const calUrl = buildCalUrl({
+    name: lead.contact_name ?? lead.business_name,
+    email: lead.email,
+    notes: bookMeetingNotes(lead.business_name),
+  });
 
   async function enrich() {
     if (!lead.website) {
@@ -184,6 +264,131 @@ export default function LeadDetailClient({
             </a>
           )}
         </div>
+      </div>
+
+      {/* Call outcome — quick actions for after a phone call */}
+      <div className="mb-6 rounded-xl border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/5 p-5">
+        <div className="mb-3 flex items-start justify-between">
+          <div>
+            <h2 className="text-sm font-bold text-[var(--color-cream)]">After the call</h2>
+            <p className="text-xs text-[var(--color-cream)]/70">
+              Quick log the outcome — book a meeting on a positive, schedule a follow-up on a no.
+            </p>
+          </div>
+          {callOutcomeMsg && (
+            <span className="rounded-full bg-emerald-900/40 px-3 py-1 text-[11px] font-medium text-emerald-300">
+              {callOutcomeMsg}
+            </span>
+          )}
+        </div>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+          <a
+            href={calUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 rounded-lg bg-[var(--color-gold)] px-3 py-2.5 text-sm font-bold text-[var(--color-cream)] hover:opacity-90"
+          >
+            <Calendar size={14} />
+            Positive · Book meeting
+          </a>
+          <button
+            onClick={() => createFollowUpTask(30)}
+            className="flex items-center justify-center gap-2 rounded-lg border border-amber-700/50 bg-amber-900/20 px-3 py-2.5 text-sm font-bold text-amber-300 hover:bg-amber-900/30"
+          >
+            <Calendar size={14} />
+            Negative · Follow up post 30
+          </button>
+          <button
+            onClick={() => createFollowUpTask(60)}
+            className="flex items-center justify-center gap-2 rounded-lg border border-orange-700/50 bg-orange-900/20 px-3 py-2.5 text-sm font-bold text-orange-300 hover:bg-orange-900/30"
+          >
+            <Calendar size={14} />
+            Negative · Follow up post 60
+          </button>
+        </div>
+      </div>
+
+      {/* Tasks for this lead */}
+      <div className="mb-6 rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)] p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-[var(--color-cream)]">Tasks for this lead</h2>
+          <Link
+            href="/admin/tasks"
+            className="text-[11px] text-[var(--color-gold)] hover:underline"
+          >
+            All tasks →
+          </Link>
+        </div>
+        {tasksLoading ? (
+          <div className="flex items-center justify-center py-4">
+            <Loader2 size={16} className="animate-spin text-[var(--color-gold)]" />
+          </div>
+        ) : tasks.length === 0 ? (
+          <p className="text-xs text-[var(--color-cream)]/60">
+            No tasks yet. Use the buttons above to log a call outcome.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {tasks.map((t) => {
+              const isDone = t.status === "done";
+              const due = t.due_at ? new Date(t.due_at) : null;
+              const overdue = due && !isDone && due < new Date();
+              return (
+                <div
+                  key={t.id}
+                  className={`flex items-start gap-3 rounded-lg border px-3 py-2 ${
+                    isDone
+                      ? "border-[var(--color-ink-800)] opacity-60"
+                      : overdue
+                        ? "border-red-900/50 bg-red-900/10"
+                        : "border-[var(--color-ink-800)] bg-[var(--color-ink-900)]"
+                  }`}
+                >
+                  <button
+                    onClick={() => toggleTask(t)}
+                    className="mt-0.5 shrink-0 text-[var(--color-cream)]/70 hover:text-[var(--color-gold)]"
+                  >
+                    {isDone ? (
+                      <CheckCircle2 size={16} className="text-emerald-400" />
+                    ) : (
+                      <Calendar size={16} />
+                    )}
+                  </button>
+                  <div className="min-w-0 flex-1">
+                    <p
+                      className={`text-sm text-[var(--color-cream)] ${isDone ? "line-through" : ""}`}
+                    >
+                      {t.title}
+                    </p>
+                    {due && (
+                      <p
+                        className={`text-[11px] ${
+                          overdue ? "text-red-400" : "text-[var(--color-cream)]/60"
+                        }`}
+                      >
+                        Due{" "}
+                        {due.toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year:
+                            due.getFullYear() !== new Date().getFullYear() ? "numeric" : undefined,
+                        })}
+                        {overdue && " · overdue"}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => deleteTask(t)}
+                    className="rounded-md p-1 text-[var(--color-cream)]/60 hover:bg-red-900/30 hover:text-red-400"
+                    title="Delete task"
+                  >
+                    <Trash2 size={12} />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Contact enrichment */}

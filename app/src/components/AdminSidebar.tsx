@@ -2,13 +2,25 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, Database, Users, Mail, BarChart2, LogOut, Send, BookOpen, TrendingUp } from "lucide-react";
+import {
+  Search,
+  Database,
+  Users,
+  Mail,
+  BarChart2,
+  LogOut,
+  Send,
+  BookOpen,
+  TrendingUp,
+  CheckSquare,
+} from "lucide-react";
 import { createClient } from "@/lib/supabase";
 
 const NAV = [
   { href: "/admin/find-leads", icon: Search, label: "Find Leads" },
   { href: "/admin/leads", icon: Database, label: "Leads" },
   { href: "/admin/enrollments", icon: Send, label: "Enrollments" },
+  { href: "/admin/tasks", icon: CheckSquare, label: "Tasks" },
   { href: "/admin/personas", icon: Users, label: "Personas" },
   { href: "/admin/cadences", icon: Mail, label: "Cadences" },
   { href: "/admin/research", icon: BookOpen, label: "Research" },
