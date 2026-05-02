@@ -92,8 +92,18 @@ async function api<T>(method: string, path: string, body?: unknown): Promise<T> 
   return text ? (JSON.parse(text) as T) : ({} as T);
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function listAudiences() {
   return api<{ data: { id: string; name: string }[] }>("GET", "/audiences");
+}
+
+async function listBroadcasts() {
+  return api<{ data: { id: string; name: string }[] }>("GET", "/broadcasts").catch(
+    () => ({ data: [] })
+  );
 }
 
 async function createAudience(name: string) {
@@ -267,14 +277,22 @@ async function main() {
   }
 
   console.log("→ Adding enrolled leads as contacts...");
+  // In shared-audience mode, persona_id is irrelevant — every contact
+  // lands in the same bucket. Only require email.
+  const sharedAudienceId = perPersona ? null : personaToAudience.values().next().value!;
   let added = 0;
   let skipped = 0;
-  for (const lead of leads ?? []) {
-    if (!lead.email || !lead.persona_id) {
+  let i = 0;
+  for (const lead of leads) {
+    if (!lead.email) {
       skipped++;
       continue;
     }
-    const audienceId = personaToAudience.get(lead.persona_id);
+    const audienceId = perPersona
+      ? lead.persona_id
+        ? personaToAudience.get(lead.persona_id)
+        : null
+      : sharedAudienceId;
     if (!audienceId) {
       skipped++;
       continue;
@@ -287,8 +305,11 @@ async function main() {
     });
     if (result === null) skipped++;
     else added++;
+    // Resend rate limit: 5 req/sec. Sleep 220ms ≈ 4.5 req/sec to stay under.
+    i++;
+    if (i % 4 === 0) await sleep(220);
   }
-  console.log(`  Added: ${added} new contacts. Skipped (already in audience or no email/persona): ${skipped}`);
+  console.log(`  Added: ${added} new contacts. Skipped (already in audience or no email): ${skipped}`);
 
   console.log("→ Creating broadcast drafts (one per cadence Step 1)...");
   const { data: cadences } = await supa
@@ -301,15 +322,27 @@ async function main() {
     .eq("step_number", 1);
 
   const stepByCadence = new Map(steps?.map((s) => [s.cadence_id, s]) ?? []);
+
+  // Idempotency: skip broadcasts that already exist by name
+  const existingBroadcasts = await listBroadcasts();
+  const existingNames = new Set(existingBroadcasts.data.map((b) => b.name));
+  if (existingNames.size > 0) {
+    console.log(`  ${existingNames.size} broadcast(s) already exist — will skip those.`);
+  }
+
   let createdBroadcasts = 0;
+  let skippedExisting = 0;
   for (const c of cadences ?? []) {
-    if (!c.persona_id) continue;
-    const audienceId = personaToAudience.get(c.persona_id);
+    if (existingNames.has(c.name)) {
+      skippedExisting++;
+      continue;
+    }
+    const audienceId = c.persona_id
+      ? personaToAudience.get(c.persona_id)
+      : sharedAudienceId;
     const step = stepByCadence.get(c.id);
     if (!audienceId || !step) continue;
 
-    // Strip variable interpolation tokens for a sample HTML preview;
-    // the user can edit the broadcast in the Resend dashboard before sending.
     const html = `<p>${(step.body ?? "")
       .replace(/\{(\w+)\}/g, "[$1]")
       .replace(/\n\n/g, "</p><p>")
@@ -322,8 +355,12 @@ async function main() {
     } catch (err) {
       console.log(`  Failed: ${c.name} — ${err instanceof Error ? err.message : err}`);
     }
+    // Stay under 5 req/sec
+    await sleep(220);
   }
-  console.log(`  Created ${createdBroadcasts} broadcast drafts.`);
+  console.log(
+    `  Created ${createdBroadcasts} broadcast drafts. Skipped ${skippedExisting} that already existed.`
+  );
 
   console.log("\n✓ Resend setup complete.");
   console.log("Next steps:");
