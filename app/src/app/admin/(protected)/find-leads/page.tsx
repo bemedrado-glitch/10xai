@@ -150,8 +150,18 @@ export default function FindLeadsPage() {
             if (placePhone) updates[r.place_id] = { phone: placePhone };
             return;
           }
-          const data = (await res.json()) as { emails: string[]; phones: string[] };
-          const email = data.emails?.[0];
+          const data = (await res.json()) as {
+            emails: string[];
+            phones: string[];
+            email_sources?: { email: string; source: "hunter" | "scrape" | "guess" }[];
+          };
+          // Only auto-pick verified emails (Hunter or scrape). Skip "guess"
+          // emails — those have ~50% bounce rate and damage sender reputation.
+          // User can still manually add a guess from /admin/leads/[id] enrich.
+          const verified = data.email_sources?.find(
+            (s) => s.source === "hunter" || s.source === "scrape"
+          );
+          const email = verified?.email;
           const phone = placePhone ?? data.phones?.[0];
           if (email || phone) updates[r.place_id] = { email, phone };
         } catch {
