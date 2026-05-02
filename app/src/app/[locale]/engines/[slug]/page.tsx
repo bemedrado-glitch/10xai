@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
-import { ENGINES, getAllEngineSlugs, getEngine } from "@/data/engines";
+import { getAllEngineSlugs, getEngine, getEngines } from "@/data/engines";
 import { Reveal } from "@/components/Reveal";
 import { RoiCalculator } from "@/components/RoiCalculator";
 import { SiteNav } from "@/components/SiteNav";
@@ -25,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
   const { slug, locale } = await params;
-  const engine = getEngine(slug);
+  const engine = getEngine(slug, locale);
   if (!engine) return { title: "Engine not found" };
   const ogImage = ENGINE_OG[slug];
   return {
@@ -53,12 +53,12 @@ export default async function EngineDetailPage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
-  const engine = getEngine(slug);
+  const engine = getEngine(slug, locale);
   if (!engine) notFound();
 
   const t = await getTranslations({ locale, namespace: "engineDetail" });
 
-  const others = ENGINES.filter((e) => e.slug !== engine.slug).slice(0, 3);
+  const others = getEngines(locale).filter((e) => e.slug !== engine.slug).slice(0, 3);
   const primaryCtaIsBernieChat = engine.slug === "bernie";
   const primaryCta = engine.primaryCta ?? { label: t("ctaBook"), href: "/contact" };
 

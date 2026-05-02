@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { HeroBackground } from "@/components/HeroBackground";
@@ -22,11 +22,11 @@ export async function generateMetadata({
   return { title: t("title"), description: t("description") };
 }
 
-const ENGINES = getHomeEngines();
-
 export default function HomePage() {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
+  const locale = useLocale();
+  const ENGINES = getHomeEngines(locale);
 
   const stats = [
     { stat: "77%", label: t("stats.abandonRate") },

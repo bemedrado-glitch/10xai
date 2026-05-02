@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/Reveal";
@@ -21,7 +21,8 @@ export async function generateMetadata({
 export default function EnginesIndexPage() {
   const t = useTranslations("enginesIndex");
   const tCommon = useTranslations("common");
-  const engines = getHomeEngines();
+  const locale = useLocale();
+  const engines = getHomeEngines(locale);
 
   return (
     <div className="flex flex-1 flex-col bg-[var(--color-cream)]">
