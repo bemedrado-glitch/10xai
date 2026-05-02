@@ -33,23 +33,23 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-gold)]">
           Lighthouse
         </p>
-        <p className="mt-0.5 text-xs font-medium text-[var(--color-ink-400)]">
+        <p className="mt-0.5 text-xs font-medium text-[var(--color-cream)]">
           Admin
         </p>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 space-y-0.5 p-3">
+      <nav className="flex-1 space-y-1 p-3">
         {NAV.map(({ href, icon: Icon, label }) => {
           const active = pathname.startsWith(href);
           return (
             <Link
               key={href}
               href={href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 text-sm font-semibold transition-colors ${
                 active
-                  ? "bg-[var(--color-gold)]/10 text-[var(--color-gold)]"
-                  : "text-[var(--color-ink-400)] hover:bg-[var(--color-ink-800)] hover:text-[var(--color-cream)]"
+                  ? "border-[var(--color-gold)]/50 bg-[var(--color-gold)]/15 text-[var(--color-gold)]"
+                  : "border-transparent bg-[var(--color-ink-900)] text-[var(--color-cream)] hover:border-[var(--color-gold)]/40 hover:bg-[var(--color-ink-800)]"
               }`}
             >
               <Icon size={15} />
@@ -61,12 +61,12 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
 
       {/* User */}
       <div className="border-t border-[var(--color-ink-700)] p-3">
-        <p className="truncate px-3 py-1 text-[10px] text-[var(--color-ink-500)]">
+        <p className="truncate px-3 py-1 text-[10px] text-[var(--color-cream)]/70">
           {userEmail}
         </p>
         <button
           onClick={handleSignOut}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-ink-400)] transition-colors hover:bg-[var(--color-ink-800)] hover:text-[var(--color-cream)]"
+          className="flex w-full items-center gap-3 rounded-lg border border-transparent bg-[var(--color-ink-900)] px-3 py-2.5 text-sm font-semibold text-[var(--color-cream)] transition-colors hover:border-red-900/50 hover:bg-red-900/20 hover:text-red-300"
         >
           <LogOut size={15} />
           Sign out
