@@ -418,6 +418,30 @@ JOIN (VALUES
 ON cad.name = s.cad_name;
 
 -- ============================================================
+-- 4b. Append booking CTA to every seeded step that doesn't have one
+-- ============================================================
+-- Inserts "Book 15 min: https://cal.com/10xai" before the "— Bernardo" sign-off
+-- for every email step that doesn't already mention the booking URL.
+
+UPDATE cadence_steps
+SET body = regexp_replace(body, E'(\n— Bernardo)', E'\nBook 15 min: https://cal.com/10xai\\1')
+WHERE cadence_id IN (
+  SELECT id FROM cadences WHERE name IN (
+    'Care Engine — Clinics (Booking Gap)',
+    'Care Engine — Review Backlog',
+    'Lighthouse — Local Service / Trades',
+    'Lighthouse — Restaurants (Insta-only, BR-PT)',
+    'Lighthouse — Talleres / Auto (LatAm-ES)',
+    'Sales Engine — Pro Services No CRM',
+    'Reach Engine — Content Gap (Pro Firms)',
+    'Reach Engine — No Social Presence',
+    'Care Engine — D2C Support Overload',
+    'Bid Engine — RFP Throughput'
+  )
+)
+AND body NOT LIKE '%cal.com/10xai%';
+
+-- ============================================================
 -- 5. Verify
 -- ============================================================
 -- Run these to sanity-check after seed:
