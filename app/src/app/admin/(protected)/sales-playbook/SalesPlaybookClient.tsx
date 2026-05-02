@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import type { Cadence, CadenceStep, Persona } from "@/lib/database.types";
 import { PLAYBOOK, type PlaybookEntry } from "@/data/sales-playbook";
+import EmailPreviewModal from "@/components/EmailPreviewModal";
 
 const SECTION_TABS = [
   { key: "insight", label: "Audience Insight", icon: Eye },
@@ -506,6 +507,7 @@ function StepCard({
   const [body, setBody] = useState(step.body);
   const [delayDays, setDelayDays] = useState(step.delay_days);
   const [busy, setBusy] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   function startEdit() {
     setSubject(step.subject ?? "");
@@ -550,8 +552,16 @@ function StepCard({
           </div>
           <div className="flex shrink-0 flex-col gap-1">
             <button
+              onClick={() => setPreviewOpen(true)}
+              className="flex items-center justify-center gap-1 rounded-md border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-2.5 py-1 text-[11px] font-bold text-[var(--color-gold)] hover:bg-[var(--color-gold)]/20"
+              title="Preview rendered email"
+            >
+              <Eye size={11} />
+              Preview
+            </button>
+            <button
               onClick={startEdit}
-              className="rounded-md border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-2.5 py-1 text-[11px] font-bold text-[var(--color-gold)] hover:bg-[var(--color-gold)]/20"
+              className="rounded-md border border-[var(--color-ink-700)] bg-[var(--color-ink)] px-2.5 py-1 text-[11px] font-bold text-[var(--color-cream)] hover:border-[var(--color-gold)]/40"
             >
               Edit
             </button>
@@ -574,6 +584,13 @@ function StepCard({
             </button>
           </div>
         </div>
+        {previewOpen && (
+          <EmailPreviewModal
+            subject={step.subject ?? ""}
+            body={step.body}
+            onClose={() => setPreviewOpen(false)}
+          />
+        )}
       </div>
     );
   }
@@ -635,16 +652,26 @@ function StepCard({
         </button>
       )}
       <div className="mt-4 flex flex-wrap justify-between gap-2">
-        <a
-          href={gmailUrl(subject, body)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:border-[var(--color-gold)]/40 hover:text-[var(--color-gold)]"
-          title="Preview this draft in Gmail compose"
-        >
-          <ExternalLink size={11} />
-          Open in Gmail
-        </a>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setPreviewOpen(true)}
+            className="flex items-center gap-1.5 rounded-lg border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-gold)] hover:bg-[var(--color-gold)]/20"
+            title="See the rendered HTML email"
+          >
+            <Eye size={11} />
+            Preview
+          </button>
+          <a
+            href={gmailUrl(subject, body)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:border-[var(--color-gold)]/40 hover:text-[var(--color-gold)]"
+            title="Preview this draft in Gmail compose"
+          >
+            <ExternalLink size={11} />
+            Open in Gmail
+          </a>
+        </div>
         <div className="flex gap-2">
           <button
             onClick={onCancel}
@@ -662,6 +689,13 @@ function StepCard({
           </button>
         </div>
       </div>
+      {previewOpen && (
+        <EmailPreviewModal
+          subject={subject}
+          body={body}
+          onClose={() => setPreviewOpen(false)}
+        />
+      )}
     </div>
   );
 }

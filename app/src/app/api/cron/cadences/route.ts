@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient as createSupabase } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import type { Database } from "@/lib/database.types";
+import { buildVars, renderCadenceEmail } from "@/lib/email-template";
 
-// Called by Vercel Cron every hour — processes all active enrollments due to send
+const REPLY_TO = "contato10xai@gmail.com";
+const FROM = "Bernardo Medrado <contact@10xai.us>";
+const UNSUBSCRIBE_MAILTO = `mailto:${REPLY_TO}?subject=Unsubscribe`;
+
+// Hourly cron — processes all active enrollments due to send.
 export async function GET(req: NextRequest) {
   const secret = req.headers.get("authorization");
   if (secret !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -36,7 +41,7 @@ export async function GET(req: NextRequest) {
     // Fetch lead
     const { data: lead } = await supabase
       .from("leads")
-      .select("id, email, business_name, city, phone, rating, contact_name")
+      .select("*")
       .eq("id", enrollment.lead_id)
       .single();
 
@@ -68,30 +73,29 @@ export async function GET(req: NextRequest) {
       continue;
     }
 
-    const vars: Record<string, string> = {
-      business_name: lead.business_name,
-      city: lead.city ?? "",
-      phone: lead.phone ?? "",
-      rating: lead.rating?.toFixed(1) ?? "",
-      contact_name: lead.contact_name ?? "there",
-    };
-
-    function interpolate(str: string) {
-      return str.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
-    }
-
-    const subject = interpolate(step.subject ?? `Following up — ${lead.business_name}`);
-    const body = interpolate(step.body);
+    // Render the email — interpolates ALL variables, builds rich HTML + plain text
+    const rendered = renderCadenceEmail({
+      subject: step.subject ?? `Following up — ${lead.business_name}`,
+      body: step.body,
+      vars: buildVars(lead),
+      unsubscribeMailto: UNSUBSCRIBE_MAILTO,
+    });
 
     let resendId: string | null = null;
     let sendStatus: string = "sent";
 
     try {
       const result = await resend.emails.send({
-        from: "Bernardo Medrado <contact@10xai.us>",
+        from: FROM,
         to: lead.email,
-        subject,
-        text: body,
+        replyTo: REPLY_TO,
+        subject: rendered.subject,
+        html: rendered.html,
+        text: rendered.text,
+        headers: {
+          "List-Unsubscribe": `<${UNSUBSCRIBE_MAILTO}>`,
+          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        },
       });
       resendId = result.data?.id ?? null;
     } catch {
@@ -103,7 +107,7 @@ export async function GET(req: NextRequest) {
       step_id: step.id,
       lead_id: lead.id,
       to_email: lead.email,
-      subject,
+      subject: rendered.subject,
       resend_id: resendId,
       status: sendStatus,
     });

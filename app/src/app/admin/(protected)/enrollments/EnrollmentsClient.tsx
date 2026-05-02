@@ -89,7 +89,7 @@ export default function EnrollmentsClient({
   ];
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-8">
+    <div className="mx-auto w-full px-6 py-8 2xl:max-w-[1700px]">
       <div className="mb-6">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-gold)]">
           Lighthouse
@@ -133,16 +133,16 @@ export default function EnrollmentsClient({
           <table className="min-w-full divide-y divide-[var(--color-ink-800)] text-sm">
             <thead className="bg-[var(--color-ink-900)]">
               <tr className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-cream)]">
-                <th className="px-3 py-3 text-left">Business</th>
-                <th className="px-3 py-3 text-left">Contact name</th>
-                <th className="px-3 py-3 text-left">Email</th>
-                <th className="px-3 py-3 text-left">Phone</th>
-                <th className="px-3 py-3 text-left">Website</th>
-                <th className="px-3 py-3 text-left">Cadence</th>
-                <th className="px-3 py-3 text-left">Progress</th>
-                <th className="px-3 py-3 text-left">Next send</th>
-                <th className="px-3 py-3 text-left">Status</th>
-                <th className="px-3 py-3 text-right">Actions</th>
+                <th className="px-4 py-3.5 text-left">Business</th>
+                <th className="px-4 py-3.5 text-left">Contact name</th>
+                <th className="px-4 py-3.5 text-left">Email</th>
+                <th className="px-4 py-3.5 text-left">Phone</th>
+                <th className="px-4 py-3.5 text-left">Website</th>
+                <th className="px-4 py-3.5 text-left">Cadence</th>
+                <th className="px-4 py-3.5 text-left">Progress</th>
+                <th className="px-4 py-3.5 text-left">Next send</th>
+                <th className="px-4 py-3.5 text-left">Status</th>
+                <th className="px-4 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-ink-800)]">
@@ -155,8 +155,11 @@ export default function EnrollmentsClient({
                   totalSteps > 0 ? Math.min(100, Math.round((e.current_step / totalSteps) * 100)) : 0;
 
                 return (
-                  <tr key={e.id} className="text-[var(--color-cream)]">
-                    <td className="px-3 py-3">
+                  <tr
+                    key={e.id}
+                    className="text-[var(--color-cream)] transition-colors hover:bg-[var(--color-ink-900)]/60"
+                  >
+                    <td className="px-4 py-3.5">
                       <Link
                         href={`/admin/leads/${e.lead_id}`}
                         className="flex items-center gap-1.5 font-medium hover:text-[var(--color-gold)]"
@@ -165,13 +168,13 @@ export default function EnrollmentsClient({
                         <ExternalLink size={10} className="shrink-0" />
                       </Link>
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       <ContactNameInput
                         initial={lead?.contact_name ?? ""}
                         onSave={(v) => lead && saveContactName(lead.id, v)}
                       />
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       {lead?.email ? (
                         <a
                           href={`mailto:${lead.email}`}
@@ -183,7 +186,7 @@ export default function EnrollmentsClient({
                         <span className="text-xs text-[var(--color-cream)]/40">—</span>
                       )}
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       {lead?.phone ? (
                         <a
                           href={`tel:${lead.phone}`}
@@ -195,7 +198,7 @@ export default function EnrollmentsClient({
                         <span className="text-xs text-[var(--color-cream)]/40">—</span>
                       )}
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       {lead?.website ? (
                         <a
                           href={lead.website}
@@ -210,10 +213,10 @@ export default function EnrollmentsClient({
                         <span className="text-xs text-[var(--color-cream)]/40">—</span>
                       )}
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       <span className="text-xs">{cadence?.name ?? "—"}</span>
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       <div className="flex items-center gap-2">
                         <span className="text-xs tabular-nums text-[var(--color-cream)]/70">
                           {e.current_step}/{totalSteps || "?"}
@@ -226,12 +229,12 @@ export default function EnrollmentsClient({
                         </div>
                       </div>
                     </td>
-                    <td className="px-3 py-3 whitespace-nowrap text-xs text-[var(--color-cream)]/70">
+                    <td className="px-3 py-3 whitespace-nowrap text-xs text-[var(--color-cream)]/85">
                       {e.status === "active" && e.next_send_at
                         ? new Date(e.next_send_at).toLocaleDateString()
                         : "—"}
                     </td>
-                    <td className="px-3 py-3">
+                    <td className="px-4 py-3.5">
                       <StatusBadge status={e.status} />
                     </td>
                     <td className="px-3 py-3 text-right">

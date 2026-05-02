@@ -114,7 +114,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
   }, {});
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <div className="mx-auto w-full px-6 py-8 2xl:max-w-[1700px]">
       <div className="mb-6 flex items-end justify-between">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-gold)]">
@@ -275,13 +275,14 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                     onSave={(v) => patchLead(lead.id, { contact_name: v || null })}
                   />
                 </td>
-                <td className="px-3 py-3">
+                <td className="px-3 py-3 min-w-[230px]">
                   <EditableCell
                     initial={lead.email ?? ""}
                     type="email"
                     placeholder="email@business.com"
                     icon={Mail}
                     iconColor="text-[var(--color-gold)]"
+                    minWidth="220px"
                     onSave={(v) => patchLead(lead.id, { email: v || null })}
                   />
                 </td>
