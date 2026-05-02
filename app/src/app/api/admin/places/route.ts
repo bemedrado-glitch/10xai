@@ -31,10 +31,23 @@ export async function GET(req: NextRequest) {
   const minRating = parseFloat(searchParams.get("minRating") ?? "4.5");
   const minReviews = parseInt(searchParams.get("minReviews") ?? "0", 10);
 
+  const COUNTRY_NAMES: Record<string, string> = {
+    US: "United States",
+    BR: "Brazil",
+    MX: "Mexico",
+    CO: "Colombia",
+    AR: "Argentina",
+    CL: "Chile",
+    PE: "Peru",
+    PR: "Puerto Rico",
+  };
+
   const locationBits = [city, state].filter(Boolean).join(", ");
+  const locationOrCountry = locationBits || COUNTRY_NAMES[country] || country;
+
   const query =
     q ||
-    [category.replace(/_/g, " "), "in", locationBits].filter(Boolean).join(" ").trim();
+    [category.replace(/_/g, " "), "in", locationOrCountry].filter(Boolean).join(" ").trim();
 
   const body: Record<string, unknown> = {
     textQuery: query,

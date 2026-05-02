@@ -232,14 +232,13 @@ export default function FindLeadsPage() {
 
           <div>
             <label className="mb-1.5 block text-xs font-medium text-[var(--color-ink-400)]">
-              City *
+              City (optional)
             </label>
             <input
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="Austin"
-              required
               className="w-full rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-sm text-[var(--color-cream)] placeholder-[var(--color-ink-600)] outline-none focus:border-[var(--color-gold)]"
             />
           </div>
@@ -317,12 +316,15 @@ export default function FindLeadsPage() {
 
         <button
           type="submit"
-          disabled={loading || !city}
+          disabled={loading || (!query && !city && !state && !category)}
           className="mt-4 flex items-center gap-2 rounded-lg bg-[var(--color-gold)] px-5 py-2.5 text-sm font-bold text-[var(--color-cream)] transition-opacity hover:opacity-90 disabled:opacity-40"
         >
           <Search size={14} />
           {loading ? "Searching…" : "Search"}
         </button>
+        <p className="mt-2 text-[11px] text-[var(--color-ink-600)]">
+          Provide at least one: keyword, city, state, or category. Country is always applied.
+        </p>
       </form>
 
       {error && (
