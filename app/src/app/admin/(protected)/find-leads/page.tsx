@@ -1,7 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Globe, Phone, Star, MapPin, Plus, CheckCircle, Filter } from "lucide-react";
+import {
+  Search,
+  Globe,
+  Phone,
+  Star,
+  MapPin,
+  Plus,
+  CheckCircle,
+  Filter,
+  Sparkles,
+  Loader2,
+  Mail,
+  Database,
+} from "lucide-react";
 import EnrollModal from "@/components/EnrollModal";
 import { COUNTRIES, US_STATES } from "@/lib/locations";
 import { BUSINESS_CATEGORY_GROUPS, categoryLabel } from "@/lib/business-categories";
@@ -48,6 +61,17 @@ export default function FindLeadsPage() {
 
   const [enrollTarget, setEnrollTarget] = useState<PlacesResult | null>(null);
   const [enrolled, setEnrolled] = useState<Set<string>>(new Set());
+  const [saved, setSaved] = useState<Set<string>>(new Set());
+
+  // Enrichment state per place_id
+  const [enrichments, setEnrichments] = useState<
+    Record<string, { email?: string; phone?: string }>
+  >({});
+  const [enriching, setEnriching] = useState(false);
+  const [enrichDone, setEnrichDone] = useState(false);
+  const [enrichSummary, setEnrichSummary] = useState<{ eligible: number; dropped: number } | null>(
+    null
+  );
 
   useEffect(() => {
     fetch("/api/admin/personas")
@@ -91,11 +115,86 @@ export default function FindLeadsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Search failed");
       setResults(data.results ?? []);
+      setEnrichments({});
+      setEnrichDone(false);
+      setEnrichSummary(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
+  }
+
+  async function enrichAll() {
+    setEnriching(true);
+    setEnrichDone(false);
+    setEnrichSummary(null);
+
+    const updates: Record<string, { email?: string; phone?: string }> = {};
+
+    await Promise.all(
+      results.map(async (r) => {
+        // Phone may already be present from Places
+        const placePhone = r.phone ?? undefined;
+        if (!r.website) {
+          if (placePhone) updates[r.place_id] = { phone: placePhone };
+          return;
+        }
+        try {
+          const res = await fetch("/api/admin/enrich", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ website: r.website }),
+          });
+          if (!res.ok) {
+            if (placePhone) updates[r.place_id] = { phone: placePhone };
+            return;
+          }
+          const data = (await res.json()) as { emails: string[]; phones: string[] };
+          const email = data.emails?.[0];
+          const phone = placePhone ?? data.phones?.[0];
+          if (email || phone) updates[r.place_id] = { email, phone };
+        } catch {
+          if (placePhone) updates[r.place_id] = { phone: placePhone };
+        }
+      })
+    );
+
+    setEnrichments(updates);
+    const eligible = Object.keys(updates).length;
+    setEnrichSummary({ eligible, dropped: results.length - eligible });
+    setEnrichDone(true);
+    setEnriching(false);
+  }
+
+  async function saveLead(r: PlacesResult) {
+    const enr = enrichments[r.place_id];
+    const email = enr?.email ?? null;
+    const phone = enr?.phone ?? r.phone ?? null;
+    if (!email && !phone) return;
+    const res = await fetch("/api/admin/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        place: r,
+        email,
+        phone,
+        persona_id: activePersonaId || null,
+      }),
+    });
+    if (res.ok) {
+      setSaved((prev) => new Set(prev).add(r.place_id));
+    }
+  }
+
+  async function saveAllEligible() {
+    const eligible = results.filter((r) => {
+      const enr = enrichments[r.place_id];
+      return enr?.email || enr?.phone || r.phone;
+    });
+    await Promise.all(eligible.map(saveLead));
+    // Cleanup orphan leads (no email/phone, not enrolled)
+    await fetch("/api/admin/leads", { method: "DELETE" });
   }
 
   function handleEnrolled(placeId: string) {
@@ -336,12 +435,59 @@ export default function FindLeadsPage() {
 
       {searched && !loading && (
         <div>
-          <p className="mb-4 text-xs text-[var(--color-ink-500)]">
-            {results.length} result{results.length !== 1 ? "s" : ""}
-          </p>
+          {/* Enrich bar */}
+          {results.length > 0 && (
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]/40 p-3">
+              <div className="text-xs text-[var(--color-cream)]">
+                <span className="font-semibold">{results.length}</span> result
+                {results.length !== 1 ? "s" : ""}
+                {enrichDone && enrichSummary && (
+                  <>
+                    {" · "}
+                    <span className="text-[var(--color-gold)]">{enrichSummary.eligible} with contact</span>
+                    {enrichSummary.dropped > 0 && (
+                      <span className="text-[var(--color-ink-500)]">
+                        {" · "}
+                        {enrichSummary.dropped} hidden (no contact found)
+                      </span>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={enrichAll}
+                  disabled={enriching || enrichDone}
+                  className="flex items-center gap-2 rounded-lg border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-gold)] hover:bg-[var(--color-gold)]/20 disabled:opacity-40"
+                >
+                  {enriching ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
+                  {enriching ? "Enriching…" : enrichDone ? "Enriched ✓" : "Enrich emails"}
+                </button>
+                {enrichDone && enrichSummary && enrichSummary.eligible > 0 && (
+                  <button
+                    onClick={saveAllEligible}
+                    className="flex items-center gap-2 rounded-lg bg-[var(--color-gold)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:opacity-90"
+                  >
+                    <Database size={12} />
+                    Save {enrichSummary.eligible} to Leads
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-3">
             {results.map((r) => {
-              const done = enrolled.has(r.place_id);
+              const enr = enrichments[r.place_id];
+              const enrichedEmail = enr?.email;
+              const enrichedPhone = enr?.phone ?? r.phone ?? null;
+              const eligible = !!(enrichedEmail || enrichedPhone);
+              const wasEnrolled = enrolled.has(r.place_id);
+              const wasSaved = saved.has(r.place_id);
+
+              // After enrichment, hide ineligible
+              if (enrichDone && !eligible) return null;
+
               return (
                 <div
                   key={r.place_id}
@@ -351,7 +497,7 @@ export default function FindLeadsPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="font-semibold text-[var(--color-cream)]">{r.business_name}</h3>
                       {r.category && (
-                        <span className="rounded-full bg-[var(--color-ink-800)] px-2 py-0.5 text-[10px] text-[var(--color-ink-400)]">
+                        <span className="rounded-full bg-[var(--color-ink-800)] px-2 py-0.5 text-[10px] text-[var(--color-cream)]/80">
                           {categoryLabel(r.category)}
                         </span>
                       )}
@@ -360,8 +506,13 @@ export default function FindLeadsPage() {
                           No website
                         </span>
                       )}
+                      {enrichedEmail && (
+                        <span className="rounded-full bg-emerald-900/40 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
+                          email found
+                        </span>
+                      )}
                     </div>
-                    <div className="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-[var(--color-ink-500)]">
+                    <div className="mt-1.5 flex flex-wrap items-center gap-3 text-xs text-[var(--color-cream)]/75">
                       {r.rating > 0 && (
                         <span className="flex items-center gap-1">
                           <Star size={11} className="fill-[var(--color-gold)] text-[var(--color-gold)]" />
@@ -374,10 +525,16 @@ export default function FindLeadsPage() {
                           {r.address}
                         </span>
                       )}
-                      {r.phone && (
-                        <span className="flex items-center gap-1">
+                      {enrichedPhone && (
+                        <span className="flex items-center gap-1 text-[var(--color-cream)]">
                           <Phone size={11} />
-                          {r.phone}
+                          {enrichedPhone}
+                        </span>
+                      )}
+                      {enrichedEmail && (
+                        <span className="flex items-center gap-1 text-emerald-300">
+                          <Mail size={11} />
+                          {enrichedEmail}
                         </span>
                       )}
                       {r.website && (
@@ -388,25 +545,45 @@ export default function FindLeadsPage() {
                       )}
                     </div>
                   </div>
-                  {done ? (
-                    <div className="flex shrink-0 items-center gap-1.5 text-xs font-medium text-emerald-400">
-                      <CheckCircle size={14} />
-                      Enrolled
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setEnrollTarget(r)}
-                      className="flex shrink-0 items-center gap-1.5 rounded-lg border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/10 px-3 py-1.5 text-xs font-medium text-[var(--color-gold)] transition-colors hover:bg-[var(--color-gold)]/20"
-                    >
-                      <Plus size={13} />
-                      Enroll
-                    </button>
-                  )}
+                  <div className="flex shrink-0 flex-col gap-1.5">
+                    {wasEnrolled ? (
+                      <div className="flex items-center gap-1.5 rounded-lg border border-emerald-700/40 bg-emerald-900/20 px-3 py-1.5 text-xs font-medium text-emerald-400">
+                        <CheckCircle size={12} />
+                        Enrolled
+                      </div>
+                    ) : (
+                      <>
+                        {!wasSaved && eligible && (
+                          <button
+                            onClick={() => saveLead(r)}
+                            className="flex items-center gap-1.5 rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:border-[var(--color-gold)]/40"
+                          >
+                            <Database size={12} />
+                            Save
+                          </button>
+                        )}
+                        {wasSaved && (
+                          <span className="flex items-center gap-1.5 rounded-lg border border-emerald-700/40 bg-emerald-900/20 px-3 py-1.5 text-xs font-medium text-emerald-400">
+                            <CheckCircle size={12} />
+                            Saved
+                          </span>
+                        )}
+                        <button
+                          onClick={() => setEnrollTarget(r)}
+                          disabled={enrichDone && !eligible}
+                          className="flex items-center gap-1.5 rounded-lg border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-gold)] hover:bg-[var(--color-gold)]/20 disabled:opacity-40"
+                        >
+                          <Plus size={12} />
+                          Enroll
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               );
             })}
             {results.length === 0 && (
-              <div className="rounded-xl border border-dashed border-[var(--color-ink-700)] px-6 py-10 text-center text-sm text-[var(--color-ink-500)]">
+              <div className="rounded-xl border border-dashed border-[var(--color-ink-700)] px-6 py-10 text-center text-sm text-[var(--color-cream)]/60">
                 No results. Try a different city, type, or relax the rating filter.
               </div>
             )}

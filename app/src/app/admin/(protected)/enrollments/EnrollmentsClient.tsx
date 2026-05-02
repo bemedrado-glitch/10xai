@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { PauseCircle, PlayCircle, XCircle, ExternalLink, Mail } from "lucide-react";
+import { PauseCircle, PlayCircle, XCircle, ExternalLink, Globe } from "lucide-react";
 import type { Cadence, CadenceStep, Lead } from "@/lib/database.types";
 
 type Enrollment = {
@@ -19,7 +19,7 @@ type Filter = "all" | "active" | "paused" | "completed" | "cancelled";
 
 export default function EnrollmentsClient({
   initialEnrollments,
-  leads,
+  leads: initialLeads,
   cadences,
   steps,
 }: {
@@ -29,7 +29,8 @@ export default function EnrollmentsClient({
   steps: CadenceStep[];
 }) {
   const [enrollments, setEnrollments] = useState(initialEnrollments);
-  const [filter, setFilter] = useState<Filter>("active");
+  const [leads, setLeads] = useState(initialLeads);
+  const [filter, setFilter] = useState<Filter>("all");
 
   const leadById = useMemo(() => new Map(leads.map((l) => [l.id, l])), [leads]);
   const cadenceById = useMemo(() => new Map(cadences.map((c) => [c.id, c])), [cadences]);
@@ -66,6 +67,17 @@ export default function EnrollmentsClient({
     if (res.ok) {
       setEnrollments((prev) => prev.map((e) => (e.id === id ? { ...e, status } : e)));
     }
+  }
+
+  async function saveContactName(leadId: string, contactName: string) {
+    await fetch(`/api/admin/leads/${leadId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contact_name: contactName || null }),
+    });
+    setLeads((prev) =>
+      prev.map((l) => (l.id === leadId ? { ...l, contact_name: contactName || null } : l))
+    );
   }
 
   const filterTabs: { key: Filter; label: string }[] = [
@@ -113,20 +125,24 @@ export default function EnrollmentsClient({
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-[var(--color-ink-700)] px-6 py-12 text-center text-sm text-[var(--color-ink-500)]">
+        <div className="rounded-xl border border-dashed border-[var(--color-ink-700)] px-6 py-12 text-center text-sm text-[var(--color-cream)]/70">
           Nothing to show in this view.
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]">
+        <div className="overflow-x-auto rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]">
           <table className="min-w-full divide-y divide-[var(--color-ink-800)] text-sm">
-            <thead className="bg-[var(--color-ink-900)] text-[10px] uppercase tracking-wider text-[var(--color-ink-500)]">
-              <tr>
-                <th className="px-4 py-3 text-left">Lead</th>
-                <th className="px-4 py-3 text-left">Cadence</th>
-                <th className="px-4 py-3 text-left">Progress</th>
-                <th className="px-4 py-3 text-left">Next send</th>
-                <th className="px-4 py-3 text-left">Status</th>
-                <th className="px-4 py-3 text-right">Actions</th>
+            <thead className="bg-[var(--color-ink-900)]">
+              <tr className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-cream)]">
+                <th className="px-3 py-3 text-left">Business</th>
+                <th className="px-3 py-3 text-left">Contact name</th>
+                <th className="px-3 py-3 text-left">Email</th>
+                <th className="px-3 py-3 text-left">Phone</th>
+                <th className="px-3 py-3 text-left">Website</th>
+                <th className="px-3 py-3 text-left">Cadence</th>
+                <th className="px-3 py-3 text-left">Progress</th>
+                <th className="px-3 py-3 text-left">Next send</th>
+                <th className="px-3 py-3 text-left">Status</th>
+                <th className="px-3 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-ink-800)]">
@@ -140,32 +156,69 @@ export default function EnrollmentsClient({
 
                 return (
                   <tr key={e.id} className="text-[var(--color-cream)]">
-                    <td className="px-4 py-3">
-                      <div className="flex flex-col">
-                        <Link
-                          href={`/admin/leads/${e.lead_id}`}
-                          className="flex items-center gap-1.5 font-medium hover:text-[var(--color-gold)]"
+                    <td className="px-3 py-3">
+                      <Link
+                        href={`/admin/leads/${e.lead_id}`}
+                        className="flex items-center gap-1.5 font-medium hover:text-[var(--color-gold)]"
+                      >
+                        <span className="max-w-[180px] truncate">{lead?.business_name ?? "—"}</span>
+                        <ExternalLink size={10} className="shrink-0" />
+                      </Link>
+                    </td>
+                    <td className="px-3 py-3">
+                      <ContactNameInput
+                        initial={lead?.contact_name ?? ""}
+                        onSave={(v) => lead && saveContactName(lead.id, v)}
+                      />
+                    </td>
+                    <td className="px-3 py-3">
+                      {lead?.email ? (
+                        <a
+                          href={`mailto:${lead.email}`}
+                          className="text-xs text-[var(--color-cream)] hover:text-[var(--color-gold)]"
                         >
-                          {lead?.business_name ?? "Unknown lead"}
-                          <ExternalLink size={11} />
-                        </Link>
-                        {lead?.email && (
-                          <span className="flex items-center gap-1 text-[11px] text-[var(--color-ink-500)]">
-                            <Mail size={10} />
-                            {lead.email}
-                          </span>
-                        )}
-                      </div>
+                          {lead.email}
+                        </a>
+                      ) : (
+                        <span className="text-xs text-[var(--color-cream)]/40">—</span>
+                      )}
                     </td>
-                    <td className="px-4 py-3">
-                      <span className="text-sm">{cadence?.name ?? "—"}</span>
+                    <td className="px-3 py-3">
+                      {lead?.phone ? (
+                        <a
+                          href={`tel:${lead.phone}`}
+                          className="whitespace-nowrap text-xs text-[var(--color-cream)] hover:text-[var(--color-gold)]"
+                        >
+                          {lead.phone}
+                        </a>
+                      ) : (
+                        <span className="text-xs text-[var(--color-cream)]/40">—</span>
+                      )}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-3">
+                      {lead?.website ? (
+                        <a
+                          href={lead.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex max-w-[160px] items-center gap-1 truncate text-xs text-[var(--color-cream)] hover:text-[var(--color-gold)]"
+                        >
+                          <Globe size={10} className="shrink-0" />
+                          {lead.website.replace(/^https?:\/\//, "")}
+                        </a>
+                      ) : (
+                        <span className="text-xs text-[var(--color-cream)]/40">—</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-3">
+                      <span className="text-xs">{cadence?.name ?? "—"}</span>
+                    </td>
+                    <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs tabular-nums text-[var(--color-ink-400)]">
+                        <span className="text-xs tabular-nums text-[var(--color-cream)]/70">
                           {e.current_step}/{totalSteps || "?"}
                         </span>
-                        <div className="h-1.5 w-20 overflow-hidden rounded-full bg-[var(--color-ink-800)]">
+                        <div className="h-1.5 w-16 overflow-hidden rounded-full bg-[var(--color-ink-800)]">
                           <div
                             className="h-full bg-[var(--color-gold)] transition-all"
                             style={{ width: `${progressPct}%` }}
@@ -173,21 +226,21 @@ export default function EnrollmentsClient({
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-xs text-[var(--color-ink-400)]">
+                    <td className="px-3 py-3 whitespace-nowrap text-xs text-[var(--color-cream)]/70">
                       {e.status === "active" && e.next_send_at
                         ? new Date(e.next_send_at).toLocaleDateString()
                         : "—"}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-3">
                       <StatusBadge status={e.status} />
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="inline-flex gap-1.5">
+                    <td className="px-3 py-3 text-right">
+                      <div className="inline-flex gap-1">
                         {e.status === "active" && (
                           <button
                             onClick={() => changeStatus(e.id, "paused")}
                             title="Pause"
-                            className="rounded-md p-1.5 text-[var(--color-ink-500)] hover:bg-[var(--color-ink-800)] hover:text-[var(--color-cream)]"
+                            className="rounded-md p-1.5 text-[var(--color-cream)]/70 hover:bg-[var(--color-ink-800)] hover:text-[var(--color-cream)]"
                           >
                             <PauseCircle size={14} />
                           </button>
@@ -205,7 +258,7 @@ export default function EnrollmentsClient({
                           <button
                             onClick={() => changeStatus(e.id, "cancelled")}
                             title="Opt out"
-                            className="rounded-md p-1.5 text-[var(--color-ink-500)] hover:bg-red-900/30 hover:text-red-400"
+                            className="rounded-md p-1.5 text-[var(--color-cream)]/70 hover:bg-red-900/30 hover:text-red-400"
                           >
                             <XCircle size={14} />
                           </button>
@@ -220,6 +273,45 @@ export default function EnrollmentsClient({
         </div>
       )}
     </div>
+  );
+}
+
+function ContactNameInput({
+  initial,
+  onSave,
+}: {
+  initial: string;
+  onSave: (value: string) => void | Promise<void>;
+}) {
+  const [value, setValue] = useState(initial);
+  const [saving, setSaving] = useState(false);
+  const [savedFlash, setSavedFlash] = useState(false);
+
+  async function commit() {
+    if (value === initial) return;
+    setSaving(true);
+    await onSave(value.trim());
+    setSaving(false);
+    setSavedFlash(true);
+    setTimeout(() => setSavedFlash(false), 1200);
+  }
+
+  return (
+    <input
+      value={value}
+      onChange={(ev) => setValue(ev.target.value)}
+      onBlur={commit}
+      onKeyDown={(ev) => {
+        if (ev.key === "Enter") (ev.target as HTMLInputElement).blur();
+      }}
+      placeholder="First Last"
+      disabled={saving}
+      className={`w-full rounded-md border bg-[var(--color-ink-900)] px-2 py-1 text-xs text-[var(--color-cream)] placeholder-[var(--color-cream)]/30 outline-none transition-colors ${
+        savedFlash
+          ? "border-emerald-700/60"
+          : "border-[var(--color-ink-700)] focus:border-[var(--color-gold)]"
+      }`}
+    />
   );
 }
 
