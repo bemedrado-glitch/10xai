@@ -3,11 +3,17 @@ import { Mail, MousePointerClick, Reply, TrendingUp, Users, Activity } from "luc
 
 export const revalidate = 0;
 
+// "Qualified" = has at least one way to reach them (email OR phone).
+// Leads with neither are excluded from every count on this page so the
+// numbers match what's visible in /admin/leads.
+const QUALIFIED_FILTER = "email.not.is.null,phone.not.is.null";
+
 export default async function AnalyticsPage() {
   const supabase = await createClient();
 
   const [
     { count: totalLeads },
+    { count: orphanLeads },
     { count: enrolledLeads },
     { count: totalSends },
     { count: opens },
@@ -16,10 +22,19 @@ export default async function AnalyticsPage() {
     { data: recentSends },
     { data: statusBreakdown },
   ] = await Promise.all([
-    supabase.from("leads").select("*", { count: "exact", head: true }),
     supabase
       .from("leads")
       .select("*", { count: "exact", head: true })
+      .or(QUALIFIED_FILTER),
+    supabase
+      .from("leads")
+      .select("*", { count: "exact", head: true })
+      .is("email", null)
+      .is("phone", null),
+    supabase
+      .from("leads")
+      .select("*", { count: "exact", head: true })
+      .or(QUALIFIED_FILTER)
       .in("status", ["enrolled", "replied", "booked"]),
     supabase.from("email_sends").select("*", { count: "exact", head: true }),
     supabase
@@ -42,6 +57,7 @@ export default async function AnalyticsPage() {
     supabase
       .from("leads")
       .select("status")
+      .or(QUALIFIED_FILTER)
       .order("created_at", { ascending: false }),
   ]);
 
@@ -72,6 +88,14 @@ export default async function AnalyticsPage() {
         <h1 className="mt-1 font-display text-2xl font-black text-[var(--color-cream)]">
           Analytics
         </h1>
+        <p className="mt-1 text-sm text-[var(--color-cream)]/80">
+          Counts only qualified leads — those with at least an email or phone.
+          {(orphanLeads ?? 0) > 0 && (
+            <span className="ml-2 text-amber-300">
+              {orphanLeads} orphan lead{orphanLeads !== 1 ? "s" : ""} hidden (no contact info).
+            </span>
+          )}
+        </p>
       </div>
 
       {/* KPI grid */}
