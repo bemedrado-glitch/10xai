@@ -7,16 +7,17 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const body = await req.json() as {
+  const body = (await req.json()) as {
     place: PlacesResult;
     cadenceId: string;
     personaId: string | null;
     email: string | null;
+    contactName?: string | null;
+    phone?: string | null;
   };
 
-  const { place, cadenceId, personaId, email } = body;
+  const { place, cadenceId, personaId, email, contactName, phone } = body;
 
-  // Upsert lead
   const { data: lead, error: leadError } = await supabase
     .from("leads")
     .upsert(
@@ -26,12 +27,13 @@ export async function POST(req: NextRequest) {
         address: place.address,
         city: place.city,
         state: place.state,
-        phone: place.phone,
+        phone: phone ?? place.phone,
         website: place.website,
         rating: place.rating,
         review_count: place.review_count,
         category: place.category,
         email: email ?? null,
+        contact_name: contactName ?? null,
         persona_id: personaId ?? null,
         status: "enrolled",
       },

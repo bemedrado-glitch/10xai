@@ -1,24 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { X, Loader2 } from "lucide-react";
 import type { PlacesResult } from "@/app/admin/(protected)/find-leads/page";
 import type { Cadence, Persona } from "@/lib/database.types";
 
 export default function EnrollModal({
   place,
+  defaultPersonaId,
   onClose,
   onEnrolled,
 }: {
   place: PlacesResult;
+  defaultPersonaId?: string | null;
   onClose: () => void;
   onEnrolled: () => void;
 }) {
   const [cadences, setCadences] = useState<Cadence[]>([]);
   const [personas, setPersonas] = useState<Persona[]>([]);
   const [selectedCadence, setSelectedCadence] = useState("");
-  const [selectedPersona, setSelectedPersona] = useState("");
+  const [selectedPersona, setSelectedPersona] = useState(defaultPersonaId ?? "");
   const [email, setEmail] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [phone, setPhone] = useState(place.phone ?? "");
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,12 +36,24 @@ export default function EnrollModal({
       const [cData, pData] = await Promise.all([cRes.json(), pRes.json()]);
       setCadences(cData.cadences ?? []);
       setPersonas(pData.personas ?? []);
-      if (cData.cadences?.length) setSelectedCadence(cData.cadences[0].id);
-      if (pData.personas?.length) setSelectedPersona(pData.personas[0].id);
       setFetching(false);
     }
     load();
   }, []);
+
+  // Filter cadences by persona, falling back to "all" when persona has no matches
+  const filteredCadences = useMemo(() => {
+    if (!selectedPersona) return cadences;
+    const matching = cadences.filter((c) => c.persona_id === selectedPersona);
+    return matching.length > 0 ? matching : cadences;
+  }, [cadences, selectedPersona]);
+
+  useEffect(() => {
+    // Auto-pick first valid cadence when filter changes
+    if (filteredCadences.length > 0 && !filteredCadences.find((c) => c.id === selectedCadence)) {
+      setSelectedCadence(filteredCadences[0].id);
+    }
+  }, [filteredCadences, selectedCadence]);
 
   async function handleEnroll() {
     if (!selectedCadence) return;
@@ -53,6 +69,8 @@ export default function EnrollModal({
           cadenceId: selectedCadence,
           personaId: selectedPersona || null,
           email: email || null,
+          contactName: contactName || null,
+          phone: phone || null,
         }),
       });
       const data = await res.json();
@@ -64,17 +82,17 @@ export default function EnrollModal({
     }
   }
 
+  const personaCadenceCount = selectedPersona
+    ? cadences.filter((c) => c.persona_id === selectedPersona).length
+    : 0;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
       <div className="w-full max-w-md rounded-2xl border border-[var(--color-ink-700)] bg-[var(--color-ink)] p-6 shadow-2xl">
         <div className="mb-5 flex items-start justify-between">
           <div>
-            <h2 className="font-display text-lg font-bold text-[var(--color-cream)]">
-              Enroll Lead
-            </h2>
-            <p className="mt-0.5 text-sm text-[var(--color-ink-400)]">
-              {place.business_name}
-            </p>
+            <h2 className="font-display text-lg font-bold text-[var(--color-cream)]">Enroll Lead</h2>
+            <p className="mt-0.5 text-sm text-[var(--color-ink-400)]">{place.business_name}</p>
           </div>
           <button
             onClick={onClose}
@@ -92,19 +110,6 @@ export default function EnrollModal({
           <div className="space-y-4">
             <div>
               <label className="mb-1.5 block text-xs font-medium text-[var(--color-ink-400)]">
-                Contact Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="owner@business.com (optional)"
-                className="w-full rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-sm text-[var(--color-cream)] placeholder-[var(--color-ink-600)] outline-none focus:border-[var(--color-gold)]"
-              />
-            </div>
-
-            <div>
-              <label className="mb-1.5 block text-xs font-medium text-[var(--color-ink-400)]">
                 Persona (ICP)
               </label>
               <select
@@ -119,6 +124,16 @@ export default function EnrollModal({
                   </option>
                 ))}
               </select>
+              {selectedPersona && personaCadenceCount === 0 && (
+                <p className="mt-1 text-[11px] text-[var(--color-ink-500)]">
+                  No cadences linked to this persona — showing all.
+                </p>
+              )}
+              {selectedPersona && personaCadenceCount > 0 && (
+                <p className="mt-1 text-[11px] text-[var(--color-gold)]/80">
+                  {personaCadenceCount} cadence{personaCadenceCount !== 1 ? "s" : ""} matched.
+                </p>
+              )}
             </div>
 
             <div>
@@ -132,23 +147,53 @@ export default function EnrollModal({
                 className="w-full rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-sm text-[var(--color-cream)] outline-none focus:border-[var(--color-gold)]"
               >
                 <option value="">Select cadence…</option>
-                {cadences.map((c) => (
+                {filteredCadences.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
                   </option>
                 ))}
               </select>
-              {cadences.length === 0 && (
+              {filteredCadences.length === 0 && (
                 <p className="mt-1 text-xs text-amber-400">
                   No cadences yet — create one in the Cadences tab.
                 </p>
               )}
             </div>
 
-            {error && (
-              <p className="rounded-lg bg-red-900/30 px-3 py-2 text-xs text-red-400">
-                {error}
+            <div className="border-t border-[var(--color-ink-800)] pt-3">
+              <p className="mb-2 text-[11px] font-medium uppercase tracking-wider text-[var(--color-ink-500)]">
+                Contact (optional)
               </p>
+              <div className="space-y-2.5">
+                <input
+                  type="text"
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  placeholder="Owner / contact name"
+                  className="w-full rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-sm text-[var(--color-cream)] placeholder-[var(--color-ink-600)] outline-none focus:border-[var(--color-gold)]"
+                />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="email@business.com"
+                  className="w-full rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-sm text-[var(--color-cream)] placeholder-[var(--color-ink-600)] outline-none focus:border-[var(--color-gold)]"
+                />
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone"
+                  className="w-full rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-sm text-[var(--color-cream)] placeholder-[var(--color-ink-600)] outline-none focus:border-[var(--color-gold)]"
+                />
+              </div>
+              <p className="mt-1.5 text-[11px] text-[var(--color-ink-600)]">
+                You can enrich missing fields later from the Lead detail page.
+              </p>
+            </div>
+
+            {error && (
+              <p className="rounded-lg bg-red-900/30 px-3 py-2 text-xs text-red-400">{error}</p>
             )}
 
             <div className="flex gap-3 pt-1">
@@ -161,7 +206,7 @@ export default function EnrollModal({
               <button
                 onClick={handleEnroll}
                 disabled={loading || !selectedCadence}
-                className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-[var(--color-gold)] py-2.5 text-sm font-bold text-[var(--color-cream)] transition-opacity hover:opacity-90 disabled:opacity-40"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[var(--color-gold)] py-2.5 text-sm font-bold text-[var(--color-cream)] transition-opacity hover:opacity-90 disabled:opacity-40"
               >
                 {loading && <Loader2 size={13} className="animate-spin" />}
                 {loading ? "Enrolling…" : "Enroll"}

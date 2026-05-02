@@ -38,6 +38,12 @@ export function SiteFooter() {
             <Link href="/terms" className="hover:text-[var(--color-ink)]">
               {t("links.terms")}
             </Link>
+            <a
+              href="/admin/login"
+              className="text-[var(--color-ink-500)]/70 hover:text-[var(--color-ink)]"
+            >
+              Admin
+            </a>
           </nav>
         </div>
         <p className="mt-8 text-xs text-[var(--color-ink-500)]">{t("address")}</p>

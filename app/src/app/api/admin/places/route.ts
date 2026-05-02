@@ -23,20 +23,24 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = req.nextUrl;
   const q = searchParams.get("q") ?? "";
+  const country = searchParams.get("country") ?? "US";
   const city = searchParams.get("city") ?? "";
   const state = searchParams.get("state") ?? "";
   const category = searchParams.get("category") ?? "";
   const noWebsite = searchParams.get("noWebsite") === "1";
   const minRating = parseFloat(searchParams.get("minRating") ?? "4.5");
+  const minReviews = parseInt(searchParams.get("minReviews") ?? "0", 10);
 
-  const query = q || [category.replace(/_/g, " "), "in", city, state]
-    .filter(Boolean)
-    .join(" ");
+  const locationBits = [city, state].filter(Boolean).join(", ");
+  const query =
+    q ||
+    [category.replace(/_/g, " "), "in", locationBits].filter(Boolean).join(" ").trim();
 
   const body: Record<string, unknown> = {
     textQuery: query,
     maxResultCount: 20,
     languageCode: "en",
+    regionCode: country,
   };
   if (category) body.includedType = category;
 
@@ -61,14 +65,16 @@ export async function GET(req: NextRequest) {
   const results = places
     .filter((p) => {
       const rating = (p.rating as number) ?? 0;
+      const reviews = (p.userRatingCount as number) ?? 0;
       const hasWebsite = Boolean(p.websiteUri);
       if (rating < minRating) return false;
+      if (reviews < minReviews) return false;
       if (noWebsite && hasWebsite) return false;
       return p.businessStatus === "OPERATIONAL" || !p.businessStatus;
     })
     .map((p) => {
-      const address = p.formattedAddress as string ?? "";
-      const components = (p.addressComponents as Array<{longText: string; types: string[]}>) ?? [];
+      const address = (p.formattedAddress as string) ?? "";
+      const components = (p.addressComponents as Array<{ longText: string; types: string[] }>) ?? [];
       const cityComp = components.find((c) => c.types.includes("locality"));
       const stateComp = components.find((c) => c.types.includes("administrative_area_level_1"));
 

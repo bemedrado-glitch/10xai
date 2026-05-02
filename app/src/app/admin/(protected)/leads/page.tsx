@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase-server";
 import { Phone, Globe, Star, Mail } from "lucide-react";
+import { categoryLabel } from "@/lib/business-categories";
 
 const STATUS_COLORS: Record<string, string> = {
   new: "bg-[var(--color-ink-800)] text-[var(--color-ink-400)]",
@@ -75,12 +77,15 @@ export default async function LeadsPage() {
                 className="bg-[var(--color-ink-900)] transition-colors hover:bg-[var(--color-ink-800)]"
               >
                 <td className="px-4 py-3">
-                  <div className="font-medium text-[var(--color-cream)]">
+                  <Link
+                    href={`/admin/leads/${lead.id}`}
+                    className="font-medium text-[var(--color-cream)] hover:text-[var(--color-gold)]"
+                  >
                     {lead.business_name}
-                  </div>
+                  </Link>
                   {lead.category && (
                     <div className="text-xs text-[var(--color-ink-500)]">
-                      {lead.category.replace(/_/g, " ")}
+                      {categoryLabel(lead.category)}
                     </div>
                   )}
                 </td>
