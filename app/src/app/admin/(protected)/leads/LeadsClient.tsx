@@ -339,7 +339,12 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                     type="url"
                     placeholder="https://…"
                     icon={Globe}
+                    iconColor="text-[var(--color-gold)]"
                     minWidth="180px"
+                    hrefBuilder={(v) =>
+                      /^https?:\/\//i.test(v) ? v : `https://${v}`
+                    }
+                    openTitle="Open website in new tab — check About Us for owner names"
                     onSave={(v) => patchLead(lead.id, { website: v || null })}
                   />
                 </td>
@@ -419,6 +424,8 @@ function EditableCell({
   iconColor,
   minWidth,
   onSave,
+  hrefBuilder,
+  openTitle,
 }: {
   initial: string;
   type?: "text" | "email" | "tel" | "url";
@@ -427,6 +434,9 @@ function EditableCell({
   iconColor?: string;
   minWidth?: string;
   onSave: (value: string) => Promise<boolean>;
+  /** When provided + value non-empty, the leading icon becomes a link button. */
+  hrefBuilder?: (value: string) => string;
+  openTitle?: string;
 }) {
   const [value, setValue] = useState(initial);
   const [savedFlash, setSavedFlash] = useState(false);
@@ -443,18 +453,36 @@ function EditableCell({
     }
   }
 
+  const trimmed = value.trim();
+  const linkUrl = hrefBuilder && trimmed ? hrefBuilder(trimmed) : null;
+
   return (
     <div className="flex items-center gap-1.5" style={minWidth ? { minWidth } : undefined}>
-      {Icon && (
-        <Icon
-          size={11}
-          className={`shrink-0 ${
-            value
-              ? iconColor ?? "text-[var(--color-cream)]/70"
-              : "text-[var(--color-cream)]/30"
-          }`}
-        />
-      )}
+      {Icon &&
+        (linkUrl ? (
+          <a
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={openTitle ?? "Open"}
+            onMouseDown={(e) => e.stopPropagation()}
+            className="shrink-0 rounded-sm hover:scale-110 transition-transform"
+          >
+            <Icon
+              size={12}
+              className={`${iconColor ?? "text-[var(--color-gold)]"} hover:opacity-80`}
+            />
+          </a>
+        ) : (
+          <Icon
+            size={11}
+            className={`shrink-0 ${
+              value
+                ? iconColor ?? "text-[var(--color-cream)]/70"
+                : "text-[var(--color-cream)]/30"
+            }`}
+          />
+        ))}
       <input
         type={type}
         value={value}
