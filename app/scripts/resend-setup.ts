@@ -56,7 +56,10 @@ function loadEnvLocal() {
     ) {
       value = value.slice(1, -1);
     }
-    if (!process.env[key]) process.env[key] = value;
+    // Overwrite if value is empty OR looks like a placeholder (e.g. "<from .env.local>")
+    const existing = process.env[key];
+    const isPlaceholder = existing && /^<.*>$/.test(existing.trim());
+    if (!existing || isPlaceholder) process.env[key] = value;
   }
   console.log("→ Loaded .env.local");
 }
