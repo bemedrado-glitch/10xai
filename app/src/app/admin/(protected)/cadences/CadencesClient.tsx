@@ -10,6 +10,7 @@ import {
   Save,
   Loader2,
   Clock,
+  ExternalLink,
 } from "lucide-react";
 import type { Cadence, CadenceStep } from "@/lib/database.types";
 
@@ -333,6 +334,16 @@ function StepEditor({
 
   const hasCta = /cal\.com\/10xai/i.test(body);
 
+  function gmailUrl(subject: string, body: string): string {
+    const params = new URLSearchParams({
+      view: "cm",
+      fs: "1",
+      su: subject,
+      body: body,
+    });
+    return `https://mail.google.com/mail/?${params.toString()}`;
+  }
+
   if (!editing) {
     return (
       <div className="rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)]">
@@ -366,6 +377,16 @@ function StepEditor({
             >
               Edit
             </button>
+            <a
+              href={gmailUrl(step.subject ?? "", step.body)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open in Gmail compose"
+              className="flex items-center justify-center gap-1 rounded-md border border-[var(--color-ink-700)] bg-[var(--color-ink)] px-2.5 py-1 text-[11px] font-bold text-[var(--color-cream)] hover:border-[var(--color-gold)]/40 hover:text-[var(--color-gold)]"
+            >
+              <ExternalLink size={11} />
+              Gmail
+            </a>
             <button
               onClick={onDelete}
               className="rounded-md p-1.5 text-[var(--color-ink-500)] hover:bg-red-900/30 hover:text-red-400"
@@ -439,21 +460,33 @@ function StepEditor({
         </button>
       )}
 
-      <div className="mt-4 flex justify-end gap-2">
-        <button
-          onClick={onCancel}
-          className="rounded-lg border border-[var(--color-ink-700)] px-3 py-1.5 text-xs font-medium text-[var(--color-cream)] hover:border-[var(--color-gold)]/40"
+      <div className="mt-4 flex flex-wrap justify-between gap-2">
+        <a
+          href={gmailUrl(subject, body)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:border-[var(--color-gold)]/40 hover:text-[var(--color-gold)]"
+          title="Preview this draft in Gmail compose"
         >
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          disabled={busy}
-          className="flex items-center gap-1.5 rounded-lg bg-[var(--color-gold)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:opacity-90 disabled:opacity-40"
-        >
-          {busy ? <Loader2 size={11} className="animate-spin" /> : <Save size={11} />}
-          {busy ? "Saving…" : "Save"}
-        </button>
+          <ExternalLink size={11} />
+          Open in Gmail
+        </a>
+        <div className="flex gap-2">
+          <button
+            onClick={onCancel}
+            className="rounded-lg border border-[var(--color-ink-700)] px-3 py-1.5 text-xs font-medium text-[var(--color-cream)] hover:border-[var(--color-gold)]/40"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={busy}
+            className="flex items-center gap-1.5 rounded-lg bg-[var(--color-gold)] px-3 py-1.5 text-xs font-bold text-[var(--color-cream)] hover:opacity-90 disabled:opacity-40"
+          >
+            {busy ? <Loader2 size={11} className="animate-spin" /> : <Save size={11} />}
+            {busy ? "Saving…" : "Save"}
+          </button>
+        </div>
       </div>
     </div>
   );
