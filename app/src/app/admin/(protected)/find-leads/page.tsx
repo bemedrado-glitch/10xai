@@ -122,7 +122,7 @@ export default function FindLeadsPage() {
       {/* Persona quick-apply */}
       {personas.length > 0 && (
         <div className="mb-5 rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]/40 p-4">
-          <div className="mb-2 flex items-center gap-2 text-xs font-medium text-[var(--color-ink-400)]">
+          <div className="mb-2 flex items-center gap-2 text-xs font-medium text-[var(--color-cream)]">
             <Filter size={12} />
             Apply persona filters
           </div>
@@ -133,10 +133,11 @@ export default function FindLeadsPage() {
                 <button
                   key={p.id}
                   onClick={() => applyPersona(p)}
+                  title={p.description ?? undefined}
                   className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
                     active
-                      ? "border-[var(--color-gold)] bg-[var(--color-gold)]/15 text-[var(--color-gold)]"
-                      : "border-[var(--color-ink-700)] text-[var(--color-ink-400)] hover:text-[var(--color-cream)]"
+                      ? "border-[var(--color-gold)] bg-[var(--color-gold)]/20 text-[var(--color-gold)]"
+                      : "border-[var(--color-ink-700)] bg-[var(--color-ink-900)] text-[var(--color-cream)] hover:border-[var(--color-gold)]/50 hover:bg-[var(--color-ink-800)]"
                   }`}
                 >
                   {p.name}
@@ -146,7 +147,7 @@ export default function FindLeadsPage() {
             {activePersonaId && (
               <button
                 onClick={clearPersona}
-                className="rounded-full border border-[var(--color-ink-700)] px-3 py-1.5 text-xs text-[var(--color-ink-500)] hover:text-[var(--color-cream)]"
+                className="rounded-full border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-1.5 text-xs font-medium text-[var(--color-cream)] hover:border-red-900/50 hover:text-red-400"
               >
                 Clear
               </button>
