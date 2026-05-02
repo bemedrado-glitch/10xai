@@ -178,12 +178,29 @@ async function main() {
   }
 
   console.log("→ Loading personas + leads from Supabase...");
-  const { data: personas } = await supa.from("personas").select("id, name").eq("active", true);
-  const { data: leads } = await supa
+  console.log(`  URL: ${SUPA_URL}`);
+  console.log(`  Service role key: ...${SUPA_KEY?.slice(-12)}`);
+  const personasRes = await supa.from("personas").select("id, name, active");
+  if (personasRes.error) {
+    console.error(`  Personas error: ${personasRes.error.message}`);
+    console.error(`  Hint: this usually means the service role key is wrong or RLS is blocking.`);
+    console.error(`  Verify SUPABASE_SERVICE_ROLE_KEY matches the one in Supabase → Settings → API → service_role.`);
+    process.exit(1);
+  }
+  const allPersonas = personasRes.data ?? [];
+  const personas = allPersonas.filter((p) => p.active);
+  console.log(`  ${allPersonas.length} personas total, ${personas.length} active`);
+
+  const leadsRes = await supa
     .from("leads")
     .select("id, persona_id, business_name, contact_name, email, phone, status")
     .or("email.not.is.null,phone.not.is.null");
-  console.log(`  ${personas?.length ?? 0} personas, ${leads?.length ?? 0} qualified leads`);
+  if (leadsRes.error) {
+    console.error(`  Leads error: ${leadsRes.error.message}`);
+    process.exit(1);
+  }
+  const leads = leadsRes.data ?? [];
+  console.log(`  ${leads.length} qualified leads (have email or phone)`);
 
   console.log("→ Provisioning audiences (one per persona)...");
   const existingAudiences = await listAudiences();
