@@ -12,10 +12,14 @@ import {
   Plus,
   Trash2,
   ArrowUpDown,
+  FileSpreadsheet,
+  FileText,
+  Loader2,
 } from "lucide-react";
 import type { Lead } from "@/lib/database.types";
 import { categoryLabel } from "@/lib/business-categories";
 import EnrollLeadModal from "@/components/EnrollLeadModal";
+import { exportLeadsCsv, exportLeadsPdf } from "@/lib/export-leads";
 
 type SortKey = "best" | "rating" | "reviews" | "recent" | "added";
 
@@ -47,6 +51,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
   const [sort, setSort] = useState<SortKey>("best");
   const [minRating, setMinRating] = useState<string>("0");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [exportingPdf, setExportingPdf] = useState(false);
 
   const visibleLeads = useMemo(() => {
     const minR = parseFloat(minRating);
@@ -115,7 +120,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
 
   return (
     <div className="mx-auto w-full px-6 py-8 2xl:max-w-[1700px]">
-      <div className="mb-6 flex items-end justify-between">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-gold)]">
             Lighthouse
@@ -125,7 +130,40 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
             Click any cell to edit. Saves automatically when you tab away.
           </p>
         </div>
-        <p className="text-sm font-medium text-[var(--color-cream)]">{leads.length} total</p>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => exportLeadsCsv(visibleLeads)}
+            disabled={visibleLeads.length === 0}
+            title="Download CSV (opens in Excel or Google Sheets)"
+            className="flex items-center gap-2 rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-xs font-bold text-[var(--color-cream)] transition-colors hover:border-[var(--color-gold)]/50 hover:text-[var(--color-gold)] disabled:opacity-40"
+          >
+            <FileSpreadsheet size={13} />
+            CSV / Sheets
+          </button>
+          <button
+            onClick={async () => {
+              setExportingPdf(true);
+              try {
+                await exportLeadsPdf(visibleLeads);
+              } finally {
+                setExportingPdf(false);
+              }
+            }}
+            disabled={visibleLeads.length === 0 || exportingPdf}
+            title="Download a formatted PDF of the current view"
+            className="flex items-center gap-2 rounded-lg border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-3 py-2 text-xs font-bold text-[var(--color-cream)] transition-colors hover:border-[var(--color-gold)]/50 hover:text-[var(--color-gold)] disabled:opacity-40"
+          >
+            {exportingPdf ? (
+              <Loader2 size={13} className="animate-spin" />
+            ) : (
+              <FileText size={13} />
+            )}
+            PDF
+          </button>
+          <p className="ml-2 text-sm font-medium text-[var(--color-cream)]">
+            {leads.length} total
+          </p>
+        </div>
       </div>
 
       {/* Status summary — clickable filter chips */}
