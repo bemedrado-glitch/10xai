@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, Database, Users, Mail, BarChart2, LogOut, Send } from "lucide-react";
+import { Search, Database, Users, Mail, BarChart2, LogOut, Send, BookOpen } from "lucide-react";
 import { createClient } from "@/lib/supabase";
 
 const NAV = [
@@ -11,6 +11,7 @@ const NAV = [
   { href: "/admin/enrollments", icon: Send, label: "Enrollments" },
   { href: "/admin/personas", icon: Users, label: "Personas" },
   { href: "/admin/cadences", icon: Mail, label: "Cadences" },
+  { href: "/admin/research", icon: BookOpen, label: "Research" },
   { href: "/admin/analytics", icon: BarChart2, label: "Analytics" },
 ];
 
