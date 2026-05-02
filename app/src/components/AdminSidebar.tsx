@@ -6,13 +6,13 @@ import {
   Search,
   Database,
   Users,
-  Mail,
   BarChart2,
   LogOut,
   Send,
   BookOpen,
   TrendingUp,
   CheckSquare,
+  Target,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase";
 
@@ -22,7 +22,7 @@ const NAV = [
   { href: "/admin/enrollments", icon: Send, label: "Enrollments" },
   { href: "/admin/tasks", icon: CheckSquare, label: "Tasks" },
   { href: "/admin/personas", icon: Users, label: "Personas" },
-  { href: "/admin/cadences", icon: Mail, label: "Cadences" },
+  { href: "/admin/sales-playbook", icon: Target, label: "Sales Playbook" },
   { href: "/admin/research", icon: BookOpen, label: "Research" },
   { href: "/admin/sales-plan", icon: TrendingUp, label: "Sales Plan" },
   { href: "/admin/analytics", icon: BarChart2, label: "Analytics" },
