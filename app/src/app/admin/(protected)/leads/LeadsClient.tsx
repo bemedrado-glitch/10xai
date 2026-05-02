@@ -1,11 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Phone, Globe, Star, Mail, ExternalLink, User, Plus, Trash2 } from "lucide-react";
+import {
+  Phone,
+  Globe,
+  Star,
+  Mail,
+  ExternalLink,
+  User,
+  Plus,
+  Trash2,
+  ArrowUpDown,
+} from "lucide-react";
 import type { Lead } from "@/lib/database.types";
 import { categoryLabel } from "@/lib/business-categories";
 import EnrollLeadModal from "@/components/EnrollLeadModal";
+
+type SortKey = "best" | "rating" | "reviews" | "recent" | "added";
+
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: "best", label: "Best (rating × reviews)" },
+  { key: "rating", label: "Highest rating" },
+  { key: "reviews", label: "Most reviews" },
+  { key: "recent", label: "Recently added" },
+];
+
+function bestScore(l: Lead): number {
+  const rating = l.rating ?? 0;
+  const reviews = l.review_count ?? 0;
+  return rating * Math.log(reviews + 1);
+}
 
 const STATUS_COLORS: Record<string, string> = {
   new: "bg-[var(--color-ink-700)] text-[var(--color-cream)]",
@@ -19,6 +44,36 @@ const STATUS_COLORS: Record<string, string> = {
 export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) {
   const [leads, setLeads] = useState(initialLeads);
   const [enrollTarget, setEnrollTarget] = useState<Lead | null>(null);
+  const [sort, setSort] = useState<SortKey>("best");
+  const [minRating, setMinRating] = useState<string>("0");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+
+  const visibleLeads = useMemo(() => {
+    const minR = parseFloat(minRating);
+    const arr = leads.filter((l) => {
+      if (statusFilter !== "all" && l.status !== statusFilter) return false;
+      if (minR > 0 && (l.rating ?? 0) < minR) return false;
+      return true;
+    });
+    arr.sort((a, b) => {
+      switch (sort) {
+        case "best":
+          return bestScore(b) - bestScore(a);
+        case "rating": {
+          const dr = (b.rating ?? 0) - (a.rating ?? 0);
+          if (dr !== 0) return dr;
+          return (b.review_count ?? 0) - (a.review_count ?? 0);
+        }
+        case "reviews":
+          return (b.review_count ?? 0) - (a.review_count ?? 0);
+        case "recent":
+        case "added":
+        default:
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }
+    });
+    return arr;
+  }, [leads, sort, minRating, statusFilter]);
 
   async function patchLead(id: string, patch: Partial<Lead>) {
     const res = await fetch(`/api/admin/leads/${id}`, {
@@ -73,21 +128,83 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
         <p className="text-sm font-medium text-[var(--color-cream)]">{leads.length} total</p>
       </div>
 
-      {/* Status summary */}
+      {/* Status summary — clickable filter chips */}
       {Object.keys(counts).length > 0 && (
-        <div className="mb-6 flex flex-wrap gap-2">
-          {Object.entries(counts).map(([status, count]) => (
-            <span
-              key={status}
-              className={`rounded-full px-3 py-1 text-xs font-bold capitalize ${
-                STATUS_COLORS[status] ?? "bg-[var(--color-ink-700)] text-[var(--color-cream)]"
-              }`}
-            >
-              {status} · {count}
-            </span>
-          ))}
+        <div className="mb-4 flex flex-wrap gap-2">
+          <button
+            onClick={() => setStatusFilter("all")}
+            className={`rounded-full border px-3 py-1 text-xs font-bold transition-colors ${
+              statusFilter === "all"
+                ? "border-[var(--color-gold)] bg-[var(--color-gold)]/20 text-[var(--color-gold)]"
+                : "border-[var(--color-ink-700)] bg-[var(--color-ink-900)] text-[var(--color-cream)] hover:border-[var(--color-gold)]/50"
+            }`}
+          >
+            All · {leads.length}
+          </button>
+          {Object.entries(counts).map(([status, count]) => {
+            const active = statusFilter === status;
+            return (
+              <button
+                key={status}
+                onClick={() => setStatusFilter(active ? "all" : status)}
+                className={`rounded-full border px-3 py-1 text-xs font-bold capitalize transition-colors ${
+                  active
+                    ? STATUS_COLORS[status]?.replace("bg-", "border-").replace("text-", "border-") +
+                      " " +
+                      STATUS_COLORS[status]
+                    : `border-[var(--color-ink-700)] ${
+                        STATUS_COLORS[status] ?? "bg-[var(--color-ink-900)] text-[var(--color-cream)]"
+                      } hover:border-[var(--color-gold)]/50`
+                }`}
+              >
+                {status} · {count}
+              </button>
+            );
+          })}
         </div>
       )}
+
+      {/* Sort + rating filter row */}
+      <div className="mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]/50 p-3">
+        <div className="flex items-center gap-2">
+          <ArrowUpDown size={12} className="text-[var(--color-cream)]/60" />
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-cream)]/70">
+            Sort
+          </label>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortKey)}
+            className="rounded-md border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-2 py-1.5 text-xs font-medium text-[var(--color-cream)] outline-none focus:border-[var(--color-gold)]"
+          >
+            {SORT_OPTIONS.map((o) => (
+              <option key={o.key} value={o.key}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex items-center gap-2">
+          <Star size={12} className="text-[var(--color-gold)]" />
+          <label className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-cream)]/70">
+            Min rating
+          </label>
+          <select
+            value={minRating}
+            onChange={(e) => setMinRating(e.target.value)}
+            className="rounded-md border border-[var(--color-ink-700)] bg-[var(--color-ink-900)] px-2 py-1.5 text-xs font-medium text-[var(--color-cream)] outline-none focus:border-[var(--color-gold)]"
+          >
+            <option value="0">Any</option>
+            <option value="3.5">3.5+</option>
+            <option value="4.0">4.0+</option>
+            <option value="4.5">4.5+</option>
+            <option value="4.8">4.8+</option>
+            <option value="5.0">5.0</option>
+          </select>
+        </div>
+        <span className="ml-auto text-[11px] text-[var(--color-cream)]/60">
+          Showing {visibleLeads.length} of {leads.length}
+        </span>
+      </div>
 
       {/* Table */}
       <div className="overflow-x-auto rounded-xl border border-[var(--color-ink-700)] bg-[var(--color-ink)]">
@@ -113,7 +230,7 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--color-ink-800)]">
-            {leads.map((lead) => (
+            {visibleLeads.map((lead) => (
               <tr key={lead.id} className="transition-colors hover:bg-[var(--color-ink-900)]">
                 <td className="px-3 py-3">
                   <Link
@@ -228,13 +345,15 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                 </td>
               </tr>
             ))}
-            {leads.length === 0 && (
+            {visibleLeads.length === 0 && (
               <tr>
                 <td
                   colSpan={10}
                   className="px-4 py-10 text-center text-sm text-[var(--color-cream)]/70"
                 >
-                  No leads yet — use Find Leads to discover and save businesses.
+                  {leads.length === 0
+                    ? "No leads yet — use Find Leads to discover and save businesses."
+                    : "No leads match the current filters — try lowering the rating threshold or clicking 'All'."}
                 </td>
               </tr>
             )}
