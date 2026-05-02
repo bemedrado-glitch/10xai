@@ -97,7 +97,7 @@ export default function EnrollmentsClient({
         <h1 className="mt-1 font-display text-2xl font-black text-[var(--color-cream)]">
           Enrollments
         </h1>
-        <p className="mt-1 text-sm text-[var(--color-ink-400)]">
+        <p className="mt-1 text-sm text-[var(--color-cream)]/80">
           Everyone currently in a cadence — see exactly which step, and pause or opt them out.
         </p>
       </div>
@@ -111,13 +111,13 @@ export default function EnrollmentsClient({
             <button
               key={t.key}
               onClick={() => setFilter(t.key)}
-              className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+              className={`rounded-full border px-3 py-1.5 text-xs font-bold transition-colors ${
                 active
-                  ? "border-[var(--color-gold)] bg-[var(--color-gold)]/15 text-[var(--color-gold)]"
-                  : "border-[var(--color-ink-700)] text-[var(--color-ink-400)] hover:text-[var(--color-cream)]"
+                  ? "border-[var(--color-gold)] bg-[var(--color-gold)]/20 text-[var(--color-gold)]"
+                  : "border-[var(--color-ink-700)] bg-[var(--color-ink-900)] text-[var(--color-cream)] hover:border-[var(--color-gold)]/50 hover:bg-[var(--color-ink-800)]"
               }`}
             >
-              {t.label} <span className="opacity-60">({count})</span>
+              {t.label} <span className="opacity-70">({count})</span>
             </button>
           );
         })}
