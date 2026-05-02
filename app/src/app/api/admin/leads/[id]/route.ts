@@ -55,3 +55,17 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ lead });
 }
+
+export async function DELETE(_req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await ctx.params;
+  // Enrollments + email_sends cascade-delete via FK ON DELETE CASCADE
+  const { error } = await supabase.from("leads").delete().eq("id", id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true });
+}

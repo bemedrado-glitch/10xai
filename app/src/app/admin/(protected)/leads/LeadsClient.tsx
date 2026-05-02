@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Phone, Globe, Star, Mail, ExternalLink, User } from "lucide-react";
+import { Phone, Globe, Star, Mail, ExternalLink, User, Plus, Trash2 } from "lucide-react";
 import type { Lead } from "@/lib/database.types";
 import { categoryLabel } from "@/lib/business-categories";
+import EnrollLeadModal from "@/components/EnrollLeadModal";
 
 const STATUS_COLORS: Record<string, string> = {
   new: "bg-[var(--color-ink-700)] text-[var(--color-cream)]",
@@ -17,6 +18,7 @@ const STATUS_COLORS: Record<string, string> = {
 
 export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) {
   const [leads, setLeads] = useState(initialLeads);
+  const [enrollTarget, setEnrollTarget] = useState<Lead | null>(null);
 
   async function patchLead(id: string, patch: Partial<Lead>) {
     const res = await fetch(`/api/admin/leads/${id}`, {
@@ -29,6 +31,26 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
       return true;
     }
     return false;
+  }
+
+  async function deleteLead(lead: Lead) {
+    const ok = window.confirm(
+      `Permanently delete ${lead.business_name}? This also deletes all enrollments and email history for this lead. Cannot be undone.`
+    );
+    if (!ok) return;
+    const res = await fetch(`/api/admin/leads/${lead.id}`, { method: "DELETE" });
+    if (res.ok) {
+      setLeads((prev) => prev.filter((l) => l.id !== lead.id));
+    }
+  }
+
+  function handleEnrolled() {
+    if (enrollTarget) {
+      setLeads((prev) =>
+        prev.map((l) => (l.id === enrollTarget.id ? { ...l, status: "enrolled" } : l))
+      );
+    }
+    setEnrollTarget(null);
   }
 
   const counts = leads.reduce<Record<string, number>>((acc, l) => {
@@ -72,13 +94,22 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[var(--color-ink-700)] bg-[var(--color-ink-900)] text-[10px] font-bold uppercase tracking-wider text-[var(--color-cream)]">
-              {["Business", "Location", "Rating", "Contact name", "Email", "Phone", "Website", "Status", "Added"].map(
-                (h) => (
-                  <th key={h} className="px-3 py-3 text-left">
-                    {h}
-                  </th>
-                )
-              )}
+              {[
+                "Business",
+                "Location",
+                "Rating",
+                "Contact name",
+                "Email",
+                "Phone",
+                "Website",
+                "Status",
+                "Added",
+              ].map((h) => (
+                <th key={h} className="px-3 py-3 text-left">
+                  {h}
+                </th>
+              ))}
+              <th className="px-3 py-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--color-ink-800)]">
@@ -171,12 +202,36 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
                     day: "numeric",
                   })}
                 </td>
+                <td className="px-3 py-3 text-right">
+                  <div className="inline-flex items-center gap-1.5">
+                    <button
+                      onClick={() => setEnrollTarget(lead)}
+                      disabled={!lead.email && !lead.phone}
+                      title={
+                        !lead.email && !lead.phone
+                          ? "Add email or phone first"
+                          : "Enroll in cadence"
+                      }
+                      className="flex items-center gap-1 rounded-md border border-[var(--color-gold)]/40 bg-[var(--color-gold)]/10 px-2.5 py-1 text-[11px] font-bold text-[var(--color-gold)] transition-colors hover:bg-[var(--color-gold)]/20 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      <Plus size={11} />
+                      Enroll
+                    </button>
+                    <button
+                      onClick={() => deleteLead(lead)}
+                      title="Permanently delete this lead"
+                      className="rounded-md p-1.5 text-[var(--color-cream)]/60 transition-colors hover:bg-red-900/30 hover:text-red-400"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
+                </td>
               </tr>
             ))}
             {leads.length === 0 && (
               <tr>
                 <td
-                  colSpan={9}
+                  colSpan={10}
                   className="px-4 py-10 text-center text-sm text-[var(--color-cream)]/70"
                 >
                   No leads yet — use Find Leads to discover and save businesses.
@@ -186,6 +241,14 @@ export default function LeadsClient({ initialLeads }: { initialLeads: Lead[] }) 
           </tbody>
         </table>
       </div>
+
+      {enrollTarget && (
+        <EnrollLeadModal
+          lead={enrollTarget}
+          onClose={() => setEnrollTarget(null)}
+          onEnrolled={handleEnrolled}
+        />
+      )}
     </div>
   );
 }
